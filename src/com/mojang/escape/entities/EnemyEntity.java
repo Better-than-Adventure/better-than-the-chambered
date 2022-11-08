@@ -50,7 +50,7 @@ public class EnemyEntity extends Entity {
 
 	public boolean use(Entity source, Item item) {
 		if (hurtTime > 0) return false;
-		if (item != Item.powerGlove) return false;
+		if (item != Item.PowerGlove) return false;
 
 		hurt(Math.sin(source.rot), Math.cos(source.rot));
 

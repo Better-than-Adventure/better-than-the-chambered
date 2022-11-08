@@ -16,6 +16,6 @@ public class CryptLevel extends Level {
 
 	public void getLoot(int id) {
 		super.getLoot(id);
-		if (id == 1) game.getLoot(Item.flippers);
+		if (id == 1) game.getLoot(Item.Flippers);
 	}
 }

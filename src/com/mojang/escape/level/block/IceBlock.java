@@ -15,12 +15,12 @@ public class IceBlock extends Block {
 	}
 
 	public double getWalkSpeed(Player player) {
-		if (player.getSelectedItem() == Item.skates) return 0.05;
+		if (player.getSelectedItem() == Item.Skates) return 0.05;
 		return 1.4;
 	}
 
 	public double getFriction(Player player) {
-		if (player.getSelectedItem() == Item.skates) return 0.98;
+		if (player.getSelectedItem() == Item.Skates) return 0.98;
 		return 1;
 	}
 

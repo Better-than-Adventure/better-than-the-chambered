@@ -23,7 +23,7 @@ public class DungeonLevel extends Level {
 
 	public void getLoot(int id) {
 		super.getLoot(id);
-		if (id == 1) game.getLoot(Item.powerGlove);
+		if (id == 1) game.getLoot(Item.PowerGlove);
 	}
 
 	public void trigger(int id, boolean pressed) {

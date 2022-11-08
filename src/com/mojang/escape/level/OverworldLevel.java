@@ -20,6 +20,6 @@ public class OverworldLevel extends Level {
 
 	public void getLoot(int id) {
 		super.getLoot(id);
-		if (id == 1) game.getLoot(Item.cutters);
+		if (id == 1) game.getLoot(Item.Cutters);
 	}
 }

@@ -16,6 +16,6 @@ public class IceLevel extends Level {
 
 	public void getLoot(int id) {
 		super.getLoot(id);
-		if (id == 1) game.getLoot(Item.skates);
+		if (id == 1) game.getLoot(Item.Skates);
 	}
 }

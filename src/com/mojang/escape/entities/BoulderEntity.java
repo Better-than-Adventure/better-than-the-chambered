@@ -31,7 +31,7 @@ public class BoulderEntity extends Entity {
 	}
 
 	public boolean use(Entity source, Item item) {
-		if (item != Item.powerGlove) return false;
+		if (item != Item.PowerGlove) return false;
 		Sound.roll.play();
 
 		xa += Math.sin(source.rot) * 0.1;

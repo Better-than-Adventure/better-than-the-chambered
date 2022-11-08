@@ -22,7 +22,7 @@ public class WaterBlock extends Block {
 
 	public boolean blocks(Entity entity) {
 		if (entity instanceof Player) {
-			if (((Player) entity).getSelectedItem() == Item.flippers) return false;
+			if (((Player) entity).getSelectedItem() == Item.Flippers) return false;
 		}
 		if (entity instanceof Bullet) return false;
 		return blocksMotion;

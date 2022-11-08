@@ -19,7 +19,7 @@ public class BarsBlock extends Block {
 	public boolean use(Level level, Item item) {
 		if (open) return false;
 
-		if (item == Item.cutters) {
+		if (item == Item.Cutters) {
 			Sound.cut.play();
 			sprite.tex = 1;
 			open = true;

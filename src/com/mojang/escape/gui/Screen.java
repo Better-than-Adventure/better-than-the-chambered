@@ -59,8 +59,8 @@ public class Screen extends Bitmap {
 				if (itemUsed) xx = yy = 0;
 				xx += width / 2;
 				yy += height - PANEL_HEIGHT - 15 * 3;
-				if (item != Item.none) {
-					scaleDraw(Art.INSTANCE.getItems(), 3, xx, yy, 16 * item.icon + 1, 16 + 1 + (itemUsed ? 16 : 0), 15, 15, Art.INSTANCE.getCol(item.color));
+				if (item != Item.None) {
+					scaleDraw(Art.INSTANCE.getItems(), 3, xx, yy, 16 * item.getIcon() + 1, 16 + 1 + (itemUsed ? 16 : 0), 15, 15, Art.INSTANCE.getCol(item.getColor()));
 				}
 
 				if (game.player.hurtTime > 0 || game.player.dead) {
@@ -87,13 +87,13 @@ public class Screen extends Bitmap {
 
 			for (int i = 0; i < 8; i++) {
 				Item slotItem = game.player.items[i];
-				if (slotItem != Item.none) {
-					draw(Art.INSTANCE.getItems(), 30 + i * 16, height - PANEL_HEIGHT + 2, slotItem.icon * 16, 0, 16, 16, Art.INSTANCE.getCol(slotItem.color));
-					if (slotItem == Item.pistol) {
+				if (slotItem != Item.None) {
+					draw(Art.INSTANCE.getItems(), 30 + i * 16, height - PANEL_HEIGHT + 2, slotItem.getIcon() * 16, 0, 16, 16, Art.INSTANCE.getCol(slotItem.getColor()));
+					if (slotItem == Item.Pistol) {
 						String str = "" + game.player.ammo;
 						draw(str, 30 + i * 16 + 17 - str.length() * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555);
 					}
-					if (slotItem == Item.potion) {
+					if (slotItem == Item.Potion) {
 						String str = "" + game.player.potions;
 						draw(str, 30 + i * 16 + 17 - str.length() * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555);
 					}
@@ -102,7 +102,7 @@ public class Screen extends Bitmap {
 
 			draw(Art.INSTANCE.getItems(), 30 + game.player.selectedSlot * 16, height - PANEL_HEIGHT + 2, 0, 48, 17, 17, Art.INSTANCE.getCol(0xffffff));
 
-			draw(item.name, 26 + (8 * 16 - item.name.length() * 4) / 2, height - 9, 0xffffff);
+			draw(item.getItemName(), 26 + (8 * 16 - item.getItemName().length() * 4) / 2, height - 9, 0xffffff);
 		}
 
 		if (game.menu != null) {

@@ -25,7 +25,7 @@ public class Player extends Entity {
 	public Player() {
 		r = 0.3;
 		for (int i = 0; i < items.length; i++) {
-			items[i] = Item.none;
+			items[i] = Item.None;
 		}
 	}
 
@@ -94,7 +94,7 @@ public class Player extends Entity {
 		boolean wasSliding = sliding;
 		sliding = false;
 
-		if (onBlock instanceof IceBlock && getSelectedItem() != Item.skates) {
+		if (onBlock instanceof IceBlock && getSelectedItem() != Item.Skates) {
 			if (xa * xa > za * za) {
 				sliding = true;
 				za = 0;
@@ -133,7 +133,7 @@ public class Player extends Entity {
 		if (dead) return;
 		if (itemUseTime > 0) return;
 		Item item = items[selectedSlot];
-		if (item == Item.pistol) {
+		if (item == Item.Pistol) {
 			if (ammo > 0) {
 				Sound.shoot.play();
 				itemUseTime = 10;
@@ -142,7 +142,7 @@ public class Player extends Entity {
 			}
 			return;
 		}
-		if (item == Item.potion) {
+		if (item == Item.Potion) {
 			if (potions > 0 && health < 20) {
 				Sound.potion.play();
 				itemUseTime = 20;
@@ -152,9 +152,9 @@ public class Player extends Entity {
 			}
 			return;
 		}
-		if (item == Item.key) itemUseTime = 10;
-		if (item == Item.powerGlove) itemUseTime = 10;
-		if (item == Item.cutters) itemUseTime = 10;
+		if (item == Item.Key) itemUseTime = 10;
+		if (item == Item.PowerGlove) itemUseTime = 10;
+		if (item == Item.Cutters) itemUseTime = 10;
 
 		double xa = (2 * Math.sin(rot));
 		double za = (2 * Math.cos(rot));
@@ -209,8 +209,8 @@ public class Player extends Entity {
 	}
 
 	public void addLoot(Item item) {
-		if (item == Item.pistol) ammo += 20;
-		if (item == Item.potion) potions += 1;
+		if (item == Item.Pistol) ammo += 20;
+		if (item == Item.Potion) potions += 1;
 		for (int i = 0; i < items.length; i++) {
 			if (items[i] == item) {
 				if (level!=null) level.showLootScreen(item);
@@ -219,7 +219,7 @@ public class Player extends Entity {
 		}
 
 		for (int i = 0; i < items.length; i++) {
-			if (items[i] == Item.none) {
+			if (items[i] == Item.None) {
 				items[i] = item;
 				selectedSlot = i;
 				itemUseTime = 0;

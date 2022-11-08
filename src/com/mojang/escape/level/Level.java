@@ -263,8 +263,8 @@ public abstract class Level {
 	}
 
 	public void getLoot(int id) {
-		if (id == 20) game.getLoot(Item.pistol);
-		if (id == 21) game.getLoot(Item.potion);
+		if (id == 20) game.getLoot(Item.Pistol);
+		if (id == 21) game.getLoot(Item.Potion);
 	}
 
 	public void win() {
