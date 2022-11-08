@@ -1,6 +1,7 @@
 package com.mojang.escape.entities;
 
 import com.mojang.escape.*;
+import com.mojang.escape.gui.BasicSprite;
 import com.mojang.escape.gui.Sprite;
 
 public class BoulderEntity extends Entity {
@@ -11,7 +12,7 @@ public class BoulderEntity extends Entity {
 	public BoulderEntity(int x, int z) {
 		this.x = x;
 		this.z = z;
-		sprite = new Sprite(0, 0, 0, 16, COLOR);
+		sprite = new BasicSprite(0, 0, 0, 16, COLOR);
 		sprites.add(sprite);
 	}
 

@@ -2,6 +2,7 @@ package com.mojang.escape.level.block;
 
 import com.mojang.escape.Sound;
 import com.mojang.escape.entities.*;
+import com.mojang.escape.gui.BasicSprite;
 import com.mojang.escape.gui.Sprite;
 import com.mojang.escape.level.Level;
 import com.mojang.escape.level.block.Block;
@@ -11,7 +12,7 @@ public class BarsBlock extends Block {
 	private boolean open = false;
 
 	public BarsBlock() {
-		sprite = new Sprite(0, 0, 0, 0, 0x202020);
+		sprite = new BasicSprite(0, 0, 0, 0, 0x202020);
 		addSprite(sprite);
 		blocksMotion = true;
 	}

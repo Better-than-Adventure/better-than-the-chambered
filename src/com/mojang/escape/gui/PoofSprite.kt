@@ -10,8 +10,6 @@ class PoofSprite(x: Double, y: Double, z: Double) : Sprite(x, y, z, 5, 0x222222)
     private var life: Int = 20
 
     override fun tick() {
-        super.tick()
-
         if (life-- <= 0) removed = true
     }
 }

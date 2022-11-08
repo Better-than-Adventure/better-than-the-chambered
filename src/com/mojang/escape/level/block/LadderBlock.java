@@ -2,6 +2,7 @@ package com.mojang.escape.level.block;
 
 import com.mojang.escape.*;
 import com.mojang.escape.entities.*;
+import com.mojang.escape.gui.BasicSprite;
 import com.mojang.escape.gui.Sprite;
 
 public class LadderBlock extends Block {
@@ -11,10 +12,10 @@ public class LadderBlock extends Block {
 	public LadderBlock(boolean down) {
 		if (down) {
 			floorTex = 1;
-			addSprite(new Sprite(0, 0, 0, 8 + 3, Art.INSTANCE.getCol(LADDER_COLOR)));
+			addSprite(new BasicSprite(0, 0, 0, 8 + 3, Art.INSTANCE.getCol(LADDER_COLOR)));
 		} else {
 			ceilTex = 1;
-			addSprite(new Sprite(0, 0, 0, 8 + 4, Art.INSTANCE.getCol(LADDER_COLOR)));
+			addSprite(new BasicSprite(0, 0, 0, 8 + 4, Art.INSTANCE.getCol(LADDER_COLOR)));
 		}
 	}
 

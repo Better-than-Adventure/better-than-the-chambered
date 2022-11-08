@@ -1,6 +1,7 @@
 package com.mojang.escape.entities;
 
 import com.mojang.escape.Art;
+import com.mojang.escape.gui.BasicSprite;
 import com.mojang.escape.gui.Sprite;
 
 public class Bullet extends Entity {
@@ -15,7 +16,7 @@ public class Bullet extends Entity {
 		this.x = x - za / 2;
 		this.z = z + xa / 2;
 
-		sprites.add(new Sprite(0, 0, 0, 8 * 3 + sprite, Art.INSTANCE.getCol(col)));
+		sprites.add(new BasicSprite(0, 0, 0, 8 * 3 + sprite, Art.INSTANCE.getCol(col)));
 
 		flying = true;
 	}

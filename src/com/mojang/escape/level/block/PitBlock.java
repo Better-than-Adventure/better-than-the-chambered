@@ -2,6 +2,7 @@ package com.mojang.escape.level.block;
 
 import com.mojang.escape.Sound;
 import com.mojang.escape.entities.*;
+import com.mojang.escape.gui.BasicSprite;
 import com.mojang.escape.gui.Sprite;
 
 public class PitBlock extends Block {
@@ -18,7 +19,7 @@ public class PitBlock extends Block {
 			entity.remove();
 			filled = true;
 			blocksMotion = false;
-			addSprite(new Sprite(0, 0, 0, 8 + 2, BoulderEntity.COLOR));
+			addSprite(new BasicSprite(0, 0, 0, 8 + 2, BoulderEntity.COLOR));
 			Sound.thud.play();
 		}
 	}

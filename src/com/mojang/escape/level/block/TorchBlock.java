@@ -3,6 +3,7 @@ package com.mojang.escape.level.block;
 import java.util.Random;
 
 import com.mojang.escape.Art;
+import com.mojang.escape.gui.BasicSprite;
 import com.mojang.escape.gui.Sprite;
 import com.mojang.escape.level.Level;
 
@@ -10,7 +11,7 @@ public class TorchBlock extends Block {
 	private Sprite torchSprite;
 
 	public TorchBlock() {
-		torchSprite = new Sprite(0, 0, 0, 3, Art.INSTANCE.getCol(0xffff00));
+		torchSprite = new BasicSprite(0, 0, 0, 3, Art.INSTANCE.getCol(0xffff00));
 		sprites.add(torchSprite);
 	}
 

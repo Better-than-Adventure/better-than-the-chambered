@@ -9,7 +9,7 @@ package com.mojang.escape.gui
  *
  * [col] is the display colour.
  */
-open class Sprite(var x: Double, var y: Double, var z: Double, var tex: Int, var col: Int) {
+abstract class Sprite(var x: Double, var y: Double, var z: Double, var tex: Int, var col: Int) {
     /**
      * Indicates whether the sprite has been removed from the game world.
      */
@@ -18,6 +18,5 @@ open class Sprite(var x: Double, var y: Double, var z: Double, var tex: Int, var
     /**
      * Called every tick to update the sprite.
      */
-    open fun tick() {
-    }
+    abstract fun tick();
 }

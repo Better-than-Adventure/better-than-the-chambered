@@ -2,6 +2,7 @@ package com.mojang.escape.level.block;
 
 import com.mojang.escape.*;
 import com.mojang.escape.entities.*;
+import com.mojang.escape.gui.BasicSprite;
 import com.mojang.escape.gui.Sprite;
 
 public class LootBlock extends Block {
@@ -9,7 +10,7 @@ public class LootBlock extends Block {
 	private Sprite sprite;
 
 	public LootBlock() {
-		sprite = new Sprite(0, 0, 0, 16 + 2, Art.INSTANCE.getCol(0xffff80));
+		sprite = new BasicSprite(0, 0, 0, 16 + 2, Art.INSTANCE.getCol(0xffff80));
 		addSprite(sprite);
 		blocksMotion = true;
 	}

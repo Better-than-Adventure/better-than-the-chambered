@@ -20,7 +20,7 @@ public class EnemyEntity extends Entity {
 		this.z = z;
 		this.defaultColor = defaultColor;
 		this.defaultTex = defaultTex;
-		sprite = new Sprite(0, 0, 0, 4 * 8, defaultColor);
+		sprite = new BasicSprite(0, 0, 0, 4 * 8, defaultColor);
 		sprites.add(sprite);
 		r = 0.3;
 	}

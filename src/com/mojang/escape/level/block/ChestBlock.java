@@ -2,6 +2,7 @@ package com.mojang.escape.level.block;
 
 import com.mojang.escape.*;
 import com.mojang.escape.entities.Item;
+import com.mojang.escape.gui.BasicSprite;
 import com.mojang.escape.gui.Sprite;
 import com.mojang.escape.level.Level;
 
@@ -13,7 +14,7 @@ public class ChestBlock extends Block {
 		tex = 1;
 		blocksMotion = true;
 
-		chestSprite = new Sprite(0, 0, 0, 8 * 2 + 0, Art.INSTANCE.getCol(0xffff00));
+		chestSprite = new BasicSprite(0, 0, 0, 8 * 2 + 0, Art.INSTANCE.getCol(0xffff00));
 		addSprite(chestSprite);
 	}
 
