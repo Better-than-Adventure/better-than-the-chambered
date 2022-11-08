@@ -17,7 +17,7 @@ public class BoulderEntity extends Entity {
 
 	public void tick() {
 		rollDist += Math.sqrt(xa * xa + za * za);
-		sprite.tex = 8 + ((int) (rollDist * 4) & 1);
+		sprite.setTex(8 + ((int) (rollDist * 4) & 1));
 		double xao = xa;
 		double zao = za;
 		move();

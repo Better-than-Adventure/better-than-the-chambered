@@ -16,7 +16,7 @@ public class GhostBossEntity extends EnemyEntity {
 
 	public void tick() {
 		animTime++;
-		sprite.tex = defaultTex + animTime / 10 % 2;
+		sprite.setTex(defaultTex + animTime / 10 % 2);
 
 		double xd = (level.player.x + Math.sin(rotatePos) * 2) - x;
 		double zd = (level.player.z + Math.cos(rotatePos) * 2) - z;

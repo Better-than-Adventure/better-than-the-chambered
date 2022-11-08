@@ -17,7 +17,7 @@ public class LootBlock extends Block {
 	public void addEntity(Entity entity) {
 		super.addEntity(entity);
 		if (!taken && entity instanceof Player) {
-			sprite.removed = true;
+			sprite.setRemoved(true);
 			taken = true;
 			blocksMotion = false;
 			((Player) entity).loot++;

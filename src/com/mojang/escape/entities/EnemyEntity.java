@@ -29,11 +29,11 @@ public class EnemyEntity extends Entity {
 		if (hurtTime > 0) {
 			hurtTime--;
 			if (hurtTime == 0) {
-				sprite.col = defaultColor;
+				sprite.setCol(defaultColor);
 			}
 		}
 		animTime++;
-		sprite.tex = defaultTex + animTime / 10 % 2;
+		sprite.setTex(defaultTex + animTime / 10 % 2);
 		move();
 		if (xa == 0 || za == 0) {
 			rota += (random.nextGaussian() * random.nextDouble()) * 0.3;
@@ -58,7 +58,7 @@ public class EnemyEntity extends Entity {
 	}
 
 	protected void hurt(double xd, double zd) {
-		sprite.col = Art.INSTANCE.getCol(0xff0000);
+		sprite.setCol(Art.INSTANCE.getCol(0xff0000));
 		hurtTime = 15;
 
 		double dd = Math.sqrt(xd * xd + zd * zd);

@@ -20,11 +20,11 @@ public class AltarBlock extends Block {
 			entity.remove();
 			filled = true;
 			blocksMotion = false;
-			sprite.removed = true;
+			sprite.setRemoved(true);
 
 			for (int i = 0; i < 8; i++) {
 				RubbleSprite sprite = new RubbleSprite();
-				sprite.col = this.sprite.col;
+				sprite.setCol(this.sprite.getCol());
 				addSprite(sprite);
 			}
 

@@ -22,7 +22,7 @@ public class VanishBlock extends SolidBlock {
 
 		for (int i = 0; i < 32; i++) {
 			RubbleSprite sprite = new RubbleSprite();
-			sprite.col = col;
+			sprite.setCol(col);
 			addSprite(sprite);
 		}
 

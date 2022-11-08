@@ -11,16 +11,16 @@ public class RubbleSprite extends Sprite {
 	}
 
 	public void tick() {
-		x += xa * 0.03;
-		y += ya * 0.03;
-		z += za * 0.03;
+		setX(getX() + xa * 0.03);
+		setY(getY() + ya * 0.03);
+		setZ(getZ() + za * 0.03);
 		ya -= 0.1;
-		if (y < 0) {
-			y = 0;
+		if (getY() < 0) {
+			setY(0);
 			xa *= 0.8;
 			za *= 0.8;
 			if (Math.random() < 0.04)
-				removed = true;
+				setRemoved(true);
 		}
 	}
 }

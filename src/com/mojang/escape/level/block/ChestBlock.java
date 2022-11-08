@@ -20,7 +20,7 @@ public class ChestBlock extends Block {
 	public boolean use(Level level, Item item) {
 		if (open) return false;
 
-		chestSprite.tex++;
+		chestSprite.setTex(chestSprite.getTex() + 1);
 		open = true;
 
 		level.getLoot(id);

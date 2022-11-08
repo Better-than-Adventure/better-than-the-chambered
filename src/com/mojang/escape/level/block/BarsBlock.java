@@ -21,7 +21,7 @@ public class BarsBlock extends Block {
 
 		if (item == Item.Cutters) {
 			Sound.cut.play();
-			sprite.tex = 1;
+			sprite.setTex(1);
 			open = true;
 		}
 

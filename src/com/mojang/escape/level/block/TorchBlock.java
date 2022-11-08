@@ -20,19 +20,19 @@ public class TorchBlock extends Block {
 		for (int i = 0; i < 1000; i++) {
 			int face = random.nextInt(4);
 			if (face == 0 && level.getBlock(x - 1, y).solidRender) {
-				torchSprite.x -= r;
+				torchSprite.setX(torchSprite.getX() - r);
 				break;
 			}
 			if (face == 1 && level.getBlock(x, y - 1).solidRender) {
-				torchSprite.z -= r;
+				torchSprite.setZ(torchSprite.getZ() - r);
 				break;
 			}
 			if (face == 2 && level.getBlock(x + 1, y).solidRender) {
-				torchSprite.x += r;
+				torchSprite.setX(torchSprite.getX() + r);
 				break;
 			}
 			if (face == 3 && level.getBlock(x, y + 1).solidRender) {
-				torchSprite.z += r;
+				torchSprite.setZ(torchSprite.getZ() + r);
 				break;
 			}
 		}
@@ -40,6 +40,6 @@ public class TorchBlock extends Block {
 
 	public void tick() {
 		super.tick();
-		if (random.nextInt(4) == 0) torchSprite.tex = 3 + random.nextInt(2);
+		if (random.nextInt(4) == 0) torchSprite.setTex(3 + random.nextInt(2));
 	}
 }

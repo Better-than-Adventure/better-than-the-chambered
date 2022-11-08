@@ -45,7 +45,7 @@ public class Block {
 		for (int i = 0; i < sprites.size(); i++) {
 			Sprite sprite = sprites.get(i);
 			sprite.tick();
-			if (sprite.removed) {
+			if (sprite.getRemoved()) {
 				sprites.remove(i--);
 			}
 		}

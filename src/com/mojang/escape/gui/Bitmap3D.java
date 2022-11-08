@@ -88,13 +88,13 @@ public class Bitmap3D extends Bitmap {
 					Entity e = c.entities.get(j);
 					for (int i = 0; i < e.sprites.size(); i++) {
 						Sprite sprite = e.sprites.get(i);
-						renderSprite(e.x + sprite.x, 0 - sprite.y, e.z + sprite.z, sprite.tex, sprite.col);
+						renderSprite(e.x + sprite.getX(), 0 - sprite.getY(), e.z + sprite.getZ(), sprite.getTex(), sprite.getCol());
 					}
 				}
 
 				for (int i = 0; i < c.sprites.size(); i++) {
 					Sprite sprite = c.sprites.get(i);
-					renderSprite(xb + sprite.x, 0 - sprite.y, zb + sprite.z, sprite.tex, sprite.col);
+					renderSprite(xb + sprite.getX(), 0 - sprite.getY(), zb + sprite.getZ(), sprite.getTex(), sprite.getCol());
 				}
 			}
 		}

@@ -22,7 +22,7 @@ public class KeyEntity extends Entity {
 		y += ya;
 		if (y < 0) y = 0;
 		ya -= 0.005;
-		sprite.y = y;
+		sprite.setY(y);
 	}
 
 	protected void collide(Entity entity) {
