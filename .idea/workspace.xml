@@ -5,26 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c805ae6c-454d-4de3-8abb-cc2b30693e12" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/PoofSprite.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/Sprite.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/menu/Menu.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/BoulderEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/BoulderEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/EnemyEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/EnemyEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/GhostBossEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/GhostBossEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/GhostEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/GhostEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/Item.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/Item.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/KeyEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/KeyEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/Bitmap3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/Bitmap3D.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/PoofSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/PoofSpriteOld.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/RubbleSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/RubbleSprite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/Sprite.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/AltarBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/AltarBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/BarsBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/BarsBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/ChestBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/ChestBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LootBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LootBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/TorchBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/TorchBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/VanishBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/VanishBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/PoofSprite.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/PoofSprite.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/menu/Menu.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

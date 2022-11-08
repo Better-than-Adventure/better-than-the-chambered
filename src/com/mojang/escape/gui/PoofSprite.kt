@@ -3,7 +3,7 @@ package com.mojang.escape.gui
 /**
  * A sprite that automatically removes itself after 20 ticks.
  */
-class PoofSprite(x: Double, y: Double, z: Double, tex: Int, col: Int) : Sprite(x, y, z, tex, col) {
+class PoofSprite(x: Double, y: Double, z: Double) : Sprite(x, y, z, 5, 0x222222) {
     /**
      * The number of ticks remaining until the sprite removes itself.
      */
