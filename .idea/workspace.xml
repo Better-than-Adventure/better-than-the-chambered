@@ -5,10 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c805ae6c-454d-4de3-8abb-cc2b30693e12" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/menu/Menu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/menu/AboutMenu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/menu/GotLootMenu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/menu/InstructionsMenu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/menu/LoseMenu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/menu/PauseMenu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/menu/TitleMenu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/menu/WinMenu.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/PoofSprite.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/PoofSprite.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/menu/Menu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/menu/AboutMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/menu/GotLootMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/menu/InstructionsMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/menu/LoseMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/menu/Menu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/menu/Menu.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/menu/PauseMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/menu/TitleMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/menu/WinMenu.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

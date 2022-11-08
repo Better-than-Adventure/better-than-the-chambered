@@ -4,7 +4,15 @@ import com.mojang.escape.Game
 import com.mojang.escape.gui.Bitmap
 
 abstract class Menu {
-    abstract fun render(target: Bitmap);
+    /**
+     * Renders the menu to the [target] bitmap.
+     */
+    abstract fun render(target: Bitmap)
 
-    abstract fun tick(game: Game, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean);
+    /**
+     * Updates the menu's content.
+     *
+     * [up], [down], [left], [right], and [use] are set to true when the corresponding key is pressed, i.e. UP ARROW, DOWN ARROW, LEFT ARROW, RIGHT ARROW and SPACEBAR respectively.
+     */
+    abstract fun tick(game: Game, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean)
 }
