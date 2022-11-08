@@ -4,7 +4,7 @@ import com.mojang.escape.*;
 import com.mojang.escape.gui.Sprite;
 
 public class KeyEntity extends Entity {
-	public static final int COLOR = Art.getCol(0x00ffff);
+	public static final int COLOR = Art.INSTANCE.getCol(0x00ffff);
 	private Sprite sprite;
 	private double y, ya;
 

@@ -11,7 +11,7 @@ public class IceBlock extends Block {
 
 	public void tick() {
 		super.tick();
-		floorCol = Art.getCol(0x8080ff);
+		floorCol = Art.INSTANCE.getCol(0x8080ff);
 	}
 
 	public double getWalkSpeed(Player player) {

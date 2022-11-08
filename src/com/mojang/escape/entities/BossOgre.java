@@ -7,7 +7,7 @@ public class BossOgre extends EnemyEntity {
 	private int shootPhase;
 
 	public BossOgre(double x, double z) {
-		super(x, z, 4 * 8 + 2, Art.getCol(0xffff00));
+		super(x, z, 4 * 8 + 2, Art.INSTANCE.getCol(0xffff00));
 		this.x = x;
 		this.z = z;
 		health = 10;

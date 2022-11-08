@@ -90,7 +90,7 @@ public class Bitmap {
 
 			int xx = ch % 42;
 			int yy = ch / 42;
-			draw(Art.font, x + i * 6, y, xx * 6, yy * 8, 5, 8, col);
+			draw(Art.INSTANCE.getFont(), x + i * 6, y, xx * 6, yy * 8, 5, 8, col);
 		}
 	}
 	

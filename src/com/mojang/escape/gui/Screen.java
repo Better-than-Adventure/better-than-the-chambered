@@ -60,7 +60,7 @@ public class Screen extends Bitmap {
 				xx += width / 2;
 				yy += height - PANEL_HEIGHT - 15 * 3;
 				if (item != Item.none) {
-					scaleDraw(Art.items, 3, xx, yy, 16 * item.icon + 1, 16 + 1 + (itemUsed ? 16 : 0), 15, 15, Art.getCol(item.color));
+					scaleDraw(Art.INSTANCE.getItems(), 3, xx, yy, 16 * item.icon + 1, 16 + 1 + (itemUsed ? 16 : 0), 15, 15, Art.INSTANCE.getCol(item.color));
 				}
 
 				if (game.player.hurtTime > 0 || game.player.dead) {
@@ -76,7 +76,7 @@ public class Screen extends Bitmap {
 				}
 			}
 
-			draw(Art.panel, 0, height - PANEL_HEIGHT, 0, 0, width, PANEL_HEIGHT, Art.getCol(0x707070));
+			draw(Art.INSTANCE.getPanel(), 0, height - PANEL_HEIGHT, 0, 0, width, PANEL_HEIGHT, Art.INSTANCE.getCol(0x707070));
 
 			draw("å", 3, height - 26 + 0, 0x00ffff);
 			draw("" + game.player.keys + "/4", 10, height - 26 + 0, 0xffffff);
@@ -88,7 +88,7 @@ public class Screen extends Bitmap {
 			for (int i = 0; i < 8; i++) {
 				Item slotItem = game.player.items[i];
 				if (slotItem != Item.none) {
-					draw(Art.items, 30 + i * 16, height - PANEL_HEIGHT + 2, slotItem.icon * 16, 0, 16, 16, Art.getCol(slotItem.color));
+					draw(Art.INSTANCE.getItems(), 30 + i * 16, height - PANEL_HEIGHT + 2, slotItem.icon * 16, 0, 16, 16, Art.INSTANCE.getCol(slotItem.color));
 					if (slotItem == Item.pistol) {
 						String str = "" + game.player.ammo;
 						draw(str, 30 + i * 16 + 17 - str.length() * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555);
@@ -100,7 +100,7 @@ public class Screen extends Bitmap {
 				}
 			}
 
-			draw(Art.items, 30 + game.player.selectedSlot * 16, height - PANEL_HEIGHT + 2, 0, 48, 17, 17, Art.getCol(0xffffff));
+			draw(Art.INSTANCE.getItems(), 30 + game.player.selectedSlot * 16, height - PANEL_HEIGHT + 2, 0, 48, 17, 17, Art.INSTANCE.getCol(0xffffff));
 
 			draw(item.name, 26 + (8 * 16 - item.name.length() * 4) / 2, height - 9, 0xffffff);
 		}

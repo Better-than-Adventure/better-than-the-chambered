@@ -10,7 +10,7 @@ public class TorchBlock extends Block {
 	private Sprite torchSprite;
 
 	public TorchBlock() {
-		torchSprite = new Sprite(0, 0, 0, 3, Art.getCol(0xffff00));
+		torchSprite = new Sprite(0, 0, 0, 3, Art.INSTANCE.getCol(0xffff00));
 		sprites.add(torchSprite);
 	}
 

@@ -6,7 +6,7 @@ public class GhostEntity extends EnemyEntity {
 	private double rotatePos = 0;
 
 	public GhostEntity(double x, double z) {
-		super(x, z, 4 * 8 + 6, Art.getCol(0xffffff));
+		super(x, z, 4 * 8 + 6, Art.INSTANCE.getCol(0xffffff));
 		this.x = x;
 		this.z = z;
 		health = 4;

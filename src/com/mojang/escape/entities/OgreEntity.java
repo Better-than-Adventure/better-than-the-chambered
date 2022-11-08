@@ -6,7 +6,7 @@ public class OgreEntity extends EnemyEntity {
 	private int shootDelay;
 
 	public OgreEntity(double x, double z) {
-		super(x, z, 4 * 8 + 2, Art.getCol(0x82A821));
+		super(x, z, 4 * 8 + 2, Art.INSTANCE.getCol(0x82A821));
 		this.x = x;
 		this.z = z;
 		health = 6;

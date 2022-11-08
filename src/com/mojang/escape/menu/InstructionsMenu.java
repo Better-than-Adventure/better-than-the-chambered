@@ -9,7 +9,7 @@ public class InstructionsMenu extends Menu {
 	public void render(Bitmap target) {
 		target.fill(0, 0, 160, 120, 0);
 
-		target.draw("Instructions", 40, 8, Art.getCol(0xffffff));
+		target.draw("Instructions", 40, 8, Art.INSTANCE.getCol(0xffffff));
 		
 		String[] lines = {
 				"Use W,A,S,D to move, and",
@@ -22,10 +22,10 @@ public class InstructionsMenu extends Menu {
 		};
 		
 		for (int i=0; i<lines.length; i++) {
-			target.draw(lines[i], 4, 32+i*8, Art.getCol(0xa0a0a0));
+			target.draw(lines[i], 4, 32+i*8, Art.INSTANCE.getCol(0xa0a0a0));
 		}
 
-		if (tickDelay == 0) target.draw("-> Continue", 40, target.height - 16, Art.getCol(0xffff80));
+		if (tickDelay == 0) target.draw("-> Continue", 40, target.height - 16, Art.INSTANCE.getCol(0xffff80));
 	}
 
 	public void tick(Game game, boolean up, boolean down, boolean left, boolean right, boolean use) {

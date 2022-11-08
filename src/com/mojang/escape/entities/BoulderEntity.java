@@ -4,7 +4,7 @@ import com.mojang.escape.*;
 import com.mojang.escape.gui.Sprite;
 
 public class BoulderEntity extends Entity {
-	public static final int COLOR = Art.getCol(0xAFA293);
+	public static final int COLOR = Art.INSTANCE.getCol(0xAFA293);
 	private Sprite sprite;
 	private double rollDist = 0;
 

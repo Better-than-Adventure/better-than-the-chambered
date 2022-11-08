@@ -15,7 +15,7 @@ public class Bullet extends Entity {
 		this.x = x - za / 2;
 		this.z = z + xa / 2;
 
-		sprites.add(new Sprite(0, 0, 0, 8 * 3 + sprite, Art.getCol(col)));
+		sprites.add(new Sprite(0, 0, 0, 8 * 3 + sprite, Art.INSTANCE.getCol(col)));
 
 		flying = true;
 	}

@@ -10,7 +10,7 @@ public class AltarBlock extends Block {
 
 	public AltarBlock() {
 		blocksMotion = true;
-		sprite = new Sprite(0, 0, 0, 16 + 4, Art.getCol(0xE2FFE4));
+		sprite = new Sprite(0, 0, 0, 16 + 4, Art.INSTANCE.getCol(0xE2FFE4));
 		addSprite(sprite);
 	}
 

@@ -7,7 +7,7 @@ public class GhostBossEntity extends EnemyEntity {
 	private int shootDelay = 0;
 
 	public GhostBossEntity(double x, double z) {
-		super(x, z, 4 * 8 + 6, Art.getCol(0xffff00));
+		super(x, z, 4 * 8 + 6, Art.INSTANCE.getCol(0xffff00));
 		this.x = x;
 		this.z = z;
 		health = 10;

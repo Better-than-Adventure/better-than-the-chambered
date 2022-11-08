@@ -11,10 +11,10 @@ public class LadderBlock extends Block {
 	public LadderBlock(boolean down) {
 		if (down) {
 			floorTex = 1;
-			addSprite(new Sprite(0, 0, 0, 8 + 3, Art.getCol(LADDER_COLOR)));
+			addSprite(new Sprite(0, 0, 0, 8 + 3, Art.INSTANCE.getCol(LADDER_COLOR)));
 		} else {
 			ceilTex = 1;
-			addSprite(new Sprite(0, 0, 0, 8 + 4, Art.getCol(LADDER_COLOR)));
+			addSprite(new Sprite(0, 0, 0, 8 + 4, Art.INSTANCE.getCol(LADDER_COLOR)));
 		}
 	}
 

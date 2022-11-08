@@ -9,7 +9,7 @@ public class AboutMenu extends Menu {
 	public void render(Bitmap target) {
 		target.fill(0, 0, 160, 120, 0);
 
-		target.draw("About", 60, 8, Art.getCol(0xffffff));
+		target.draw("About", 60, 8, Art.INSTANCE.getCol(0xffffff));
 		
 		String[] lines = {
 				"Prelude of the Chambered",
@@ -23,10 +23,10 @@ public class AboutMenu extends Menu {
 		};
 		
 		for (int i=0; i<lines.length; i++) {
-			target.draw(lines[i], 4, 28+i*8, Art.getCol(0xa0a0a0));
+			target.draw(lines[i], 4, 28+i*8, Art.INSTANCE.getCol(0xa0a0a0));
 		}
 
-		if (tickDelay == 0) target.draw("-> Continue", 40, target.height - 16, Art.getCol(0xffff80));
+		if (tickDelay == 0) target.draw("-> Continue", 40, target.height - 16, Art.INSTANCE.getCol(0xffff80));
 	}
 
 	public void tick(Game game, boolean up, boolean down, boolean left, boolean right, boolean use) {

@@ -37,8 +37,8 @@ public abstract class Level {
 
 		player = game.player;
 
-		solidWall.col = Art.getCol(wallCol);
-		solidWall.tex = Art.getCol(wallTex);
+		solidWall.col = Art.INSTANCE.getCol(wallCol);
+		solidWall.tex = Art.INSTANCE.getCol(wallTex);
 		this.width = w;
 		this.height = h;
 		blocks = new Block[width * height];
@@ -54,9 +54,9 @@ public abstract class Level {
 				if (block.tex == -1) block.tex = wallTex;
 				if (block.floorTex == -1) block.floorTex = floorTex;
 				if (block.ceilTex == -1) block.ceilTex = ceilTex;
-				if (block.col == -1) block.col = Art.getCol(wallCol);
-				if (block.floorCol == -1) block.floorCol = Art.getCol(floorCol);
-				if (block.ceilCol == -1) block.ceilCol = Art.getCol(ceilCol);
+				if (block.col == -1) block.col = Art.INSTANCE.getCol(wallCol);
+				if (block.floorCol == -1) block.floorCol = Art.INSTANCE.getCol(floorCol);
+				if (block.ceilCol == -1) block.ceilCol = Art.INSTANCE.getCol(ceilCol);
 
 				blocks[x + y * w] = block;
 				block.level = this;
@@ -104,15 +104,15 @@ public abstract class Level {
 			block.ceilTex = 7;
 		}
 
-		if (col == 0xC6C6C6) block.col = Art.getCol(0xa0a0a0);
-		if (col == 0xC6C697) block.col = Art.getCol(0xa0a0a0);
+		if (col == 0xC6C6C6) block.col = Art.INSTANCE.getCol(0xa0a0a0);
+		if (col == 0xC6C697) block.col = Art.INSTANCE.getCol(0xa0a0a0);
 		if (col == 0x653A00) {
-			block.floorCol = Art.getCol(0xB56600);
+			block.floorCol = Art.INSTANCE.getCol(0xB56600);
 			block.floorTex = 3 * 8 + 1;
 		}
 
 		if (col == 0x93FF9B) {
-			block.col = Art.getCol(0x2AAF33);
+			block.col = Art.INSTANCE.getCol(0x2AAF33);
 			block.tex = 8;
 		}
 	}

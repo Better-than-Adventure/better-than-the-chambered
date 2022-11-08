@@ -4,7 +4,7 @@ import com.mojang.escape.*;
 
 public class BatBossEntity extends EnemyEntity {
 	public BatBossEntity(int x, int z) {
-		super(x, z, 4 * 8, Art.getCol(0xffff00));
+		super(x, z, 4 * 8, Art.INSTANCE.getCol(0xffff00));
 		this.x = x;
 		this.z = z;
 		health = 5;

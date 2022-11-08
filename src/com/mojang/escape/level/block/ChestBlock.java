@@ -13,7 +13,7 @@ public class ChestBlock extends Block {
 		tex = 1;
 		blocksMotion = true;
 
-		chestSprite = new Sprite(0, 0, 0, 8 * 2 + 0, Art.getCol(0xffff00));
+		chestSprite = new Sprite(0, 0, 0, 8 * 2 + 0, Art.INSTANCE.getCol(0xffff00));
 		addSprite(chestSprite);
 	}
 

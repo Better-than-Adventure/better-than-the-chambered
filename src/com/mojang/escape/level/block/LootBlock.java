@@ -9,7 +9,7 @@ public class LootBlock extends Block {
 	private Sprite sprite;
 
 	public LootBlock() {
-		sprite = new Sprite(0, 0, 0, 16 + 2, Art.getCol(0xffff80));
+		sprite = new Sprite(0, 0, 0, 16 + 2, Art.INSTANCE.getCol(0xffff80));
 		addSprite(sprite);
 		blocksMotion = true;
 	}

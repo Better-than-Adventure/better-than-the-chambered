@@ -58,7 +58,7 @@ public class EnemyEntity extends Entity {
 	}
 
 	protected void hurt(double xd, double zd) {
-		sprite.col = Art.getCol(0xff0000);
+		sprite.col = Art.INSTANCE.getCol(0xff0000);
 		hurtTime = 15;
 
 		double dd = Math.sqrt(xd * xd + zd * zd);

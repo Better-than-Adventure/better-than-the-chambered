@@ -14,13 +14,13 @@ public class GotLootMenu extends Menu {
 
 	public void render(Bitmap target) {
 		String str = "You found the " + item.name + "!";
-		target.scaleDraw(Art.items, 3, target.width / 2 - 8 * 3, 2, item.icon * 16, 0, 16, 16, Art.getCol(item.color));
-		target.draw(str, (target.width - str.length() * 6) / 2 + 2, 60 - 10, Art.getCol(0xffff80));
+		target.scaleDraw(Art.INSTANCE.getItems(), 3, target.width / 2 - 8 * 3, 2, item.icon * 16, 0, 16, 16, Art.INSTANCE.getCol(item.color));
+		target.draw(str, (target.width - str.length() * 6) / 2 + 2, 60 - 10, Art.INSTANCE.getCol(0xffff80));
 
 		str = item.description;
-		target.draw(str, (target.width - str.length() * 6) / 2 + 2, 60, Art.getCol(0xa0a0a0));
+		target.draw(str, (target.width - str.length() * 6) / 2 + 2, 60, Art.INSTANCE.getCol(0xa0a0a0));
 
-		if (tickDelay == 0) target.draw("-> Continue", 40, target.height - 40, Art.getCol(0xffff80));
+		if (tickDelay == 0) target.draw("-> Continue", 40, target.height - 40, Art.INSTANCE.getCol(0xffff80));
 	}
 
 	public void tick(Game game, boolean up, boolean down, boolean left, boolean right, boolean use) {

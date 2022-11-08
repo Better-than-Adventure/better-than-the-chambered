@@ -8,7 +8,7 @@ public class PauseMenu extends Menu {
 	private int selected = 1;
 
 	public void render(Bitmap target) {
-		target.draw(Art.logo, 0, 8, 0, 0, 160, 36, Art.getCol(0xffffff));
+		target.draw(Art.INSTANCE.getLogo(), 0, 8, 0, 0, 160, 36, Art.INSTANCE.getCol(0xffffff));
 
 		for (int i = 0; i < options.length; i++) {
 			String msg = options[i];
@@ -17,7 +17,7 @@ public class PauseMenu extends Menu {
 				msg = "-> " + msg;
 				col = 0xffff80;
 			}
-			target.draw(msg, 40, 60 + i * 10, Art.getCol(col));
+			target.draw(msg, 40, 60 + i * 10, Art.INSTANCE.getCol(col));
 		}
 	}
 

@@ -139,7 +139,7 @@ public class Bitmap3D extends Bitmap {
 					zBuffer[x + y * width] = -1;
 				} else {
 					zBuffer[x + y * width] = zd;
-					pixels[x + y * width] = Art.floors.pixels[((xPix & 15) + (tex % 8) * 16) + ((yPix & 15) + (tex / 8) * 16) * 128] * col;
+					pixels[x + y * width] = Art.INSTANCE.getFloors().pixels[((xPix & 15) + (tex % 8) * 16) + ((yPix & 15) + (tex / 8) * 16) * 128] * col;
 				}
 			}
 		}
@@ -183,7 +183,7 @@ public class Bitmap3D extends Bitmap {
 				double xpr = (xp - xPixel0) / (xPixel1 - xPixel0);
 				int xt = (int) (xpr * 16);
 				if (zBuffer[xp + yp * width] > zz) {
-					int col = Art.sprites.pixels[(xt + tex % 8 * 16) + (yt + (tex / 8) * 16) * 128];
+					int col = Art.INSTANCE.getSprites().pixels[(xt + tex % 8 * 16) + (yt + (tex / 8) * 16) * 128];
 					if (col >= 0) {
 						pixels[xp + yp * width] = col * color;
 						zBuffer[xp + yp * width] = zz;
@@ -279,7 +279,7 @@ public class Bitmap3D extends Bitmap {
 			for (int y = yp0; y < yp1; y++) {
 				double pry = (y - yPixel0) * ih;
 				int yTex = (int) (16 * pry);
-				pixels[x + y * width] = Art.walls.pixels[((xTex) + (tex % 8) * 16) + (yTex + tex / 8 * 16) * 128] * color;
+				pixels[x + y * width] = Art.INSTANCE.getWalls().pixels[((xTex) + (tex % 8) * 16) + (yTex + tex / 8 * 16) * 128] * color;
 				zBuffer[x + y * width] = 1 / iz * 4;
 			}
 		}
@@ -291,7 +291,7 @@ public class Bitmap3D extends Bitmap {
 			if (zl < 0) {
 				int xx = ((int) Math.floor((i % width) - rot * 512 / (Math.PI * 2))) & 511;
 				int yy = i / width;
-				pixels[i] = Art.sky.pixels[xx + yy * 512] * 0x444455;
+				pixels[i] = Art.INSTANCE.getSky().pixels[xx + yy * 512] * 0x444455;
 			} else {
 				int xp = (i % width);
 				int yp = (i / width) * 14;
