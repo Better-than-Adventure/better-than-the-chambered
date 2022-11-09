@@ -13,7 +13,7 @@ public class LockedDoorBlock extends DoorBlock {
 	}
 
 	public void trigger(boolean pressed) {
-		open = pressed;
+		setOpen(pressed);
 	}
 
 }

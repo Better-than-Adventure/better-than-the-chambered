@@ -5,26 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c805ae6c-454d-4de3-8abb-cc2b30693e12" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/Sound.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/BarsBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/ChestBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/DoorBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/FinalUnlockBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/IceBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LadderBlock.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/Sound.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/BatBossEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/BatBossEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/BossOgre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/BossOgre.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/BoulderEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/BoulderEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/EnemyEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/EnemyEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/EyeBossEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/EyeBossEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/KeyEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/KeyEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/BarsBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/BarsBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/ChestBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/ChestBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/DoorBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/DoorBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/FinalUnlockBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/FinalUnlockBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LadderBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LadderBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LootBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LootBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/PitBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/PitBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/PressurePlateBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/PressurePlateBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SwitchBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SwitchBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/VanishBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/VanishBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/Sound.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/Sound.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/Bitmap3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/Bitmap3D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/BarsBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/ChestBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/DoorBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/FinalUnlockBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/IceBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LadderBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LockedDoorBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LockedDoorBlock.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

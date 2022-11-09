@@ -50,7 +50,7 @@ public class Bitmap3D extends Bitmap {
 
 				if (c instanceof DoorBlock) {
 					double rr = 1 / 8.0;
-					double openness = 1 - ((DoorBlock) c).openness * 7 / 8;
+					double openness = 1 - ((DoorBlock) c).getOpenness() * 7 / 8;
 					if (e.getSolidRender()) {
 						renderWall(xb + openness, zb + 0.5 - rr, xb, zb + 0.5 - rr, c.getTex(), (c.getCol() & 0xfefefe) >> 1, 0, openness);
 						renderWall(xb, zb + 0.5 + rr, xb + openness, zb + 0.5 + rr, c.getTex(), (c.getCol() & 0xfefefe) >> 1, openness, 0);

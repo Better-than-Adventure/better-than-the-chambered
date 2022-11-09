@@ -38,7 +38,7 @@ public class Game {
 		level.findSpawn(id);
 		player.x = level.xSpawn;
 		player.z = level.ySpawn;
-		((LadderBlock) level.getBlock(level.xSpawn, level.ySpawn)).wait = true;
+		((LadderBlock) level.getBlock(level.xSpawn, level.ySpawn)).setWait(true);
 		player.x += Math.sin(player.rot) * 0.2;
 		player.z += Math.cos(player.rot) * 0.2;
 		level.addEntity(player);

@@ -2,6 +2,7 @@ package com.mojang.escape
 
 import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.Clip
+import javax.sound.sampled.FloatControl
 import kotlin.concurrent.thread
 
 class Sound(private val clip: Clip?) {
@@ -48,6 +49,7 @@ class Sound(private val clip: Clip?) {
                     synchronized(clip) {
                         clip.stop()
                         clip.framePosition = 0
+                        //(clip.getControl(FloatControl.Type.MASTER_GAIN) as FloatControl).value // Volume control
                         clip.start()
                     }
                 }
