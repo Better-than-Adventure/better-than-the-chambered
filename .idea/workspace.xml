@@ -5,24 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c805ae6c-454d-4de3-8abb-cc2b30693e12" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/BasicSprite.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/RubbleSprite.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/AltarBlock.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/BoulderEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/BoulderEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/Bullet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/EnemyEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/EnemyEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/KeyEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/KeyEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/PoofSprite.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/PoofSprite.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/RubbleSprite.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/Sprite.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/Sprite.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/Bitmap3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/Bitmap3D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/Screen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/Screen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/Level.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/Level.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/AltarBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/AltarBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/BarsBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/BarsBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/Block.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/Block.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/ChestBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/ChestBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/DoorBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/DoorBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/FinalUnlockBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/FinalUnlockBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/IceBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/IceBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LadderBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LadderBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LockedDoorBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LockedDoorBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LootBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LootBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/PitBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/PitBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/PressurePlateBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/PressurePlateBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SolidBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SolidBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SpiritWallBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SpiritWallBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SwitchBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SwitchBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/TorchBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/TorchBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/VanishBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/VanishBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/WaterBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/WaterBlock.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,21 +58,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2022.2.2/jbr/bin",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;G:/Projects/RetroMCP-Java/workspace/Client&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Better than the Chambered" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />

@@ -7,14 +7,14 @@ import com.mojang.escape.gui.Sprite;
 
 public class SpiritWallBlock extends Block {
 	public SpiritWallBlock() {
-		floorTex = 7;
-		ceilTex = 7;
-		blocksMotion = true;
+		setFloorTex(7);
+		setCeilTex(7);
+		setBlocksMotion(true);
 		for (int i = 0; i < 6; i++) {
-			double x = (random.nextDouble() - 0.5);
-			double y = (random.nextDouble() - 0.7) * 0.3;
-			double z = (random.nextDouble() - 0.5);
-			addSprite(new BasicSprite(x, y, z, 4 * 8 + 6 + random.nextInt(2), Art.INSTANCE.getCol(0x202020)));
+			double x = (getRandom().nextDouble() - 0.5);
+			double y = (getRandom().nextDouble() - 0.7) * 0.3;
+			double z = (getRandom().nextDouble() - 0.5);
+			addSprite(new BasicSprite(x, y, z, 4 * 8 + 6 + getRandom().nextInt(2), Art.INSTANCE.getCol(0x202020)));
 		}
 	}
 

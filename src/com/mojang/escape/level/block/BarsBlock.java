@@ -5,7 +5,6 @@ import com.mojang.escape.entities.*;
 import com.mojang.escape.gui.BasicSprite;
 import com.mojang.escape.gui.Sprite;
 import com.mojang.escape.level.Level;
-import com.mojang.escape.level.block.Block;
 
 public class BarsBlock extends Block {
 	private Sprite sprite;
@@ -14,7 +13,7 @@ public class BarsBlock extends Block {
 	public BarsBlock() {
 		sprite = new BasicSprite(0, 0, 0, 0, 0x202020);
 		addSprite(sprite);
-		blocksMotion = true;
+		setBlocksMotion(true);
 	}
 
 	public boolean use(Level level, Item item) {
@@ -32,6 +31,6 @@ public class BarsBlock extends Block {
 	public boolean blocks(Entity entity) {
 		if (open && entity instanceof Player) return false;
 		if (open && entity instanceof Bullet) return false;
-		return blocksMotion;
+		return getBlocksMotion();
 	}
 }

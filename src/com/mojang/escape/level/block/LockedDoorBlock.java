@@ -5,7 +5,7 @@ import com.mojang.escape.level.Level;
 
 public class LockedDoorBlock extends DoorBlock {
 	public LockedDoorBlock() {
-		tex = 5;
+		setTex(5);
 	}
 
 	public boolean use(Level level, Item item) {

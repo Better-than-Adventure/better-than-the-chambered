@@ -7,19 +7,19 @@ public class PressurePlateBlock extends Block {
 	public boolean pressed = false;
 
 	public PressurePlateBlock() {
-		floorTex = 2;
+		setFloorTex(2);
 	}
 
 	public void tick() {
 		super.tick();
 		double r = 0.2;
-		boolean steppedOn = level.containsBlockingNonFlyingEntity(x - r, y - r, x + r, y + r);
+		boolean steppedOn = getLevel().containsBlockingNonFlyingEntity(getX() - r, getY() - r, getX() + r, getY() + r);
 		if (steppedOn != pressed) {
 			pressed = steppedOn;
-			if (pressed) floorTex = 3;
-			else floorTex = 2;
+			if (pressed) setFloorTex(3);
+			else setFloorTex(2);
 
-			level.trigger(id, pressed);
+			getLevel().trigger(getId(), pressed);
 			if (pressed)
 				Sound.click1.play();
 			else

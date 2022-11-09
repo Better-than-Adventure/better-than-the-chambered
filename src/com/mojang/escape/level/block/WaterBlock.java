@@ -7,15 +7,15 @@ public class WaterBlock extends Block {
 	int steps = 0;
 
 	public WaterBlock() {
-		blocksMotion = true;
+		setBlocksMotion(true);
 	}
 
 	public void tick() {
 		super.tick();
 		steps--;
 		if (steps <= 0) {
-			floorTex = 8 + random.nextInt(3);
-			floorCol = Art.INSTANCE.getCol(0x0000ff);
+			setFloorTex(8 + getRandom().nextInt(3));
+			setFloorCol(Art.INSTANCE.getCol(0x0000ff));
 			steps = 16;
 		}
 	}
@@ -25,7 +25,7 @@ public class WaterBlock extends Block {
 			if (((Player) entity).getSelectedItem() == Item.Flippers) return false;
 		}
 		if (entity instanceof Bullet) return false;
-		return blocksMotion;
+		return getBlocksMotion();
 	}
 
 	public double getFloorHeight(Entity e) {

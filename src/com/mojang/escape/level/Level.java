@@ -37,8 +37,8 @@ public abstract class Level {
 
 		player = game.player;
 
-		solidWall.col = Art.INSTANCE.getCol(wallCol);
-		solidWall.tex = Art.INSTANCE.getCol(wallTex);
+		solidWall.setCol(Art.INSTANCE.getCol(wallCol));
+		solidWall.setTex(Art.INSTANCE.getCol(wallTex));
 		this.width = w;
 		this.height = h;
 		blocks = new Block[width * height];
@@ -49,19 +49,19 @@ public abstract class Level {
 				int id = 255 - ((pixels[x + y * w] >> 24) & 0xff);
 
 				Block block = getBlock(x, y, col);
-				block.id = id;
+				block.setId(id);
 
-				if (block.tex == -1) block.tex = wallTex;
-				if (block.floorTex == -1) block.floorTex = floorTex;
-				if (block.ceilTex == -1) block.ceilTex = ceilTex;
-				if (block.col == -1) block.col = Art.INSTANCE.getCol(wallCol);
-				if (block.floorCol == -1) block.floorCol = Art.INSTANCE.getCol(floorCol);
-				if (block.ceilCol == -1) block.ceilCol = Art.INSTANCE.getCol(ceilCol);
+				if (block.getTex() == -1) block.setTex(wallTex);
+				if (block.getFloorTex() == -1) block.setFloorTex(floorTex);
+				if (block.getCeilTex() == -1) block.setCeilTex(ceilTex);
+				if (block.getCol() == -1) block.setCol(Art.INSTANCE.getCol(wallCol));
+				if (block.getFloorCol() == -1) block.setFloorCol(Art.INSTANCE.getCol(floorCol));
+				if (block.getCeilCol() == -1) block.setCeilCol(Art.INSTANCE.getCol(ceilCol));
 
 				blocks[x + y * w] = block;
-				block.level = this;
-				block.x = x;
-				block.y = y;
+				block.setLevel(this);
+				block.setX(x);
+				block.setY(y);
 			}
 		}
 
@@ -100,20 +100,20 @@ public abstract class Level {
 		if (col == 0xff0006) addEntity(new GhostEntity(x, y));
 		if (col == 0xff0007) addEntity(new GhostBossEntity(x, y));
 		if (col == 0x1A2108 || col == 0xff0007) {
-			block.floorTex = 7;
-			block.ceilTex = 7;
+			block.setFloorTex(7);
+			block.setCeilTex(7);
 		}
 
-		if (col == 0xC6C6C6) block.col = Art.INSTANCE.getCol(0xa0a0a0);
-		if (col == 0xC6C697) block.col = Art.INSTANCE.getCol(0xa0a0a0);
+		if (col == 0xC6C6C6) block.setCol(Art.INSTANCE.getCol(0xa0a0a0));
+		if (col == 0xC6C697) block.setCol(Art.INSTANCE.getCol(0xa0a0a0));
 		if (col == 0x653A00) {
-			block.floorCol = Art.INSTANCE.getCol(0xB56600);
-			block.floorTex = 3 * 8 + 1;
+			block.setFloorCol(Art.INSTANCE.getCol(0xB56600));
+			block.setFloorTex(3 * 8 + 1);
 		}
 
 		if (col == 0x93FF9B) {
-			block.col = Art.INSTANCE.getCol(0x2AAF33);
-			block.tex = 8;
+			block.setCol(Art.INSTANCE.getCol(0x2AAF33));
+			block.setTex(8);
 		}
 	}
 
@@ -193,7 +193,7 @@ public abstract class Level {
 		int rr = 2;
 		for (int z = zc - rr; z <= zc + rr; z++) {
 			for (int x = xc - rr; x <= xc + rr; x++) {
-				List<Entity> es = getBlock(x, z).entities;
+				List<Entity> es = getBlock(x, z).getEntities();
 				for (int i = 0; i < es.size(); i++) {
 					Entity e = es.get(i);
 					if (e.isInside(x0, y0, x1, y1)) return true;
@@ -209,7 +209,7 @@ public abstract class Level {
 		int rr = 2;
 		for (int z = zc - rr; z <= zc + rr; z++) {
 			for (int x = xc - rr; x <= xc + rr; x++) {
-				List<Entity> es = getBlock(x, z).entities;
+				List<Entity> es = getBlock(x, z).getEntities();
 				for (int i = 0; i < es.size(); i++) {
 					Entity e = es.get(i);
 					if (!e.flying && e.isInside(x0, y0, x1, y1)) return true;
@@ -240,7 +240,7 @@ public abstract class Level {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				Block b = blocks[x + y * width];
-				if (b.id == id) {
+				if (b.getId() == id) {
 					b.trigger(pressed);
 				}
 			}
@@ -254,7 +254,7 @@ public abstract class Level {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				Block b = blocks[x + y * width];
-				if (b.id == id && b instanceof LadderBlock) {
+				if (b.getId() == id && b instanceof LadderBlock) {
 					xSpawn = x;
 					ySpawn = y;
 				}

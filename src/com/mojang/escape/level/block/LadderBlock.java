@@ -11,10 +11,10 @@ public class LadderBlock extends Block {
 
 	public LadderBlock(boolean down) {
 		if (down) {
-			floorTex = 1;
+			setFloorTex(1);
 			addSprite(new BasicSprite(0, 0, 0, 8 + 3, Art.INSTANCE.getCol(LADDER_COLOR)));
 		} else {
-			ceilTex = 1;
+			setCeilTex(1);
 			addSprite(new BasicSprite(0, 0, 0, 8 + 4, Art.INSTANCE.getCol(LADDER_COLOR)));
 		}
 	}
@@ -30,7 +30,7 @@ public class LadderBlock extends Block {
 		super.addEntity(entity);
 
 		if (!wait && entity instanceof Player) {
-			level.switchLevel(id);
+			getLevel().switchLevel(getId());
 			Sound.ladder.play();
 		}
 	}

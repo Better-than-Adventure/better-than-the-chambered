@@ -8,7 +8,7 @@ public class FinalUnlockBlock extends SolidBlock {
 	private boolean pressed = false;
 
 	public FinalUnlockBlock() {
-		tex = 8 + 3;
+		setTex(8 + 3);
 	}
 
 	public boolean use(Level level, Item item) {
@@ -17,7 +17,7 @@ public class FinalUnlockBlock extends SolidBlock {
 
 		Sound.click1.play();
 		pressed = true;
-		level.trigger(id, true);
+		level.trigger(getId(), true);
 
 		return true;
 	}

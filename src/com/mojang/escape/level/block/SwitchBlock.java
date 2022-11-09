@@ -8,15 +8,15 @@ public class SwitchBlock extends SolidBlock {
 	private boolean pressed = false;
 
 	public SwitchBlock() {
-		tex = 2;
+		setTex(2);
 	}
 
 	public boolean use(Level level, Item item) {
 		pressed = !pressed;
-		if (pressed) tex = 3;
-		else tex = 2;
+		if (pressed) setTex(3);
+		else setTex(2);
 		
-		level.trigger(id, pressed);
+		level.trigger(getId(), pressed);
 		if (pressed)
 			Sound.click1.play();
 		else

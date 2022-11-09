@@ -11,8 +11,8 @@ public class ChestBlock extends Block {
 	private Sprite chestSprite;
 
 	public ChestBlock() {
-		tex = 1;
-		blocksMotion = true;
+		setTex(1);
+		setBlocksMotion(true);
 
 		chestSprite = new BasicSprite(0, 0, 0, 8 * 2 + 0, Art.INSTANCE.getCol(0xffff00));
 		addSprite(chestSprite);
@@ -24,7 +24,7 @@ public class ChestBlock extends Block {
 		chestSprite.setTex(chestSprite.getTex() + 1);
 		open = true;
 
-		level.getLoot(id);
+		level.getLoot(getId());
 		Sound.treasure.play();
 
 		return true;

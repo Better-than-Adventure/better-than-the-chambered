@@ -82,7 +82,7 @@ public class Entity {
 		int rr = 2;
 		for (int z = zc - rr; z <= zc + rr; z++) {
 			for (int x = xc - rr; x <= xc + rr; x++) {
-				List<Entity> es = level.getBlock(x, z).entities;
+				List<Entity> es = level.getBlock(x, z).getEntities();
 				for (int i = 0; i < es.size(); i++) {
 					Entity e = es.get(i);
 					if (e == this) continue;

@@ -12,7 +12,7 @@ public class TorchBlock extends Block {
 
 	public TorchBlock() {
 		torchSprite = new BasicSprite(0, 0, 0, 3, Art.INSTANCE.getCol(0xffff00));
-		sprites.add(torchSprite);
+		getSprites().add(torchSprite);
 	}
 
 	public void decorate(Level level, int x, int y) {
@@ -20,19 +20,19 @@ public class TorchBlock extends Block {
 		double r = 0.4;
 		for (int i = 0; i < 1000; i++) {
 			int face = random.nextInt(4);
-			if (face == 0 && level.getBlock(x - 1, y).solidRender) {
+			if (face == 0 && level.getBlock(x - 1, y).getSolidRender()) {
 				torchSprite.setX(torchSprite.getX() - r);
 				break;
 			}
-			if (face == 1 && level.getBlock(x, y - 1).solidRender) {
+			if (face == 1 && level.getBlock(x, y - 1).getSolidRender()) {
 				torchSprite.setZ(torchSprite.getZ() - r);
 				break;
 			}
-			if (face == 2 && level.getBlock(x + 1, y).solidRender) {
+			if (face == 2 && level.getBlock(x + 1, y).getSolidRender()) {
 				torchSprite.setX(torchSprite.getX() + r);
 				break;
 			}
-			if (face == 3 && level.getBlock(x, y + 1).solidRender) {
+			if (face == 3 && level.getBlock(x, y + 1).getSolidRender()) {
 				torchSprite.setZ(torchSprite.getZ() + r);
 				break;
 			}
@@ -41,6 +41,6 @@ public class TorchBlock extends Block {
 
 	public void tick() {
 		super.tick();
-		if (random.nextInt(4) == 0) torchSprite.setTex(3 + random.nextInt(2));
+		if (getRandom().nextInt(4) == 0) torchSprite.setTex(3 + getRandom().nextInt(2));
 	}
 }

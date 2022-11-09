@@ -9,20 +9,20 @@ public class VanishBlock extends SolidBlock {
 	private boolean gone = false;
 
 	public VanishBlock() {
-		tex = 1;
+		setTex(1);
 	}
 
 	public boolean use(Level level, Item item) {
 		if (gone) return false;
 
 		gone = true;
-		blocksMotion = false;
-		solidRender = false;
+		setBlocksMotion(false);
+		setSolidRender(false);
 		Sound.crumble.play();
 
 		for (int i = 0; i < 32; i++) {
 			RubbleSprite sprite = new RubbleSprite();
-			sprite.setCol(col);
+			sprite.setCol(getCol());
 			addSprite(sprite);
 		}
 

@@ -51,31 +51,31 @@ public class Bitmap3D extends Bitmap {
 				if (c instanceof DoorBlock) {
 					double rr = 1 / 8.0;
 					double openness = 1 - ((DoorBlock) c).openness * 7 / 8;
-					if (e.solidRender) {
-						renderWall(xb + openness, zb + 0.5 - rr, xb, zb + 0.5 - rr, c.tex, (c.col & 0xfefefe) >> 1, 0, openness);
-						renderWall(xb, zb + 0.5 + rr, xb + openness, zb + 0.5 + rr, c.tex, (c.col & 0xfefefe) >> 1, openness, 0);
-						renderWall(xb + openness, zb + 0.5 + rr, xb + openness, zb + 0.5 - rr, c.tex, c.col, 0.5 - rr, 0.5 + rr);
+					if (e.getSolidRender()) {
+						renderWall(xb + openness, zb + 0.5 - rr, xb, zb + 0.5 - rr, c.getTex(), (c.getCol() & 0xfefefe) >> 1, 0, openness);
+						renderWall(xb, zb + 0.5 + rr, xb + openness, zb + 0.5 + rr, c.getTex(), (c.getCol() & 0xfefefe) >> 1, openness, 0);
+						renderWall(xb + openness, zb + 0.5 + rr, xb + openness, zb + 0.5 - rr, c.getTex(), c.getCol(), 0.5 - rr, 0.5 + rr);
 					} else {
-						renderWall(xb + 0.5 - rr, zb, xb + 0.5 - rr, zb + openness, c.tex, c.col, openness, 0);
-						renderWall(xb + 0.5 + rr, zb + openness, xb + 0.5 + rr, zb, c.tex, c.col, 0, openness);
-						renderWall(xb + 0.5 - rr, zb + openness, xb + 0.5 + rr, zb + openness, c.tex, (c.col & 0xfefefe) >> 1, 0.5 - rr, 0.5 + rr);
+						renderWall(xb + 0.5 - rr, zb, xb + 0.5 - rr, zb + openness, c.getTex(), c.getCol(), openness, 0);
+						renderWall(xb + 0.5 + rr, zb + openness, xb + 0.5 + rr, zb, c.getTex(), c.getCol(), 0, openness);
+						renderWall(xb + 0.5 - rr, zb + openness, xb + 0.5 + rr, zb + openness, c.getTex(), (c.getCol() & 0xfefefe) >> 1, 0.5 - rr, 0.5 + rr);
 					}
 
 				}
 
-				if (c.solidRender) {
-					if (!e.solidRender) {
-						renderWall(xb + 1, zb + 1, xb + 1, zb, c.tex, c.col);
+				if (c.getSolidRender()) {
+					if (!e.getSolidRender()) {
+						renderWall(xb + 1, zb + 1, xb + 1, zb, c.getTex(), c.getCol());
 					}
-					if (!s.solidRender) {
-						renderWall(xb, zb + 1, xb + 1, zb + 1, c.tex, (c.col & 0xfefefe) >> 1);
+					if (!s.getSolidRender()) {
+						renderWall(xb, zb + 1, xb + 1, zb + 1, c.getTex(), (c.getCol() & 0xfefefe) >> 1);
 					}
 				} else {
-					if (e.solidRender) {
-						renderWall(xb + 1, zb, xb + 1, zb + 1, e.tex, e.col);
+					if (e.getSolidRender()) {
+						renderWall(xb + 1, zb, xb + 1, zb + 1, e.getTex(), e.getCol());
 					}
-					if (s.solidRender) {
-						renderWall(xb + 1, zb + 1, xb, zb + 1, s.tex, (s.col & 0xfefefe) >> 1);
+					if (s.getSolidRender()) {
+						renderWall(xb + 1, zb + 1, xb, zb + 1, s.getTex(), (s.getCol() & 0xfefefe) >> 1);
 					}
 				}
 			}
@@ -84,16 +84,16 @@ public class Bitmap3D extends Bitmap {
 			for (int xb = xCenter - r; xb <= xCenter + r; xb++) {
 				Block c = level.getBlock(xb, zb);
 
-				for (int j = 0; j < c.entities.size(); j++) {
-					Entity e = c.entities.get(j);
+				for (int j = 0; j < c.getEntities().size(); j++) {
+					Entity e = c.getEntities().get(j);
 					for (int i = 0; i < e.sprites.size(); i++) {
 						Sprite sprite = e.sprites.get(i);
 						renderSprite(e.x + sprite.getX(), 0 - sprite.getY(), e.z + sprite.getZ(), sprite.getTex(), sprite.getCol());
 					}
 				}
 
-				for (int i = 0; i < c.sprites.size(); i++) {
-					Sprite sprite = c.sprites.get(i);
+				for (int i = 0; i < c.getSprites().size(); i++) {
+					Sprite sprite = c.getSprites().get(i);
 					renderSprite(xb + sprite.getX(), 0 - sprite.getY(), zb + sprite.getZ(), sprite.getTex(), sprite.getCol());
 				}
 			}
@@ -128,11 +128,11 @@ public class Bitmap3D extends Bitmap {
 				int yTile = yPix >> 4;
 
 				Block block = level.getBlock(xTile, yTile);
-				int col = block.floorCol;
-				int tex = block.floorTex;
+				int col = block.getFloorCol();
+				int tex = block.getFloorTex();
 				if (!floor) {
-					col = block.ceilCol;
-					tex = block.ceilTex;
+					col = block.getCeilCol();
+					tex = block.getCeilTex();
 				}
 
 				if (tex < 0) {

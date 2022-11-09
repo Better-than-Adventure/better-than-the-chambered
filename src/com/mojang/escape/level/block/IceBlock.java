@@ -5,13 +5,13 @@ import com.mojang.escape.entities.*;
 
 public class IceBlock extends Block {
 	public IceBlock() {
-		blocksMotion = false;
-		floorTex = 16;
+		setBlocksMotion(false);
+		setFloorTex(16);
 	}
 
 	public void tick() {
 		super.tick();
-		floorCol = Art.INSTANCE.getCol(0x8080ff);
+		setFloorCol(Art.INSTANCE.getCol(0x8080ff));
 	}
 
 	public double getWalkSpeed(Player player) {

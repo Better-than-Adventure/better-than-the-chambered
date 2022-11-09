@@ -9,8 +9,8 @@ public class DoorBlock extends SolidBlock {
 	public double openness = 0;
 
 	public DoorBlock() {
-		tex = 4;
-		solidRender = false;
+		setTex(4);
+		setSolidRender(false);
 	}
 
 	public boolean use(Level level, Item item) {
@@ -31,21 +31,21 @@ public class DoorBlock extends SolidBlock {
 		if (openness > 1) openness = 1;
 
 		double openLimit = 7 / 8.0;
-		if (openness < openLimit && !open && !blocksMotion) {
-			if (level.containsBlockingEntity(x - 0.5, y - 0.5, x + 0.5, y + 0.5)) {
+		if (openness < openLimit && !open && !getBlocksMotion()) {
+			if (getLevel().containsBlockingEntity(getX() - 0.5, getY() - 0.5, getX() + 0.5, getY() + 0.5)) {
 				openness = openLimit;
 				return;
 			}
 		}
 
-		blocksMotion = openness < openLimit;
+		setBlocksMotion(openness < openLimit);
 	}
 
 	public boolean blocks(Entity entity) {
 		double openLimit = 7 / 8.0;
-		if (openness >= openLimit && entity instanceof Player) return blocksMotion;
-		if (openness >= openLimit && entity instanceof Bullet) return blocksMotion;
-		if (openness >= openLimit && entity instanceof OgreEntity) return blocksMotion;
+		if (openness >= openLimit && entity instanceof Player) return getBlocksMotion();
+		if (openness >= openLimit && entity instanceof Bullet) return getBlocksMotion();
+		if (openness >= openLimit && entity instanceof OgreEntity) return getBlocksMotion();
 		return true;
 	}
 }

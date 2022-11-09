@@ -12,7 +12,7 @@ public class LootBlock extends Block {
 	public LootBlock() {
 		sprite = new BasicSprite(0, 0, 0, 16 + 2, Art.INSTANCE.getCol(0xffff80));
 		addSprite(sprite);
-		blocksMotion = true;
+		setBlocksMotion(true);
 	}
 
 	public void addEntity(Entity entity) {
@@ -20,7 +20,7 @@ public class LootBlock extends Block {
 		if (!taken && entity instanceof Player) {
 			sprite.setRemoved(true);
 			taken = true;
-			blocksMotion = false;
+			setBlocksMotion(false);
 			((Player) entity).loot++;
 			Sound.pickup.play();
 			
@@ -29,6 +29,6 @@ public class LootBlock extends Block {
 
 	public boolean blocks(Entity entity) {
 		if (entity instanceof Player) return false;
-		return blocksMotion;
+		return getBlocksMotion();
 	}
 }

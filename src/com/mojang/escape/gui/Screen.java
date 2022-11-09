@@ -45,10 +45,10 @@ public class Screen extends Bitmap {
 				viewport.postProcess(game.level);
 
 				Block block = game.level.getBlock((int) (game.player.x + 0.5), (int) (game.player.z + 0.5));
-				if (block.messages != null && hasFocus) {
-					for (int y = 0; y < block.messages.length; y++) {
-						viewport.draw(block.messages[y], (width - block.messages[y].length() * 6) / 2, (viewport.height - block.messages.length * 8) / 2 + y * 8 + 1, 0x111111);
-						viewport.draw(block.messages[y], (width - block.messages[y].length() * 6) / 2, (viewport.height - block.messages.length * 8) / 2 + y * 8, 0x555544);
+				if (block.getMessages() != null && hasFocus) {
+					for (int y = 0; y < block.getMessages().length; y++) {
+						viewport.draw(block.getMessages()[y], (width - block.getMessages()[y].length() * 6) / 2, (viewport.height - block.getMessages().length * 8) / 2 + y * 8 + 1, 0x111111);
+						viewport.draw(block.getMessages()[y], (width - block.getMessages()[y].length() * 6) / 2, (viewport.height - block.getMessages().length * 8) / 2 + y * 8, 0x555544);
 					}
 				}
 
