@@ -28,7 +28,7 @@ public class KeyEntity extends Entity {
 
 	protected void collide(Entity entity) {
 		if (entity instanceof Player) {
-			Sound.key.play();
+			Sound.Companion.getKey().play();
 			((Player) entity).keys++;
 			remove();
 		}

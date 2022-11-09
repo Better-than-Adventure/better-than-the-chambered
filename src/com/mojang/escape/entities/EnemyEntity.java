@@ -64,7 +64,7 @@ public class EnemyEntity extends Entity {
 		double dd = Math.sqrt(xd * xd + zd * zd);
 		xa += xd / dd * 0.2;
 		za += zd / dd * 0.2;
-		Sound.hurt2.play();
+		Sound.Companion.getHurt2().play();
 		health--;
 		if (health <= 0) {
 			int xt = (int) (x + 0.5);
@@ -72,7 +72,7 @@ public class EnemyEntity extends Entity {
 			level.getBlock(xt, zt).addSprite(new PoofSprite(x - xt, 0, z - zt));
 			die();
 			remove();
-			Sound.kill.play();
+			Sound.Companion.getKill().play();
 		}
 	}
 

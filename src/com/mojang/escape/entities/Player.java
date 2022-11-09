@@ -50,7 +50,7 @@ public class Player extends Entity {
 
 		double fh = onBlock.getFloorHeight(this);
 		if (onBlock instanceof WaterBlock && !(lastBlock instanceof WaterBlock)) {
-			Sound.splash.play();
+			Sound.Companion.getSplash().play();
 		}
 
 		lastBlock = onBlock;
@@ -113,7 +113,7 @@ public class Player extends Entity {
 			}
 
 			if (!wasSliding && sliding) {
-				Sound.slide.play();
+				Sound.Companion.getSlide().play();
 			}
 		} else {
 			xa -= (xm * Math.cos(rot) + zm * Math.sin(rot)) * walkSpeed;
@@ -135,7 +135,7 @@ public class Player extends Entity {
 		Item item = items[selectedSlot];
 		if (item == Item.Pistol) {
 			if (ammo > 0) {
-				Sound.shoot.play();
+				Sound.Companion.getShoot().play();
 				itemUseTime = 10;
 				level.addEntity(new Bullet(this, x, z, rot, 1, 0, 0xffffff));
 				ammo--;
@@ -144,7 +144,7 @@ public class Player extends Entity {
 		}
 		if (item == Item.Potion) {
 			if (potions > 0 && health < 20) {
-				Sound.potion.play();
+				Sound.Companion.getPotion().play();
 				itemUseTime = 20;
 				health += 5 + random.nextInt(6);
 				if (health > 20) health = 20;
@@ -237,11 +237,11 @@ public class Player extends Entity {
 
 		if (health <= 0) {
 			health = 0;
-			Sound.death.play();
+			Sound.Companion.getDeath().play();
 			dead = true;
 		}
 
-		Sound.hurt.play();
+		Sound.Companion.getHurt().play();
 
 		double xd = enemy.x - x;
 		double zd = enemy.z - z;

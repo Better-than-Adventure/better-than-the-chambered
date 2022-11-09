@@ -33,7 +33,7 @@ public class BoulderEntity extends Entity {
 
 	public boolean use(Entity source, Item item) {
 		if (item != Item.PowerGlove) return false;
-		Sound.roll.play();
+		Sound.Companion.getRoll().play();
 
 		xa += Math.sin(source.rot) * 0.1;
 		za += Math.cos(source.rot) * 0.1;

@@ -15,7 +15,7 @@ public class FinalUnlockBlock extends SolidBlock {
 		if (pressed) return false;
 		if (level.player.keys < 4) return false;
 
-		Sound.click1.play();
+		Sound.Companion.getClick1().play();
 		pressed = true;
 		level.trigger(getId(), true);
 

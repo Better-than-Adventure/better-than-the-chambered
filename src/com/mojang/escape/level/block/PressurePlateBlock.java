@@ -21,9 +21,9 @@ public class PressurePlateBlock extends Block {
 
 			getLevel().trigger(getId(), pressed);
 			if (pressed)
-				Sound.click1.play();
+				Sound.Companion.getClick1().play();
 			else
-				Sound.click2.play();
+				Sound.Companion.getClick2().play();
 		}
 	}
 

@@ -16,7 +16,7 @@ public class BossOgre extends EnemyEntity {
 	}
 
 	protected void die() {
-		Sound.bosskill.play();
+		Sound.Companion.getBosskill().play();
 		level.addEntity(new KeyEntity(x, z));
 	}
 

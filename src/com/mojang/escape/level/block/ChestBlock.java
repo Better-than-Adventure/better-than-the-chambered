@@ -25,7 +25,7 @@ public class ChestBlock extends Block {
 		open = true;
 
 		level.getLoot(getId());
-		Sound.treasure.play();
+		Sound.Companion.getTreasure().play();
 
 		return true;
 	}

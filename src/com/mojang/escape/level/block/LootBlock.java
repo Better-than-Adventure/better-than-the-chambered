@@ -22,7 +22,7 @@ public class LootBlock extends Block {
 			taken = true;
 			setBlocksMotion(false);
 			((Player) entity).loot++;
-			Sound.pickup.play();
+			Sound.Companion.getPickup().play();
 			
 		}
 	}

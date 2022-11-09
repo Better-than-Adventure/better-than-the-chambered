@@ -18,7 +18,7 @@ public class VanishBlock extends SolidBlock {
 		gone = true;
 		setBlocksMotion(false);
 		setSolidRender(false);
-		Sound.crumble.play();
+		Sound.Companion.getCrumble().play();
 
 		for (int i = 0; i < 32; i++) {
 			RubbleSprite sprite = new RubbleSprite();

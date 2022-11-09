@@ -31,7 +31,7 @@ public class LadderBlock extends Block {
 
 		if (!wait && entity instanceof Player) {
 			getLevel().switchLevel(getId());
-			Sound.ladder.play();
+			Sound.Companion.getLadder().play();
 		}
 	}
 }

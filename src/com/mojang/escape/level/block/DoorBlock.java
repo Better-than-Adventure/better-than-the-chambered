@@ -16,9 +16,9 @@ public class DoorBlock extends SolidBlock {
 	public boolean use(Level level, Item item) {
 		open = !open;
 		if (open)
-			Sound.click1.play();
+			Sound.Companion.getClick1().play();
 		else
-			Sound.click2.play();
+			Sound.Companion.getClick2().play();
 		return true;
 	}
 

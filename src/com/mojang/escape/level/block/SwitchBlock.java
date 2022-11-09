@@ -18,9 +18,9 @@ public class SwitchBlock extends SolidBlock {
 		
 		level.trigger(getId(), pressed);
 		if (pressed)
-			Sound.click1.play();
+			Sound.Companion.getClick1().play();
 		else
-			Sound.click2.play();
+			Sound.Companion.getClick2().play();
 
 		return true;
 	}

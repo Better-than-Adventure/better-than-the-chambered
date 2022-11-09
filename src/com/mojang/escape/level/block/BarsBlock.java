@@ -20,7 +20,7 @@ public class BarsBlock extends Block {
 		if (open) return false;
 
 		if (item == Item.Cutters) {
-			Sound.cut.play();
+			Sound.Companion.getCut().play();
 			sprite.setTex(1);
 			open = true;
 		}
