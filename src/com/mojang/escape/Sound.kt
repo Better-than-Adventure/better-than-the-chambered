@@ -45,14 +45,14 @@ class Sound(private val clip: Clip?) {
     fun play() {
         if (clip != null) {
             try {
-                thread {
+                Thread {
                     synchronized(clip) {
                         clip.stop()
                         clip.framePosition = 0
                         (clip.getControl(FloatControl.Type.MASTER_GAIN) as FloatControl).value = -40f // Volume control
                         clip.start()
                     }
-                }
+                }.start()
             } catch (e: Exception) {
                 e.printStackTrace()
             }

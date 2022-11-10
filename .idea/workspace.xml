@@ -10,17 +10,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c805ae6c-454d-4de3-8abb-cc2b30693e12" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/VanishBlock.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/WaterBlock.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/WinBlock.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/CryptLevel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/DungeonLevel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/IceLevel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/OverworldLevel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/StartLevel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/TempleLevel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/Sound.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/Sound.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/AltarBlock.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/AltarBlock.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/VanishBlock.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/WaterBlock.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/WinBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/CryptLevel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/DungeonLevel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/IceLevel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/OverworldLevel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/StartLevel.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
