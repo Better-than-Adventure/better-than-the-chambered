@@ -27,7 +27,7 @@ class AltarBlock: Block() {
             blocksMotion = false
             sprite.removed = true
 
-            for (i in 0..8) {
+            for (i in 0 until 8) {
                 val sprite = RubbleSprite()
                 sprite.col = this.sprite.col
                 addSprite(sprite)

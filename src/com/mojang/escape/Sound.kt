@@ -49,7 +49,7 @@ class Sound(private val clip: Clip?) {
                     synchronized(clip) {
                         clip.stop()
                         clip.framePosition = 0
-                        //(clip.getControl(FloatControl.Type.MASTER_GAIN) as FloatControl).value // Volume control
+                        (clip.getControl(FloatControl.Type.MASTER_GAIN) as FloatControl).value = -40f // Volume control
                         clip.start()
                     }
                 }

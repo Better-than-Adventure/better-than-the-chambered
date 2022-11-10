@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="BetterThanTheChambered:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c805ae6c-454d-4de3-8abb-cc2b30693e12" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/BarsBlock.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/ChestBlock.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/DoorBlock.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/FinalUnlockBlock.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/IceBlock.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LadderBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/VanishBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/WaterBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/WinBlock.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/Sound.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/Sound.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/gui/Bitmap3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/gui/Bitmap3D.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/BarsBlock.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/ChestBlock.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/DoorBlock.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/FinalUnlockBlock.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/IceBlock.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LadderBlock.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LockedDoorBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LockedDoorBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/AltarBlock.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/AltarBlock.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/VanishBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/WaterBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/WinBlock.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +58,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;G:/Projects/RetroMCP-Java/workspace/Client&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
@@ -67,7 +66,7 @@
 }</component>
   <component name="RunManager">
     <configuration name="Better than the Chambered" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH" value="zulu-1.8" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.mojang.escape.EscapeComponent" />
       <module name="BetterThanTheChambered" />
