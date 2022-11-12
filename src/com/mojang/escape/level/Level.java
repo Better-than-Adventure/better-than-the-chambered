@@ -94,7 +94,7 @@ public abstract class Level {
 		if (col == 0xff0000) addEntity(new BatEntity(x, y));
 		if (col == 0xff0001) addEntity(new BatBossEntity(x, y));
 		if (col == 0xff0002) addEntity(new OgreEntity(x, y));
-		if (col == 0xff0003) addEntity(new BossOgre(x, y));
+		if (col == 0xff0003) addEntity(new OgreBossEntity(x, y));
 		if (col == 0xff0004) addEntity(new EyeEntity(x, y));
 		if (col == 0xff0005) addEntity(new EyeBossEntity(x, y));
 		if (col == 0xff0006) addEntity(new GhostEntity(x, y));
