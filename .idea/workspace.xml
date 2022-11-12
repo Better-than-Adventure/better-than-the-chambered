@@ -10,7 +10,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c805ae6c-454d-4de3-8abb-cc2b30693e12" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LockedDoorBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LootBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/PitBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/PressurePlateBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SolidBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SpiritWallBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SwitchBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/mojang/escape/level/block/TorchBlock.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LockedDoorBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/LootBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/PitBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/PressurePlateBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SolidBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SpiritWallBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/SwitchBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mojang/escape/level/block/TorchBlock.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +73,7 @@
 }</component>
   <component name="RunManager">
     <configuration name="Better than the Chambered" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="zulu-1.8" />
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.mojang.escape.EscapeComponent" />
       <module name="BetterThanTheChambered" />
