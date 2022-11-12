@@ -103,7 +103,7 @@ public class Entity {
 
 	public boolean blocks(Entity entity, double x2, double z2, double r2) {
 		if (entity instanceof Bullet) {
-			if (((Bullet) entity).owner == this) return false;
+			if (((Bullet) entity).getOwner() == this) return false;
 		}
 		if (x + r <= x2 - r2) return false;
 		if (x - r >= x2 + r2) return false;

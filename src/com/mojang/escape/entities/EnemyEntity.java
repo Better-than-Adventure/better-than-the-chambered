@@ -83,7 +83,7 @@ public class EnemyEntity extends Entity {
 	protected void collide(Entity entity) {
 		if (entity instanceof Bullet) {
 			Bullet bullet = (Bullet) entity;
-			if (bullet.owner.getClass() == this.getClass()) {
+			if (bullet.getOwner().getClass() == this.getClass()) {
 				return;
 			}
 			if (hurtTime > 0) return;
