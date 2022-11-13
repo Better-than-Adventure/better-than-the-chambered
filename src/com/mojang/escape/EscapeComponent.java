@@ -114,7 +114,7 @@ public class EscapeComponent extends Canvas implements Runnable {
 
 	private void tick() {
 		if (hasFocus()) {
-			game.tick(inputHandler.keys);
+			game.tick(inputHandler.getKeys());
 		}
 	}
 
