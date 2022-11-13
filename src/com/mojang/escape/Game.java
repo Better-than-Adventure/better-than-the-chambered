@@ -70,8 +70,8 @@ public class Game {
 		for (int i = 0; i < 8; i++) {
 			if (keys[KeyEvent.VK_1 + i]) {
 				keys[KeyEvent.VK_1 + i] = false;
-				player.selectedSlot = i;
-				player.itemUseTime = 0;
+				player.setSelectedSlot(i);
+				player.setItemUseTime(0);
 			}
 		}
 

@@ -30,8 +30,8 @@ public class Screen extends Bitmap {
 		if (game.level == null) {
 			fill(0, 0, width, height, 0);
 		} else {
-			boolean itemUsed = game.player.itemUseTime > 0;
-			Item item = game.player.items[game.player.selectedSlot];
+			boolean itemUsed = game.player.getItemUseTime() > 0;
+			Item item = game.player.getItems()[game.player.getSelectedSlot()];
 
 			if (game.pauseTime > 0) {
 				fill(0, 0, width, height, 0);
@@ -53,8 +53,8 @@ public class Screen extends Bitmap {
 				}
 
 				draw(viewport, 0, 0);
-				int xx = (int) (game.player.turnBob * 32);
-				int yy = (int) (Math.sin(game.player.bobPhase * 0.4) * 1 * game.player.bob + game.player.bob * 2);
+				int xx = (int) (game.player.getTurnBob() * 32);
+				int yy = (int) (Math.sin(game.player.getBobPhase() * 0.4) * 1 * game.player.getBob() + game.player.getBob() * 2);
 
 				if (itemUsed) xx = yy = 0;
 				xx += width / 2;
@@ -63,10 +63,10 @@ public class Screen extends Bitmap {
 					scaleDraw(Art.INSTANCE.getItems(), 3, xx, yy, 16 * item.getIcon() + 1, 16 + 1 + (itemUsed ? 16 : 0), 15, 15, Art.INSTANCE.getCol(item.getColor()));
 				}
 
-				if (game.player.hurtTime > 0 || game.player.dead) {
-					double offs = 1.5 - game.player.hurtTime / 30.0;
+				if (game.player.getHurtTime() > 0 || game.player.getDead()) {
+					double offs = 1.5 - game.player.getHurtTime() / 30.0;
 					Random random = new Random(111);
-					if (game.player.dead) offs = 0.5;
+					if (game.player.getDead()) offs = 0.5;
 					for (int i = 0; i < pixels.length; i++) {
 						double xp = ((i % width) - viewport.width / 2.0) / width * 2;
 						double yp = ((i / width) - viewport.height / 2.0) / viewport.height * 2;
@@ -79,28 +79,28 @@ public class Screen extends Bitmap {
 			draw(Art.INSTANCE.getPanel(), 0, height - PANEL_HEIGHT, 0, 0, width, PANEL_HEIGHT, Art.INSTANCE.getCol(0x707070));
 
 			draw("å", 3, height - 26 + 0, 0x00ffff);
-			draw("" + game.player.keys + "/4", 10, height - 26 + 0, 0xffffff);
+			draw("" + game.player.getKeys() + "/4", 10, height - 26 + 0, 0xffffff);
 			draw("Ä", 3, height - 26 + 8, 0xffff00);
-			draw("" + game.player.loot, 10, height - 26 + 8, 0xffffff);
+			draw("" + game.player.getLoot(), 10, height - 26 + 8, 0xffffff);
 			draw("Å", 3, height - 26 + 16, 0xff0000);
-			draw("" + game.player.health, 10, height - 26 + 16, 0xffffff);
+			draw("" + game.player.getHealth(), 10, height - 26 + 16, 0xffffff);
 
 			for (int i = 0; i < 8; i++) {
-				Item slotItem = game.player.items[i];
+				Item slotItem = game.player.getItems()[i];
 				if (slotItem != Item.None) {
 					draw(Art.INSTANCE.getItems(), 30 + i * 16, height - PANEL_HEIGHT + 2, slotItem.getIcon() * 16, 0, 16, 16, Art.INSTANCE.getCol(slotItem.getColor()));
 					if (slotItem == Item.Pistol) {
-						String str = "" + game.player.ammo;
+						String str = "" + game.player.getAmmo();
 						draw(str, 30 + i * 16 + 17 - str.length() * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555);
 					}
 					if (slotItem == Item.Potion) {
-						String str = "" + game.player.potions;
+						String str = "" + game.player.getPotions();
 						draw(str, 30 + i * 16 + 17 - str.length() * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555);
 					}
 				}
 			}
 
-			draw(Art.INSTANCE.getItems(), 30 + game.player.selectedSlot * 16, height - PANEL_HEIGHT + 2, 0, 48, 17, 17, Art.INSTANCE.getCol(0xffffff));
+			draw(Art.INSTANCE.getItems(), 30 + game.player.getSelectedSlot() * 16, height - PANEL_HEIGHT + 2, 0, 48, 17, 17, Art.INSTANCE.getCol(0xffffff));
 
 			draw(item.getItemName(), 26 + (8 * 16 - item.getItemName().length() * 4) / 2, height - 9, 0xffffff);
 		}

@@ -21,7 +21,7 @@ class Player: Entity() {
     var ya = 0.0
 
     var hurtTime = 0
-    var health = 0
+    var health = 20
 
     var keys = 0
     var loot = 0
@@ -41,7 +41,7 @@ class Player: Entity() {
 
     private var lastBlock: Block? = null
 
-    private var items = arrayOf(Item.None, Item.None, Item.None, Item.None, Item.None, Item.None, Item.None, Item.None)
+    var items = arrayOf(Item.None, Item.None, Item.None, Item.None, Item.None, Item.None, Item.None, Item.None)
 
     init {
         this.r = 0.3
@@ -246,20 +246,70 @@ class Player: Entity() {
         }
     }
 
-    override fun blocks(entity: Entity?, x2: Double, z2: Double, r2: Double): Boolean {
-        return super.blocks(entity, x2, z2, r2)
-    }
-
     fun addLoot(item: Item) {
+        if (item == Item.Pistol) {
+            ammo += 20
+        }
+        if (item == Item.Potion) {
+            potions += 1
+        }
+        for (i in items) {
+            if (i == item) {
+                if (level != null) {
+                    level.showLootScreen(item)
+                }
+                return;
+            }
+        }
 
+        for (i in items.indices) {
+            if (items[i] == Item.None) {
+                items[i] = item
+                selectedSlot = i
+                itemUseTime = 0
+                if (level != null) {
+                    level.showLootScreen(item);
+                }
+                return
+            }
+        }
     }
 
-    fun hurt(entity: Entity, dmg: Int) {
+    fun hurt(enemy: Entity, dmg: Int) {
+        if (hurtTime > 0 || dead) {
+            return
+        }
 
+        hurtTime = 40
+        health -= dmg
+
+        if (health <= 0) {
+            health = 0
+            Sound.death.play()
+            dead = true
+        }
+
+        Sound.hurt.play()
+
+        val xd = enemy.x - x
+        val zd = enemy.z - z
+        val dd = sqrt(xd * xd + zd * zd)
+        xa -= xd / dd * 0.1
+        za -= zd / dd * 0.1
+        rota += (random.nextDouble() - 0.5) * 0.2
     }
 
     override fun collide(entity: Entity?) {
-        super.collide(entity)
+        if (entity is Bullet) {
+            if (entity.owner is Player) {
+                return
+            }
+            if (hurtTime > 0) {
+                return
+            }
+            entity.remove()
+            this.hurt(entity, 1)
+        }
     }
 
     fun win() {

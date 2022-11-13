@@ -27,7 +27,7 @@ public class Bitmap3D extends Bitmap {
 		rot = game.player.rot;
 		xCam = game.player.x - Math.sin(rot) * 0.3;
 		yCam = game.player.z - Math.cos(rot) * 0.3;
-		zCam = -0.2 + Math.sin(game.player.bobPhase * 0.4) * 0.01 * game.player.bob - game.player.y;
+		zCam = -0.2 + Math.sin(game.player.getBobPhase() * 0.4) * 0.01 * game.player.getBob() - game.player.getY();
 
 		xCenter = width / 2.0;
 		yCenter = height / 3.0;
