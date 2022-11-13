@@ -15,6 +15,6 @@ class EyeBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 4, Art.getC
 
     override fun die() {
         Sound.bosskill.play()
-        level.addEntity(KeyEntity(this.x, this.z))
+        level?.addEntity(KeyEntity(this.x, this.z))
     }
 }

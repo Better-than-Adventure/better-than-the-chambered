@@ -29,7 +29,7 @@ class Bullet(val owner: Entity, x: Double, z: Double, rot: Double, pow: Double, 
         }
     }
 
-    override fun blocks(entity: Entity?, x2: Double, z2: Double, r2: Double): Boolean {
+    override fun blocks(entity: Entity, x2: Double, z2: Double, r2: Double): Boolean {
         if (entity is Bullet) {
             return false
         }

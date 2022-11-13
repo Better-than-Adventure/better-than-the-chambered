@@ -18,14 +18,14 @@ class GhostBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.ge
         animTime++
         sprite.tex = defaultTex + animTime / 10 % 2
 
-        var xd = (level.player.x + sin(rotatePos) * 2) - x
-        var zd = (level.player.z + sin(rotatePos) * 2) - z
+        var xd = ((level?.player?.x ?: 0.0) + sin(rotatePos) * 2) - x
+        var zd = ((level?.player?.z ?: 0.0) + sin(rotatePos) * 2) - z
         var dd = xd * xd + zd * zd
 
         if (dd < 1) {
             rotatePos += 0.04
         } else {
-            rotatePos = level.player.rot
+            rotatePos = level!!.player.rot
         }
 
         if (dd < 4 * 4) {
@@ -41,7 +41,7 @@ class GhostBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.ge
                 shootDelay--
             } else if (random.nextInt(10) == 0) {
                 shootDelay = 10
-                level.addEntity(Bullet(this, x, z, atan2(level.player.x - x, level.player.z - z), 0.20, 1, defaultColor))
+                level?.addEntity(Bullet(this, x, z, atan2((level?.player?.x ?: 0.0) - x, (level?.player?.z ?: 0.0) - z), 0.20, 1, defaultColor))
             }
         }
     }

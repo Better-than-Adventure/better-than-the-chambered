@@ -33,7 +33,7 @@ class KeyEntity(x: Double, z: Double): Entity() {
         this.sprite.y = this.y
     }
 
-    override fun collide(entity: Entity?) {
+    override fun collide(entity: Entity) {
         if (entity is Player) {
             Sound.key.play()
             entity.keys++

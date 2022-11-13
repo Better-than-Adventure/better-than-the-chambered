@@ -24,9 +24,9 @@ public class Bitmap3D extends Bitmap {
 		for (int i = 0; i < width * height; i++) {
 			zBuffer[i] = 10000;
 		}
-		rot = game.player.rot;
-		xCam = game.player.x - Math.sin(rot) * 0.3;
-		yCam = game.player.z - Math.cos(rot) * 0.3;
+		rot = game.player.getRot();
+		xCam = game.player.getX() - Math.sin(rot) * 0.3;
+		yCam = game.player.getZ() - Math.cos(rot) * 0.3;
 		zCam = -0.2 + Math.sin(game.player.getBobPhase() * 0.4) * 0.01 * game.player.getBob() - game.player.getY();
 
 		xCenter = width / 2.0;
@@ -86,9 +86,9 @@ public class Bitmap3D extends Bitmap {
 
 				for (int j = 0; j < c.getEntities().size(); j++) {
 					Entity e = c.getEntities().get(j);
-					for (int i = 0; i < e.sprites.size(); i++) {
-						Sprite sprite = e.sprites.get(i);
-						renderSprite(e.x + sprite.getX(), 0 - sprite.getY(), e.z + sprite.getZ(), sprite.getTex(), sprite.getCol());
+					for (int i = 0; i < e.getSprites().size(); i++) {
+						Sprite sprite = e.getSprites().get(i);
+						renderSprite(e.getX() + sprite.getX(), 0 - sprite.getY(), e.getZ() + sprite.getZ(), sprite.getTex(), sprite.getCol());
 					}
 				}
 

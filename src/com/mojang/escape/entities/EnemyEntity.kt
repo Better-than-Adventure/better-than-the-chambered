@@ -11,8 +11,6 @@ import kotlin.math.sqrt
 
 open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, protected val defaultColor: Int): Entity() {
     protected val sprite: Sprite
-    protected val rot = 0.0
-    protected val rota = 0.0
     protected var hurtTime = 0
     protected var animTime = 0
     protected var health = 3
@@ -50,12 +48,12 @@ open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, prot
         za += cos(rot) * 0.004 * runSpeed
     }
 
-    override fun use(source: Entity?, item: Item?): Boolean {
+    override fun use(source: Entity, item: Item): Boolean {
         if (hurtTime > 0 || item != Item.PowerGlove) {
             return false
         }
         
-        hurt(sin(source!!.rot), cos(source.rot))
+        hurt(sin(source.rot), cos(source.rot))
 
         return true
     }
@@ -72,7 +70,7 @@ open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, prot
         if (health <= 0) {
             val xt = (x + 0.5).toInt()
             val zt = (z + 0.5).toInt()
-            level.getBlock(xt, zt).addSprite(PoofSprite(x - xt, 0.0, z - zt))
+            level?.getBlock(xt, zt)?.addSprite(PoofSprite(x - xt, 0.0, z - zt))
             this.die()
             this.remove()
             Sound.kill.play()
@@ -82,7 +80,7 @@ open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, prot
     protected open fun die() {
     }
 
-    override fun collide(entity: Entity?) {
+    override fun collide(entity: Entity) {
         if (entity is Bullet) {
             if (entity.owner is EnemyEntity) {
                 return

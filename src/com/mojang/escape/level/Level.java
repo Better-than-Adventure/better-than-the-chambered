@@ -75,13 +75,13 @@ public abstract class Level {
 
 	public void addEntity(Entity e) {
 		entities.add(e);
-		e.level = this;
+		e.setLevel(this);
 		e.updatePos();
 	}
 
 	public void removeEntityImmediately(Player player) {
 		entities.remove(player);
-		getBlock(player.xTileO, player.zTileO).removeEntity(player);
+		getBlock(player.getXTileO(), player.getZTileO()).removeEntity(player);
 	}
 
 	protected void decorateBlock(int x, int y, Block block, int col) {
@@ -212,7 +212,7 @@ public abstract class Level {
 				List<Entity> es = getBlock(x, z).getEntities();
 				for (int i = 0; i < es.size(); i++) {
 					Entity e = es.get(i);
-					if (!e.flying && e.isInside(x0, y0, x1, y1)) return true;
+					if (!e.getFlying() && e.isInside(x0, y0, x1, y1)) return true;
 				}
 			}
 		}

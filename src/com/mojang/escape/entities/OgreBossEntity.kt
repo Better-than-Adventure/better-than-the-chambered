@@ -15,7 +15,7 @@ class OgreBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.get
 
     override fun die() {
         Sound.bosskill.play()
-        this.level.addEntity(KeyEntity(x, z))
+        this.level!!.addEntity(KeyEntity(x, z))
     }
 
     override fun tick() {
@@ -28,7 +28,7 @@ class OgreBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.get
 
             for (i in 0 until 4) {
                 val rot = Math.PI / 2 * (i + shootPhase / salva % 2 * 0.5)
-                this.level.addEntity(Bullet(this, x, z, rot, 0.4, 1, defaultColor))
+                this.level!!.addEntity(Bullet(this, x, z, rot, 0.4, 1, defaultColor))
             }
 
             shootPhase++

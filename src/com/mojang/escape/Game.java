@@ -23,12 +23,12 @@ public class Game {
 		level = Level.loadLevel(this, "start");
 
 		player = new Player();
-		player.level = level;
+		player.setLevel(level);
 		level.player = player;
-		player.x = level.xSpawn;
-		player.z = level.ySpawn;
+		player.setX(level.xSpawn);
+		player.setZ(level.ySpawn);
 		level.addEntity(player);
-		player.rot = Math.PI + 0.4;
+		player.setRot(Math.PI + 0.4);
 	}
 
 	public void switchLevel(String name, int id) {
@@ -36,11 +36,11 @@ public class Game {
 		level.removeEntityImmediately(player);
 		level = Level.loadLevel(this, name);
 		level.findSpawn(id);
-		player.x = level.xSpawn;
-		player.z = level.ySpawn;
+		player.setX(level.xSpawn);
+		player.setZ(level.ySpawn);
 		((LadderBlock) level.getBlock(level.xSpawn, level.ySpawn)).setWait(true);
-		player.x += Math.sin(player.rot) * 0.2;
-		player.z += Math.cos(player.rot) * 0.2;
+		player.setX(player.getX() + Math.sin(player.getRot()) * 0.2);
+		player.setZ(player.getZ() + Math.cos(player.getRot()) * 0.2);
 		level.addEntity(player);
 	}
 

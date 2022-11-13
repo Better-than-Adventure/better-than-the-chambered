@@ -13,7 +13,7 @@ class BatBossEntity(x: Int, z: Int): EnemyEntity(x.toDouble(), z.toDouble(), 4 *
 
     override fun die() {
         Sound.bosskill.play()
-        level.addEntity(KeyEntity(x, z))
+        level?.addEntity(KeyEntity(x, z))
     }
 
     override fun tick() {
@@ -28,7 +28,7 @@ class BatBossEntity(x: Int, z: Int): EnemyEntity(x.toDouble(), z.toDouble(), 4 *
             batEntity.z = -999.0
 
             if (batEntity.isFree(xx, zz)) {
-                level.addEntity(batEntity)
+                level?.addEntity(batEntity)
             }
         }
     }

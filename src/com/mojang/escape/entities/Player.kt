@@ -53,7 +53,7 @@ class Player: Entity() {
             allowMovement = false
             deadTime++
             if (deadTime > 60 * 2) {
-                level.lose()
+                level!!.lose()
             }
         } else {
             time++
@@ -65,7 +65,7 @@ class Player: Entity() {
             hurtTime--
         }
 
-        val onBlock = level.getBlock((x + 0.5).toInt(), (z + 0.5).toInt())
+        val onBlock = level!!.getBlock((x + 0.5).toInt(), (z + 0.5).toInt())
 
         var fh = onBlock.getFloorHeight(this)
         if (onBlock is WaterBlock && lastBlock !is WaterBlock) {
@@ -181,7 +181,7 @@ class Player: Entity() {
             if (ammo > 0) {
                 Sound.shoot.play()
                 itemUseTime = 10
-                level.addEntity(Bullet(this, x, z, rot, 1.0, 0, 0xFFFFFF))
+                level!!.addEntity(Bullet(this, x, z, rot, 1.0, 0, 0xFFFFFF))
                 ammo--
             }
             return
@@ -208,10 +208,10 @@ class Player: Entity() {
         val rr = 3
         val xc = (x + 0.5).toInt()
         val zc = (z + 0.5).toInt()
-        var possibleHits = arrayListOf<Entity>()
+        val possibleHits = arrayListOf<Entity>()
         for (z in (zc - rr)..(zc + rr)) {
             for (x in (xc - rr)..(xc + rr)) {
-                val es = level.getBlock(x, z).entities
+                val es = level!!.getBlock(x, z).entities
                 for (e in es) {
                     if (e == this) {
                         continue
@@ -235,8 +235,8 @@ class Player: Entity() {
             val xt = (xx + 0.5).toInt()
             val zt = (zz + 0.5).toInt()
             if (xt != (x + 0.5).toInt() || zt != (z + 0.5).toInt()) {
-                var block = level.getBlock(xt, zt)
-                if (block.use(level, item)) {
+                val block = level!!.getBlock(xt, zt)
+                if (block.use(level!!, item)) {
                     return
                 }
                 if (block.blocks(this)) {
@@ -256,7 +256,7 @@ class Player: Entity() {
         for (i in items) {
             if (i == item) {
                 if (level != null) {
-                    level.showLootScreen(item)
+                    level!!.showLootScreen(item)
                 }
                 return;
             }
@@ -268,7 +268,7 @@ class Player: Entity() {
                 selectedSlot = i
                 itemUseTime = 0
                 if (level != null) {
-                    level.showLootScreen(item);
+                    level!!.showLootScreen(item);
                 }
                 return
             }
@@ -299,7 +299,7 @@ class Player: Entity() {
         rota += (random.nextDouble() - 0.5) * 0.2
     }
 
-    override fun collide(entity: Entity?) {
+    override fun collide(entity: Entity) {
         if (entity is Bullet) {
             if (entity.owner is Player) {
                 return
@@ -313,6 +313,6 @@ class Player: Entity() {
     }
 
     fun win() {
-        level.win()
+        level!!.win()
     }
 }

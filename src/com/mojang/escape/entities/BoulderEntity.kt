@@ -43,13 +43,13 @@ class BoulderEntity(x: Int, z: Int): Entity() {
         }
     }
 
-    override fun use(source: Entity?, item: Item?): Boolean {
+    override fun use(source: Entity, item: Item): Boolean {
         if (item != Item.PowerGlove) {
             return false
         }
         Sound.roll.play()
 
-        xa += sin(source!!.rot) * 0.1
+        xa += sin(source.rot) * 0.1
         za += cos(source.rot) * 0.1
         return true
     }
