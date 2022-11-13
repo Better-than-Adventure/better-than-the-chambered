@@ -21,7 +21,7 @@ open class Entity {
     var za = 0.0
     var rota = 0.0
 
-    var r = 0.0
+    var r = 0.4
 
     var level: Level? = null
 
