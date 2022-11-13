@@ -41,7 +41,9 @@ class Player: Entity() {
 
     private var lastBlock: Block? = null
 
-    var items = arrayOf(Item.None, Item.None, Item.None, Item.None, Item.None, Item.None, Item.None, Item.None)
+    var items = Array(8) {
+        Item.None
+    }
 
     init {
         this.r = 0.3

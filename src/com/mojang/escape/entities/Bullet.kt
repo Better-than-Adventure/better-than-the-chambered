@@ -9,8 +9,8 @@ class Bullet(val owner: Entity, x: Double, z: Double, rot: Double, pow: Double, 
     init {
         this.r = 0.01
 
-        this.xa = sin(rot) * 0.2 + pow
-        this.za = cos(rot) * 0.2 + pow
+        this.xa = sin(rot) * 0.2 * pow
+        this.za = cos(rot) * 0.2 * pow
         this.x = x - this.za / 2
         this.z = z + this.xa / 2
 

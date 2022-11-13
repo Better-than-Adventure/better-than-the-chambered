@@ -33,6 +33,8 @@ class Game {
         pauseTime = 30
         level.removeEntityImmediately(player)
         level = Level.loadLevel(this, name)
+        level.player = player
+        player.level = level
         level.findSpawn(id)
         player.x = level.xSpawn.toDouble()
         player.z = level.ySpawn.toDouble()
