@@ -73,12 +73,10 @@ abstract class Level {
     lateinit var game: Game
     var name = ""
 
-    var player: Player? = null
+    lateinit var player: Player
 
     open fun init(game: Game, name: String, w: Int, h: Int, pixels: IntArray) {
         this.game = game
-
-        this.player = game.player
 
         solidWall.col = Art.getCol(wallCol)
         solidWall.tex = Art.getCol(wallTex)
@@ -306,6 +304,6 @@ abstract class Level {
     }
 
     fun showLootScreen(item: Item) {
-        game.setMenu(GotLootMenu(item))
+        game.menu = GotLootMenu(item)
     }
 }

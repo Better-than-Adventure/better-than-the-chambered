@@ -31,7 +31,7 @@ class WinMenu(private val player: Player): Menu() {
             tickDelay--
         } else if (use) {
             Sound.click1.play()
-            game.setMenu(TitleMenu())
+            game.menu = TitleMenu()
         }
     }
 }

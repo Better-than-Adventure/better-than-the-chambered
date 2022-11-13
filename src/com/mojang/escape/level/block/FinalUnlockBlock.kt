@@ -15,7 +15,7 @@ class FinalUnlockBlock: SolidBlock() {
         if (pressed) {
             return false
         }
-        if (level.player!!.keys < 4) {
+        if (level.player.keys < 4) {
             return false
         }
 

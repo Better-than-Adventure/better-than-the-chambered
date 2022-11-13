@@ -19,15 +19,15 @@ class GhostEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.getCol
         this.animTime++
         this.sprite.tex = defaultTex + animTime / 10 % 2
 
-        var xd = (level!!.player!!.x + sin(rotatePos)) - x
-        var zd = (level!!.player!!.z + cos(rotatePos)) - z
+        var xd = (level!!.player.x + sin(rotatePos)) - x
+        var zd = (level!!.player.z + cos(rotatePos)) - z
         var dd = xd * xd + zd + zd
 
         if (dd < 4 * 4) {
             if (dd < 1) {
                 this.rotatePos += 0.04
             } else {
-                this.rotatePos = level!!.player!!.rot
+                this.rotatePos = level!!.player.rot
                 this.xa += (random.nextDouble() - 0.5) * 0.02
                 this.za += (random.nextDouble() - 0.5) * 0.02
             }

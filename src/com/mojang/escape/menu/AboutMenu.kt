@@ -41,7 +41,7 @@ class AboutMenu: Menu() {
             tickDelay--
         } else if (use) {
             Sound.click1.play()
-            game.setMenu(TitleMenu())
+            game.menu = TitleMenu()
         }
     }
 

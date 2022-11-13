@@ -27,7 +27,7 @@ class GotLootMenu(private val item: Item): Menu() {
         if (tickDelay > 0) {
             tickDelay--
         } else if (use) {
-            game.setMenu(null)
+            game.menu = null
         }
     }
 }

@@ -50,14 +50,14 @@ class TitleMenu: Menu() {
             Sound.click1.play()
             when (selected) {
                 0 -> {
-                    game.setMenu(null)
+                    game.menu = null
                     game.newGame()
                 }
                 1 -> {
-                    game.setMenu(InstructionsMenu())
+                    game.menu = InstructionsMenu()
                 }
                 2 -> {
-                    game.setMenu(AboutMenu())
+                    game.menu = AboutMenu()
                 }
             }
         }

@@ -33,7 +33,7 @@ public class Screen extends Bitmap {
 			boolean itemUsed = game.player.getItemUseTime() > 0;
 			Item item = game.player.getItems()[game.player.getSelectedSlot()];
 
-			if (game.pauseTime > 0) {
+			if (game.getPauseTime() > 0) {
 				fill(0, 0, width, height, 0);
 				String[] messages = { "Entering " + game.level.getName(), };
 				for (int y = 0; y < messages.length; y++) {
@@ -105,11 +105,11 @@ public class Screen extends Bitmap {
 			draw(item.getItemName(), 26 + (8 * 16 - item.getItemName().length() * 4) / 2, height - 9, 0xffffff);
 		}
 
-		if (game.menu != null) {
+		if (game.getMenu() != null) {
 			for (int i = 0; i < pixels.length; i++) {
 				pixels[i] = (pixels[i] & 0xfcfcfc) >> 2;
 			}			
-			game.menu.render(this);
+			game.getMenu().render(this);
 		}
 
 		if (!hasFocus) {

@@ -25,7 +25,7 @@ class GhostBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.ge
         if (dd < 1) {
             rotatePos += 0.04
         } else {
-            rotatePos = level!!.player!!.rot
+            rotatePos = level!!.player.rot
         }
 
         if (dd < 4 * 4) {
