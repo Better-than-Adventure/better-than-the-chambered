@@ -19,14 +19,14 @@ public class Game {
 	}
 
 	public void newGame() {
-		Level.clear();
-		level = Level.loadLevel(this, "start");
+		Level.Companion.clear();
+		level = Level.Companion.loadLevel(this, "start");
 
 		player = new Player();
 		player.setLevel(level);
-		level.player = player;
-		player.setX(level.xSpawn);
-		player.setZ(level.ySpawn);
+		level.setPlayer(player);
+		player.setX(level.getXSpawn());
+		player.setZ(level.getYSpawn());
 		level.addEntity(player);
 		player.setRot(Math.PI + 0.4);
 	}
@@ -34,11 +34,11 @@ public class Game {
 	public void switchLevel(String name, int id) {
 		pauseTime = 30;
 		level.removeEntityImmediately(player);
-		level = Level.loadLevel(this, name);
+		level = Level.Companion.loadLevel(this, name);
 		level.findSpawn(id);
-		player.setX(level.xSpawn);
-		player.setZ(level.ySpawn);
-		((LadderBlock) level.getBlock(level.xSpawn, level.ySpawn)).setWait(true);
+		player.setX(level.getXSpawn());
+		player.setZ(level.getYSpawn());
+		((LadderBlock) level.getBlock(level.getXSpawn(), level.getYSpawn())).setWait(true);
 		player.setX(player.getX() + Math.sin(player.getRot()) * 0.2);
 		player.setZ(player.getZ() + Math.cos(player.getRot()) * 0.2);
 		level.addEntity(player);

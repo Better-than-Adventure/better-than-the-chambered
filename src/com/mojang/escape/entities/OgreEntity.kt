@@ -23,7 +23,7 @@ class OgreEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(
             shootDelay--
         } else if (random.nextInt(40) == 0) {
             shootDelay = 40
-            level!!.addEntity(Bullet(this, x, z, atan2(level!!.player.x - x, level!!.player.z - z), 0.3, 1, defaultColor))
+            level!!.addEntity(Bullet(this, x, z, atan2(level!!.player!!.x - x, level!!.player!!.z - z), 0.3, 1, defaultColor))
         }
     }
 }

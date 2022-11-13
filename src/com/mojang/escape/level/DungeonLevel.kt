@@ -11,7 +11,7 @@ class DungeonLevel: Level() {
         name = "The Dungeons"
     }
 
-    override fun init(game: Game?, name: String?, w: Int, h: Int, pixels: IntArray?) {
+    override fun init(game: Game, name: String, w: Int, h: Int, pixels: IntArray) {
         super.init(game, name, w, h, pixels)
         super.trigger(6, true)
         super.trigger(7, true)

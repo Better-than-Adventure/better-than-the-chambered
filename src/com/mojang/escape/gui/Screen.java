@@ -35,7 +35,7 @@ public class Screen extends Bitmap {
 
 			if (game.pauseTime > 0) {
 				fill(0, 0, width, height, 0);
-				String[] messages = { "Entering " + game.level.name, };
+				String[] messages = { "Entering " + game.level.getName(), };
 				for (int y = 0; y < messages.length; y++) {
 					draw(messages[y], (width - messages[y].length() * 6) / 2, (viewport.height - messages.length * 8) / 2 + y * 8 + 1, 0x111111);
 					draw(messages[y], (width - messages[y].length() * 6) / 2, (viewport.height - messages.length * 8) / 2 + y * 8, 0x555544);

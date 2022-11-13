@@ -3,7 +3,7 @@ package com.mojang.escape.entities
 import com.mojang.escape.Art
 import com.mojang.escape.Sound
 
-class BatBossEntity(x: Int, z: Int): EnemyEntity(x.toDouble(), z.toDouble(), 4 * 8, Art.getCol(0xFFFF00)) {
+class BatBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8, Art.getCol(0xFFFF00)) {
     init {
         this.health = 5
         this.r = 0.3

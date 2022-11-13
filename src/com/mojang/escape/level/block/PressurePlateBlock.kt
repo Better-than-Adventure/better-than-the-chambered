@@ -13,7 +13,7 @@ class PressurePlateBlock: Block() {
     override fun tick() {
         super.tick()
         val r = 0.2
-        val steppedOn = level!!.containsBlockingEntity(x - r, y - r, x + r, y + r)
+        val steppedOn = level!!.containsBlockingNonFlyingEntity(x - r, y - r, x + r, y + r)
         if (steppedOn != pressed) {
             pressed = steppedOn
             floorTex = when (pressed) {
