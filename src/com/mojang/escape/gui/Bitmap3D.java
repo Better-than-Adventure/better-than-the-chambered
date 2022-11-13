@@ -18,10 +18,10 @@ public class Bitmap3D extends Bitmap {
 	}
 
 	public void render(Game game) {
-		for (int x = 0; x < width; x++) {
+		for (int x = 0; x < getWidth(); x++) {
 			zBufferWall[x] = 0;
 		}
-		for (int i = 0; i < width * height; i++) {
+		for (int i = 0; i < getWidth() * getHeight(); i++) {
 			zBuffer[i] = 10000;
 		}
 		rot = game.player.getRot();
@@ -29,13 +29,13 @@ public class Bitmap3D extends Bitmap {
 		yCam = game.player.getZ() - Math.cos(rot) * 0.3;
 		zCam = -0.2 + Math.sin(game.player.getBobPhase() * 0.4) * 0.01 * game.player.getBob() - game.player.getY();
 
-		xCenter = width / 2.0;
-		yCenter = height / 3.0;
+		xCenter = getWidth() / 2.0;
+		yCenter = getHeight() / 3.0;
 
 		rCos = Math.cos(rot);
 		rSin = Math.sin(rot);
 
-		fov = height;
+		fov = getHeight();
 
 		Level level = game.level;
 		int r = 6;
@@ -103,7 +103,7 @@ public class Bitmap3D extends Bitmap {
 	}
 
 	private void renderFloor(Level level) {
-		for (int y = 0; y < height; y++) {
+		for (int y = 0; y < getHeight(); y++) {
 			double yd = ((y + 0.5) - yCenter) / fov;
 
 			boolean floor = true;
@@ -113,8 +113,8 @@ public class Bitmap3D extends Bitmap {
 				zd = (4 + zCam * 8) / -yd;
 			}
 
-			for (int x = 0; x < width; x++) {
-				if (zBuffer[x + y * width] <= zd) continue;
+			for (int x = 0; x < getWidth(); x++) {
+				if (zBuffer[x + y * getWidth()] <= zd) continue;
 
 				double xd = (xCenter - x) / fov;
 				xd *= zd;
@@ -136,10 +136,10 @@ public class Bitmap3D extends Bitmap {
 				}
 
 				if (tex < 0) {
-					zBuffer[x + y * width] = -1;
+					zBuffer[x + y * getWidth()] = -1;
 				} else {
-					zBuffer[x + y * width] = zd;
-					pixels[x + y * width] = Art.INSTANCE.getFloors().pixels[((xPix & 15) + (tex % 8) * 16) + ((yPix & 15) + (tex / 8) * 16) * 128] * col;
+					zBuffer[x + y * getWidth()] = zd;
+					getPixels()[x + y * getWidth()] = Art.INSTANCE.getFloors().getPixels()[((xPix & 15) + (tex % 8) * 16) + ((yPix & 15) + (tex / 8) * 16) * 128] * col;
 				}
 			}
 		}
@@ -160,11 +160,11 @@ public class Bitmap3D extends Bitmap {
 		double xPixel = xCenter - (xx / zz * fov);
 		double yPixel = (yy / zz * fov + yCenter);
 
-		double xPixel0 = xPixel - height / zz;
-		double xPixel1 = xPixel + height / zz;
+		double xPixel0 = xPixel - getHeight() / zz;
+		double xPixel1 = xPixel + getHeight() / zz;
 
-		double yPixel0 = yPixel - height / zz;
-		double yPixel1 = yPixel + height / zz;
+		double yPixel0 = yPixel - getHeight() / zz;
+		double yPixel1 = yPixel + getHeight() / zz;
 
 		int xp0 = (int) Math.ceil(xPixel0);
 		int xp1 = (int) Math.ceil(xPixel1);
@@ -172,9 +172,9 @@ public class Bitmap3D extends Bitmap {
 		int yp1 = (int) Math.ceil(yPixel1);
 
 		if (xp0 < 0) xp0 = 0;
-		if (xp1 > width) xp1 = width;
+		if (xp1 > getWidth()) xp1 = getWidth();
 		if (yp0 < 0) yp0 = 0;
-		if (yp1 > height) yp1 = height;
+		if (yp1 > getHeight()) yp1 = getHeight();
 		zz *= 4;
 		for (int yp = yp0; yp < yp1; yp++) {
 			double ypr = (yp - yPixel0) / (yPixel1 - yPixel0);
@@ -182,11 +182,11 @@ public class Bitmap3D extends Bitmap {
 			for (int xp = xp0; xp < xp1; xp++) {
 				double xpr = (xp - xPixel0) / (xPixel1 - xPixel0);
 				int xt = (int) (xpr * 16);
-				if (zBuffer[xp + yp * width] > zz) {
-					int col = Art.INSTANCE.getSprites().pixels[(xt + tex % 8 * 16) + (yt + (tex / 8) * 16) * 128];
+				if (zBuffer[xp + yp * getWidth()] > zz) {
+					int col = Art.INSTANCE.getSprites().getPixels()[(xt + tex % 8 * 16) + (yt + (tex / 8) * 16) * 128];
 					if (col >= 0) {
-						pixels[xp + yp * width] = col * color;
-						zBuffer[xp + yp * width] = zz;
+						getPixels()[xp + yp * getWidth()] = col * color;
+						zBuffer[xp + yp * getWidth()] = zz;
 					}
 				}
 			}
@@ -243,7 +243,7 @@ public class Bitmap3D extends Bitmap {
 		int xp0 = (int) Math.ceil(xPixel0);
 		int xp1 = (int) Math.ceil(xPixel1);
 		if (xp0 < 0) xp0 = 0;
-		if (xp1 > width) xp1 = width;
+		if (xp1 > getWidth()) xp1 = getWidth();
 
 		double yPixel00 = (u0 / zz0 * fov + yCenter);
 		double yPixel01 = (l0 / zz0 * fov + yCenter);
@@ -273,31 +273,31 @@ public class Bitmap3D extends Bitmap {
 			int yp0 = (int) Math.ceil(yPixel0);
 			int yp1 = (int) Math.ceil(yPixel1);
 			if (yp0 < 0) yp0 = 0;
-			if (yp1 > height) yp1 = height;
+			if (yp1 > getHeight()) yp1 = getHeight();
 
 			double ih = 1 / (yPixel1 - yPixel0);
 			for (int y = yp0; y < yp1; y++) {
 				double pry = (y - yPixel0) * ih;
 				int yTex = (int) (16 * pry);
-				pixels[x + y * width] = Art.INSTANCE.getWalls().pixels[((xTex) + (tex % 8) * 16) + (yTex + tex / 8 * 16) * 128] * color;
-				zBuffer[x + y * width] = 1 / iz * 4;
+				getPixels()[x + y * getWidth()] = Art.INSTANCE.getWalls().getPixels()[((xTex) + (tex % 8) * 16) + (yTex + tex / 8 * 16) * 128] * color;
+				zBuffer[x + y * getWidth()] = 1 / iz * 4;
 			}
 		}
 	}
 
 	public void postProcess(Level level) {
-		for (int i = 0; i < width * height; i++) {
+		for (int i = 0; i < getWidth() * getHeight(); i++) {
 			double zl = zBuffer[i];
 			if (zl < 0) {
-				int xx = ((int) Math.floor((i % width) - rot * 512 / (Math.PI * 2))) & 511;
-				int yy = i / width;
-				pixels[i] = Art.INSTANCE.getSky().pixels[xx + yy * 512] * 0x444455;
+				int xx = ((int) Math.floor((i % getWidth()) - rot * 512 / (Math.PI * 2))) & 511;
+				int yy = i / getWidth();
+				getPixels()[i] = Art.INSTANCE.getSky().getPixels()[xx + yy * 512] * 0x444455;
 			} else {
-				int xp = (i % width);
-				int yp = (i / width) * 14;
+				int xp = (i % getWidth());
+				int yp = (i / getWidth()) * 14;
 
-				double xx = ((i % width - width / 2.0) / width);
-				int col = pixels[i];
+				double xx = ((i % getWidth() - getWidth() / 2.0) / getWidth());
+				int col = getPixels()[i];
 				int brightness = (int) (300 - zl * 6 * (xx * xx * 2 + 1));
 				brightness = (brightness + ((xp + yp) & 3) * 4) >> 4 << 4;
 				if (brightness < 0) brightness = 0;
@@ -311,7 +311,7 @@ public class Bitmap3D extends Bitmap {
 				g = g * brightness / 255;
 				b = b * brightness / 255;
 
-				pixels[i] = r << 16 | g << 8 | b;
+				getPixels()[i] = r << 16 | g << 8 | b;
 			}
 		}
 	}

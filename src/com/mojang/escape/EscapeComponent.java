@@ -132,7 +132,7 @@ public class EscapeComponent extends Canvas implements Runnable {
 		screen.render(game, hasFocus());
 
 		for (int i = 0; i < WIDTH * HEIGHT; i++) {
-			pixels[i] = screen.pixels[i];
+			pixels[i] = screen.getPixels()[i];
 		}
 
 		Graphics g = bs.getDrawGraphics();
