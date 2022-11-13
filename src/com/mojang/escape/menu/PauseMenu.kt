@@ -42,7 +42,11 @@ class PauseMenu: Menu() {
         if (use) {
             Sound.click1.play()
             game.menu = when (selected) {
-                0 -> TitleMenu()
+                0 -> {
+                    game.level = null
+                    game.player = null
+                    TitleMenu()
+                }
                 else -> null
             }
         }

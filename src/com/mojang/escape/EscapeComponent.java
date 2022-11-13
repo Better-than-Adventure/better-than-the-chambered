@@ -1,11 +1,11 @@
 package com.mojang.escape;
 
+import com.mojang.escape.gui.Screen;
+
 import java.awt.*;
 import java.awt.image.*;
 
 import javax.swing.*;
-
-import com.mojang.escape.gui.Screen;
 
 public class EscapeComponent extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;

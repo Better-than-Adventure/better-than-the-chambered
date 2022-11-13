@@ -24,10 +24,10 @@ public class Bitmap3D extends Bitmap {
 		for (int i = 0; i < getWidth() * getHeight(); i++) {
 			zBuffer[i] = 10000;
 		}
-		rot = game.player.getRot();
-		xCam = game.player.getX() - Math.sin(rot) * 0.3;
-		yCam = game.player.getZ() - Math.cos(rot) * 0.3;
-		zCam = -0.2 + Math.sin(game.player.getBobPhase() * 0.4) * 0.01 * game.player.getBob() - game.player.getY();
+		rot = game.getPlayer().getRot();
+		xCam = game.getPlayer().getX() - Math.sin(rot) * 0.3;
+		yCam = game.getPlayer().getZ() - Math.cos(rot) * 0.3;
+		zCam = -0.2 + Math.sin(game.getPlayer().getBobPhase() * 0.4) * 0.01 * game.getPlayer().getBob() - game.getPlayer().getY();
 
 		xCenter = getWidth() / 2.0;
 		yCenter = getHeight() / 3.0;
@@ -37,7 +37,7 @@ public class Bitmap3D extends Bitmap {
 
 		fov = getHeight();
 
-		Level level = game.level;
+		Level level = game.getLevel();
 		int r = 6;
 
 		int xCenter = (int) (Math.floor(xCam));

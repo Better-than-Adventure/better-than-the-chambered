@@ -11,37 +11,46 @@ import kotlin.math.sin
 
 class Game {
     var time = 0
-    lateinit var level: Level
-    lateinit var player: Player
+    var level: Level? = null
+    var player: Player? = null
     var pauseTime = 0
     var menu: Menu? = TitleMenu()
 
     fun newGame() {
         Level.clear()
-        level = Level.loadLevel(this, "start")
 
-        player = Player()
-        player.level = level
-        level.player = player
-        player.x = level.xSpawn.toDouble()
-        player.z = level.ySpawn.toDouble()
-        level.addEntity(player)
-        player.rot = Math.PI + 0.4
+        val localLevel = Level.loadLevel(this, "start")
+        val localPlayer = Player()
+
+        localPlayer.level = localLevel
+        localLevel.player = localPlayer
+        localPlayer.x = localLevel.xSpawn.toDouble()
+        localPlayer.z = localLevel.ySpawn.toDouble()
+        localLevel.addEntity(localPlayer)
+        localPlayer.rot = Math.PI + 0.4
+
+        level = localLevel
+        player = localPlayer
     }
 
     fun switchLevel(name: String, id: Int) {
         pauseTime = 30
-        level.removeEntityImmediately(player)
-        level = Level.loadLevel(this, name)
-        level.player = player
-        player.level = level
-        level.findSpawn(id)
-        player.x = level.xSpawn.toDouble()
-        player.z = level.ySpawn.toDouble()
-        (level.getBlock(level.xSpawn, level.ySpawn) as LadderBlock).wait = true
-        player.x += sin(player.rot) * 0.2
-        player.z += cos(player.rot) * 0.2
-        level.addEntity(player)
+        level!!.removeEntityImmediately(player!!)
+        val localLevel = Level.loadLevel(this, name)
+        val localPlayer = player!!
+
+        localLevel.player = localPlayer
+        localPlayer.level = localLevel
+        localLevel.findSpawn(id)
+        localPlayer.x = localLevel.xSpawn.toDouble()
+        localPlayer.z = localLevel.ySpawn.toDouble()
+        (localLevel.getBlock(localLevel.xSpawn, localLevel.ySpawn) as LadderBlock).wait = true
+        localPlayer.x += sin(localPlayer.rot) * 0.2
+        localPlayer.z += cos(localPlayer.rot) * 0.2
+        localLevel.addEntity(localPlayer)
+
+        level = localLevel
+        player = localPlayer
     }
 
     fun tick(keys: BooleanArray) {
@@ -70,8 +79,8 @@ class Game {
         for (i in 0 until 8) {
             if (keys[KeyEvent.VK_1 + i]) {
                 keys[KeyEvent.VK_1 + i] = false
-                player.selectedSlot = i
-                player.itemUseTime = 0
+                player?.selectedSlot = i
+                player?.itemUseTime = 0
             }
         }
 
@@ -98,17 +107,17 @@ class Game {
 
             menu?.tick(this, up, down, left, right, use)
         } else {
-            player.tick(up, down, left, right, turnLeft, turnRight)
+            player?.tick(up, down, left, right, turnLeft, turnRight)
             if (use) {
-                player.activate()
+                player?.activate()
             }
 
-            level.tick()
+            level?.tick()
         }
     }
 
     fun getLoot(item: Item) {
-        player.addLoot(item)
+        player?.addLoot(item)
     }
 
     fun win(player: Player) {
