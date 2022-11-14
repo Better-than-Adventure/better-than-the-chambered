@@ -6,7 +6,7 @@ import com.mojang.escape.Sound
 import com.mojang.escape.gui.Bitmap
 
 class TitleMenu: Menu() {
-    private val options = arrayOf("New game", "Instructions", "About")
+    private val options = arrayOf("New game", "Settings", "About")
     private var selected = 0
     private var firstTick = true
 
@@ -54,7 +54,7 @@ class TitleMenu: Menu() {
                     game.newGame()
                 }
                 1 -> {
-                    game.menu = InstructionsMenu()
+                    game.menu = SettingsMenu()
                 }
                 2 -> {
                     game.menu = AboutMenu()

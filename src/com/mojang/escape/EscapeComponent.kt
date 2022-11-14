@@ -161,7 +161,7 @@ class EscapeComponent: Canvas(), Runnable {
 fun main() {
     val game = EscapeComponent()
 
-    val frame = JFrame("Prelude of the Chambered!")
+    val frame = JFrame("Better than the Chambered!")
 
     val panel = JPanel(BorderLayout())
     panel.add(game, BorderLayout.CENTER)
