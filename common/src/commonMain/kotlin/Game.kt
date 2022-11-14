@@ -5,7 +5,7 @@ import com.mojang.escape.entities.Player
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.LadderBlock
 import com.mojang.escape.menu.*
-import java.awt.event.KeyEvent
+import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -27,7 +27,7 @@ class Game {
         localPlayer.x = localLevel.xSpawn.toDouble()
         localPlayer.z = localLevel.ySpawn.toDouble()
         localLevel.addEntity(localPlayer)
-        localPlayer.rot = Math.PI + 0.4
+        localPlayer.rot = PI + 0.4
 
         level = localLevel
         player = localPlayer
@@ -61,49 +61,49 @@ class Game {
 
         time++
 
-        val strafe = keys[KeyEvent.VK_CONTROL] || keys[KeyEvent.VK_ALT] || keys[KeyEvent.VK_ALT_GRAPH] || keys[KeyEvent.VK_SHIFT]
+        val strafe = keys[Keys.KEY_CTRL.ordinal] || keys[Keys.KEY_ALT.ordinal] || keys[Keys.KEY_SHIFT.ordinal]
 
-        val lk = keys[KeyEvent.VK_LEFT] || keys[KeyEvent.VK_NUMPAD4]
-        val rk = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_NUMPAD6]
+        val lk = keys[Keys.KEY_LEFT.ordinal] || keys[Keys.KEY_NUMPAD4.ordinal]
+        val rk = keys[Keys.KEY_RIGHT.ordinal] || keys[Keys.KEY_NUMPAD6.ordinal]
 
-        val up = keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_NUMPAD8]
-        val down = keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN] || keys[KeyEvent.VK_NUMPAD2]
-        val left = keys[KeyEvent.VK_A] || (strafe && lk)
-        val right = keys[KeyEvent.VK_D] || (strafe && rk)
+        val up = keys[Keys.KEY_W.ordinal] || keys[Keys.KEY_UP.ordinal] || keys[Keys.KEY_NUMPAD8.ordinal]
+        val down = keys[Keys.KEY_S.ordinal] || keys[Keys.KEY_DOWN.ordinal] || keys[Keys.KEY_NUMPAD2.ordinal]
+        val left = keys[Keys.KEY_A.ordinal] || (strafe && lk)
+        val right = keys[Keys.KEY_D.ordinal] || (strafe && rk)
 
-        val turnLeft = keys[KeyEvent.VK_Q] || (!strafe && lk)
-        val turnRight = keys[KeyEvent.VK_E] || (!strafe && rk)
+        val turnLeft = keys[Keys.KEY_Q.ordinal] || (!strafe && lk)
+        val turnRight = keys[Keys.KEY_E.ordinal] || (!strafe && rk)
 
-        val use = keys[KeyEvent.VK_SPACE]
+        val use = keys[Keys.KEY_SPACEBAR.ordinal]
 
         for (i in 0 until 8) {
-            if (keys[KeyEvent.VK_1 + i]) {
-                keys[KeyEvent.VK_1 + i] = false
+            if (keys[Keys.KEY_1.ordinal + i]) {
+                keys[Keys.KEY_1.ordinal + i] = false
                 player?.selectedSlot = i
                 player?.itemUseTime = 0
             }
         }
 
-        if (keys[KeyEvent.VK_ESCAPE]) {
-            keys[KeyEvent.VK_ESCAPE] = false
+        if (keys[Keys.KEY_ESCAPE.ordinal]) {
+            keys[Keys.KEY_ESCAPE.ordinal] = false
             if (menu == null) {
                 menu = PauseMenu()
             }
         }
 
         if (use) {
-            keys[KeyEvent.VK_SPACE] = false
+            keys[Keys.KEY_SPACEBAR.ordinal] = false
         }
 
         if (menu != null) {
-            keys[KeyEvent.VK_W] = false
-            keys[KeyEvent.VK_UP] = false
-            keys[KeyEvent.VK_NUMPAD8] = false
-            keys[KeyEvent.VK_S] = false
-            keys[KeyEvent.VK_DOWN] = false
-            keys[KeyEvent.VK_NUMPAD2] = false
-            keys[KeyEvent.VK_A] = false
-            keys[KeyEvent.VK_D] = false
+            keys[Keys.KEY_W.ordinal] = false
+            keys[Keys.KEY_UP.ordinal] = false
+            keys[Keys.KEY_NUMPAD8.ordinal] = false
+            keys[Keys.KEY_S.ordinal] = false
+            keys[Keys.KEY_DOWN.ordinal] = false
+            keys[Keys.KEY_NUMPAD2.ordinal] = false
+            keys[Keys.KEY_A.ordinal] = false
+            keys[Keys.KEY_D.ordinal] = false
 
             menu?.tick(this, up, down, left, right, use)
         } else {

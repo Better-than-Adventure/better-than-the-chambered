@@ -4,6 +4,7 @@ import com.mojang.escape.Art
 import kotlin.math.atan2
 import kotlin.math.sin
 import kotlin.math.sqrt
+import kotlin.random.Random
 
 class GhostBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.getCol(0xFFFF00)) {
     private var rotatePos = 0.0
@@ -39,7 +40,7 @@ class GhostBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.ge
 
             if (shootDelay > 0) {
                 shootDelay--
-            } else if (random.nextInt(10) == 0) {
+            } else if (Random.nextInt(10) == 0) {
                 shootDelay = 10
                 level?.addEntity(Bullet(this, x, z, atan2((level?.player?.x ?: 0.0) - x, (level?.player?.z ?: 0.0) - z), 0.20, 1, defaultColor))
             }

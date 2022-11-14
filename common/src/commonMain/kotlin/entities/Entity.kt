@@ -3,14 +3,10 @@ package com.mojang.escape.entities
 import com.mojang.escape.gui.Sprite
 import com.mojang.escape.level.Level
 import kotlin.math.abs
-import java.util.Random
 import kotlin.math.floor
+import kotlin.random.Random
 
 open class Entity {
-    companion object {
-        val random = Random()
-    }
-
     val sprites = arrayListOf<Sprite>()
 
     var x = 0.0

@@ -1,16 +1,20 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm") version "1.7.21"
+    kotlin("multiplatform") version "1.7.21"
 }
 
-group = "org.example"
+group = "com.mojang.escape"
 version = "1.0-SNAPSHOT"
+
+kotlin {
+    jvm {
+    }
+    js(IR) {
+        browser {
+
+        }
+    }
+}
 
 repositories {
     mavenCentral()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
 }

@@ -6,6 +6,7 @@ import com.mojang.escape.entities.Item
 import java.util.*
 import kotlin.math.sin
 import kotlin.math.sqrt
+import kotlin.random.Random
 
 class Screen(width: Int, height: Int): Bitmap(width, height) {
     companion object {
@@ -18,10 +19,9 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
     init {
         viewport = Bitmap3D(width, height - PANEL_HEIGHT)
 
-        val random = Random()
         testBitmap = Bitmap(64, 64)
         for (i in 0 until (64 * 64)) {
-            testBitmap.pixels[i] = random.nextInt() * (random.nextInt(5) / 4)
+            testBitmap.pixels[i] = Random.nextInt() * (Random.nextInt(5) / 4)
         }
     }
 
@@ -124,10 +124,8 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                 for (i in pixels.indices) {
                     pixels[i] = (pixels[i] and 0xFCFCFC) shr 2
                 }
-                if (System.currentTimeMillis() / 450 % 2 != 0L) {
-                    val msg = "Click to focus!"
-                    draw(msg, (width - msg.length * 6) / 2, height / 3 + 4, 0xFFFFFF)
-                }
+                val msg = "Click to focus!"
+                draw(msg, (width - msg.length * 6) / 2, height / 3 + 4, 0xFFFFFF)
             }
         }
     }

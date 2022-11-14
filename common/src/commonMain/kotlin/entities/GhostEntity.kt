@@ -4,6 +4,7 @@ import com.mojang.escape.Art
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
+import kotlin.random.Random
 
 class GhostEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.getCol(0xFFFFFF)) {
     private var rotatePos = 0.0
@@ -28,8 +29,8 @@ class GhostEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.getCol
                 this.rotatePos += 0.04
             } else {
                 this.rotatePos = level!!.player.rot
-                this.xa += (random.nextDouble() - 0.5) * 0.02
-                this.za += (random.nextDouble() - 0.5) * 0.02
+                this.xa += (Random.nextDouble() - 0.5) * 0.02
+                this.za += (Random.nextDouble() - 0.5) * 0.02
             }
 
             dd = sqrt(dd)

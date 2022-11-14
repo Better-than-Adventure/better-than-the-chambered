@@ -1,7 +1,3 @@
-repositories {
-    mavenCentral()
-}
-
 plugins {
     kotlin("multiplatform")
 }
@@ -9,13 +5,18 @@ plugins {
 group = "com.mojang.escape"
 version = "1.0-SNAPSHOT"
 
+repositories {
+    mavenCentral()
+}
+
 kotlin {
-    jvm {
+    js(IR) {
+        browser {
+        }
     }
     sourceSets {
-        val jvmMain by getting {
+        val jsMain by getting {
             dependencies {
-                implementation(kotlin("stdlib-jdk8"))
                 implementation(project(":common"))
             }
         }

@@ -2,6 +2,7 @@ package com.mojang.escape.entities
 
 import com.mojang.escape.Art
 import kotlin.math.atan2
+import kotlin.random.Random
 
 class OgreEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0x82A821)) {
     var shootDelay: Int = 0
@@ -21,7 +22,7 @@ class OgreEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(
         super.tick()
         if (shootDelay > 0) {
             shootDelay--
-        } else if (random.nextInt(40) == 0) {
+        } else if (Random.nextInt(40) == 0) {
             shootDelay = 40
             level!!.addEntity(Bullet(this, x, z, atan2(level!!.player.x - x, level!!.player.z - z), 0.3, 1, defaultColor))
         }

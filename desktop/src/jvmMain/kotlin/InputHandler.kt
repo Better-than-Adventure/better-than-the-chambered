@@ -50,6 +50,7 @@ class InputHandler: KeyListener, FocusListener, MouseListener, MouseMotionListen
                 keys[code] = false
             }
         }
+        val kt: KeyEvent
     }
 
     override fun keyTyped(e: KeyEvent?) {

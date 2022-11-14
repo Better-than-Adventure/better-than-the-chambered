@@ -2,6 +2,7 @@ package com.mojang.escape.entities
 
 import com.mojang.escape.Art
 import com.mojang.escape.Sound
+import kotlin.math.PI
 
 class OgreBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0xFFFF00)) {
     private var shootDelay: Int = 0
@@ -27,7 +28,7 @@ class OgreBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.get
             val salva = 10
 
             for (i in 0 until 4) {
-                val rot = Math.PI / 2 * (i + shootPhase / salva % 2 * 0.5)
+                val rot = PI / 2 * (i + shootPhase / salva % 2 * 0.5)
                 this.level!!.addEntity(Bullet(this, x, z, rot, 0.4, 1, defaultColor))
             }
 

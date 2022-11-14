@@ -5,9 +5,11 @@ import com.mojang.escape.Sound
 import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.gui.PoofSprite
 import com.mojang.escape.gui.Sprite
+import com.mojang.escape.nextGaussian
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
+import kotlin.random.Random
 
 open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, protected val defaultColor: Int): Entity() {
     protected val sprite: Sprite
@@ -36,10 +38,10 @@ open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, prot
         this.sprite.tex = defaultTex + animTime / 10 % 2
         this.move()
         if (xa == 0.0 || za == 0.0) {
-            this.rota += (random.nextGaussian() * random.nextDouble())
+            this.rota += (Random.nextGaussian() * Random.nextDouble())
         }
 
-        this.rota += (random.nextGaussian() * random.nextDouble()) * spinSpeed
+        this.rota += (Random.nextGaussian() * Random.nextDouble()) * spinSpeed
         rot += rota
         rota *= 0.8
         xa *= 0.8

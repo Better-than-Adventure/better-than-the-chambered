@@ -7,6 +7,7 @@ import com.mojang.escape.level.block.WaterBlock
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
+import kotlin.random.Random
 import kotlin.time.Duration.Companion.minutes
 
 class Player: Entity() {
@@ -192,7 +193,7 @@ class Player: Entity() {
             if (potions > 0 && health < 20) {
                 Sound.potion.play()
                 itemUseTime = 20
-                health += (5 + random.nextInt(6))
+                health += (5 + Random.nextInt(6))
                 if (health > 20) {
                     health = 20
                 }
@@ -298,7 +299,7 @@ class Player: Entity() {
         val dd = sqrt(xd * xd + zd * zd)
         xa -= xd / dd * 0.1
         za -= zd / dd * 0.1
-        rota += (random.nextDouble() - 0.5) * 0.2
+        rota += (Random.nextDouble() - 0.5) * 0.2
     }
 
     override fun collide(entity: Entity) {

@@ -4,11 +4,9 @@ import com.mojang.escape.Art
 import com.mojang.escape.Game
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.DoorBlock
+import com.mojang.escape.setAll
 import java.util.*
-import kotlin.math.ceil
-import kotlin.math.cos
-import kotlin.math.floor
-import kotlin.math.sin
+import kotlin.math.*
 
 class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
     private val zBuffer = DoubleArray(width * height)
@@ -28,12 +26,8 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
         val player = game.player!!
         val level = game.level!!
 
-        Arrays.setAll(zBufferWall) {
-            0.0
-        }
-        Arrays.setAll(zBuffer) {
-            10000.0
-        }
+        zBufferWall.setAll(0.0)
+        zBuffer.setAll(10000.0)
 
         rot = player.rot
         xCam = player.x - sin(rot) * 0.3
@@ -315,7 +309,7 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
         for (i in 0 until (width * height)) {
             val zl = zBuffer[i]
             if (zl < 0) {
-                val xx = (floor((i % width) - rot * 512 / (Math.PI * 2)).toInt()) and 511
+                val xx = (floor((i % width) - rot * 512 / (PI * 2)).toInt()) and 511
                 val yy = i / width
                 pixels[i] = Art.sky.pixels[xx + yy * 512] * 0x444455
             } else {
