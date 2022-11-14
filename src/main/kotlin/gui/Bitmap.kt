@@ -8,7 +8,7 @@ open class Bitmap(val width: Int, val height: Int) {
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ.,!?\"'/\\<>()[]{}" +  //
                 "abcdefghijklmnopqrstuvwxyz_               " +  //
                 "0123456789+-=*:;жедЕ                      " +  //
-                ""
+                "%"
     }
 
     val pixels = IntArray(width * height)

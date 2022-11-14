@@ -4,14 +4,24 @@ import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.menu.settings.BaseSetting
 import com.mojang.escape.menu.settings.BooleanSetting
+import com.mojang.escape.menu.settings.Settings
 
 class SettingsMenu: Menu() {
     private var selected = -1
 
-    private val settings = arrayOf<BaseSetting<*>>(
-        BooleanSetting("Sound", true),
-        BooleanSetting("Dummy", false)
-    )
+    private val settings = Settings {
+        rangeSetting("Volume", 0, 0, 4)
+            .onChanged { oldValue, newValue ->
+                // set volume
+            }
+            .valueString {
+                arrayOf("0%", "25%", "50%", "75%", "100%")[it]
+            }
+        booleanSetting("Fullscreen", false)
+            .onChanged { oldValue, newValue ->
+                // toggle fullscreen
+            }
+    }
 
     override fun render(target: Bitmap) {
         target.fill(0, 0, 160, 120, 0)
@@ -49,7 +59,11 @@ class SettingsMenu: Menu() {
         }
         if (use) {
             Sound.click1.play()
-            game.menu = TitleMenu()
+            if (selected == -1) {
+                game.menu = TitleMenu()
+            } else {
+                settings[selected].onActivated()
+            }
         }
     }
 }
