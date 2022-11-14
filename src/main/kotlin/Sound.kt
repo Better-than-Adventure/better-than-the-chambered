@@ -1,9 +1,11 @@
 package com.mojang.escape
 
+import com.mojang.escape.menu.SettingsMenu
 import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.Clip
 import javax.sound.sampled.FloatControl
-import kotlin.concurrent.thread
+import kotlin.math.log10
+import kotlin.math.pow
 
 class Sound(private val clip: Clip?) {
     companion object {
@@ -47,9 +49,12 @@ class Sound(private val clip: Clip?) {
             try {
                 Thread {
                     synchronized(clip) {
+                        val fc = clip.getControl(FloatControl.Type.MASTER_GAIN) as FloatControl
+                        val volPercentage = SettingsMenu.volume / 4.0f
+                        var dbs = 10 * log10(503570175.0 * volPercentage * volPercentage * volPercentage * volPercentage * volPercentage) + fc.minimum - 1
                         clip.stop()
                         clip.framePosition = 0
-                        (clip.getControl(FloatControl.Type.MASTER_GAIN) as FloatControl).value = -40f // Volume control
+                        fc.value = dbs.toFloat()
                         clip.start()
                     }
                 }.start()

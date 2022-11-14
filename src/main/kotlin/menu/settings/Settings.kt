@@ -1,7 +1,40 @@
 package com.mojang.escape.menu.settings
 
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.util.Properties
+
 class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by mutableListOf() {
-    abstract class Setting<T>(val name: String, value: T) {
+    companion object {
+        fun writeToFile(settings: Settings) {
+            FileOutputStream("config.properties").use {
+                val prop = Properties()
+                var comments = ""
+                for (setting in settings) {
+                    prop.setProperty("config.${setting.name.lowercase()}", setting.value.toString().lowercase())
+                    comments += "${setting.name}: ${setting::class.simpleName}\n"
+                }
+
+                prop.store(it, comments)
+            }
+        }
+
+        fun readFromFile(settings: Settings) {
+            if (File("config.properties").exists()) {
+                FileInputStream("config.properties").use {
+                    val prop = Properties()
+                    prop.load(it)
+
+                    for (setting in settings) {
+                        setting.fromString(prop.getProperty("config.${setting.name.lowercase()}"))
+                    }
+                }
+            }
+        }
+    }
+
+    abstract class Setting<T>(private val settings: Settings, val name: String, value: T) {
         private var _onChanged: ((oldValue: T, newValue: T) -> Unit)? = null
         private var _valueString: ((value: T) -> String)? = null
 
@@ -14,6 +47,7 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
                 val oldValue = _value
                 _value = value
                 _onChanged?.invoke(oldValue, value)
+                Settings.writeToFile(settings)
             }
 
         val valueString: String
@@ -31,9 +65,11 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
         }
 
         abstract fun onActivated()
+
+        abstract fun fromString(string: String)
     }
 
-    class RangeSetting(name: String, value: Int, private val minValue: Int, private val maxValue: Int): Setting<Int>(name, value) {
+    class RangeSetting(settings: Settings, name: String, value: Int, private val minValue: Int, private val maxValue: Int): Setting<Int>(settings, name, value) {
         override var value: Int
             get() = super.value
             set(value) {
@@ -46,26 +82,35 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
         override fun onActivated() {
             value++
         }
+
+        override fun fromString(string: String) {
+            value = string.toInt()
+        }
     }
 
-    class BooleanSetting(name: String, value: Boolean): Setting<Boolean>(name, value) {
+    class BooleanSetting(settings: Settings, name: String, value: Boolean): Setting<Boolean>(settings, name, value) {
         override fun onActivated() {
             value = !value
+        }
+
+        override fun fromString(string: String) {
+            value = string.toBoolean()
         }
     }
 
     init {
         init(this)
+        Settings.readFromFile(this)
     }
 
     fun rangeSetting(name: String, value: Int, minValue: Int, maxValue: Int): RangeSetting {
-        val setting = RangeSetting(name, value, minValue, maxValue)
+        val setting = RangeSetting(this, name, value, minValue, maxValue)
         add(setting)
         return setting
     }
 
     fun booleanSetting(name: String, value: Boolean): BooleanSetting {
-        val setting = BooleanSetting(name, value)
+        val setting = BooleanSetting(this, name, value)
         add(setting)
         return setting
     }

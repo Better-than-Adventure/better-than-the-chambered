@@ -2,24 +2,23 @@ package com.mojang.escape.menu
 
 import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
-import com.mojang.escape.menu.settings.BaseSetting
-import com.mojang.escape.menu.settings.BooleanSetting
 import com.mojang.escape.menu.settings.Settings
 
 class SettingsMenu: Menu() {
+    companion object {
+        var volume = 0
+    }
+
     private var selected = -1
 
     private val settings = Settings {
-        rangeSetting("Volume", 0, 0, 4)
-            .onChanged { oldValue, newValue ->
-                // set volume
+        rangeSetting("Volume", 2, 0, 4)
+            .onChanged { _, newValue ->
+                volume = newValue
+                Sound.hit.play()
             }
             .valueString {
                 arrayOf("0%", "25%", "50%", "75%", "100%")[it]
-            }
-        booleanSetting("Fullscreen", false)
-            .onChanged { oldValue, newValue ->
-                // toggle fullscreen
             }
     }
 
