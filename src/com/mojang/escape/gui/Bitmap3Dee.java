@@ -5,12 +5,12 @@ import com.mojang.escape.entities.Entity;
 import com.mojang.escape.level.Level;
 import com.mojang.escape.level.block.*;
 
-public class Bitmap3D extends Bitmap {
+public class Bitmap3Dee extends Bitmap {
 	private double[] zBuffer;
 	private double[] zBufferWall;
 	private double xCam, yCam, zCam, rCos, rSin, fov, xCenter, yCenter, rot;
 
-	public Bitmap3D(int width, int height) {
+	public Bitmap3Dee(int width, int height) {
 		super(width, height);
 
 		zBuffer = new double[width * height];
@@ -65,17 +65,17 @@ public class Bitmap3D extends Bitmap {
 
 				if (c.getSolidRender()) {
 					if (!e.getSolidRender()) {
-						renderWall(xb + 1, zb + 1, xb + 1, zb, c.getTex(), c.getCol());
+						renderWall(xb + 1, zb + 1, xb + 1, zb + 0, c.getTex(), c.getCol());
 					}
 					if (!s.getSolidRender()) {
-						renderWall(xb, zb + 1, xb + 1, zb + 1, c.getTex(), (c.getCol() & 0xfefefe) >> 1);
+						renderWall(xb + 0, zb + 1, xb + 1, zb + 1, c.getTex(), (c.getCol() & 0xfefefe) >> 1);
 					}
 				} else {
 					if (e.getSolidRender()) {
-						renderWall(xb + 1, zb, xb + 1, zb + 1, e.getTex(), e.getCol());
+						renderWall(xb + 1, zb + 0, xb + 1, zb + 1, e.getTex(), e.getCol());
 					}
 					if (s.getSolidRender()) {
-						renderWall(xb + 1, zb + 1, xb, zb + 1, s.getTex(), (s.getCol() & 0xfefefe) >> 1);
+						renderWall(xb + 1, zb + 1, xb + 0, zb + 1, s.getTex(), (s.getCol() & 0xfefefe) >> 1);
 					}
 				}
 			}
