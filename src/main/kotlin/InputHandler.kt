@@ -5,11 +5,15 @@ import java.util.*
 
 class InputHandler: KeyListener, FocusListener, MouseListener, MouseMotionListener {
     val keys = BooleanArray(Keys.values().size)
+    var mousePos = Pair(0, 0)
+    var mousePosOnScreen = Pair(0, 0)
 
     override fun mouseDragged(e: MouseEvent?) {
     }
 
     override fun mouseMoved(e: MouseEvent?) {
+        mousePos = Pair(e!!.x, e.y)
+        mousePosOnScreen = Pair(e.xOnScreen, e.yOnScreen)
     }
 
     override fun mouseClicked(e: MouseEvent?) {

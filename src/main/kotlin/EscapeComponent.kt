@@ -32,6 +32,8 @@ class EscapeComponent: Canvas(), Runnable {
 
     private var hadFocus = false
 
+    private var robot = Robot()
+
     init {
         val size = Dimension(WIDTH * SCALE, HEIGHT * SCALE)
         this.size = size
@@ -131,16 +133,17 @@ class EscapeComponent: Canvas(), Runnable {
 
     private fun tick() {
         if (hasFocus()) {
-            game.tick(inputHandler.keys)
+            if (game.menu != null || !hasFocus()) {
+                cursor = defaultCursor
+            } else {
+                cursor = emptyCursor
+                robot.mouseMove(locationOnScreen.x + width / 2, locationOnScreen.y + height / 2)
+            }
+            game.tick(inputHandler.keys, Pair(inputHandler.mousePos.first - width / 2, inputHandler.mousePos.second - height / 2))
         }
     }
 
     private fun render() {
-        if (game.menu != null || !hasFocus()) {
-            cursor = defaultCursor
-        } else {
-            cursor = emptyCursor
-        }
         val bs = bufferStrategy
         if (bs == null) {
             createBufferStrategy(3)

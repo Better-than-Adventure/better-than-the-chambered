@@ -54,7 +54,7 @@ class Game {
         player = localPlayer
     }
 
-    fun tick(keys: BooleanArray) {
+    fun tick(keys: BooleanArray, mousePos: Pair<Int, Int>) {
         if (pauseTime > 0) {
             pauseTime--
             return
@@ -94,14 +94,17 @@ class Game {
             val left = keys[GameSettings.keyStrafeLeft.value.ordinal] || (strafe && lk)
             val right = keys[GameSettings.keyStrafeRight.value.ordinal] || (strafe && rk)
 
-            val turnLeft = keys[GameSettings.keyTurnLeft.value.ordinal] || (!strafe && lk)
-            val turnRight = keys[GameSettings.keyTurnRight.value.ordinal] || (!strafe && rk)
+            var turnLeft = keys[GameSettings.keyTurnLeft.value.ordinal] || (!strafe && lk)
+            var turnRight = keys[GameSettings.keyTurnRight.value.ordinal] || (!strafe && rk)
 
             val use = keys[GameSettings.keyInteract.value.ordinal]
 
             if (use) {
                 keys[GameSettings.keyInteract.value.ordinal] = false
             }
+
+            if (mousePos.first < 0) player?.rot = player?.rot?.minus(mousePos.first * 0.01)!!
+            else if (mousePos.first > 0) player?.rot = player?.rot?.minus(mousePos.first * 0.01)!!
 
             for (i in 0 until 8) {
                 if (keys[GameSettings.keySlots[i].value.ordinal]) {
