@@ -7,6 +7,8 @@ import com.mojang.escape.entities.Item
 import com.mojang.escape.menu.SettingsMenu
 import com.mojang.escape.menu.settings.GameSettings
 import java.util.*
+import kotlin.math.floor
+import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.sqrt
 
@@ -35,6 +37,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
             if (game.menu != null) {
                 game.menu!!.render(this)
             }
+            postProcess(this, false)
         } else {
             val player = game.player!!
             val level = game.level!!
@@ -61,6 +64,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
 
                 }
 
+                postProcess(viewport, true)
                 draw(viewport, 0, 0)
                 var xx = (player.turnBob * 32).toInt()
                 var yy = (sin(player.bobPhase * 0.4) * 1 * player.bob + player.bob * 2).toInt()
@@ -124,64 +128,102 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                 game.menu!!.render(this)
             }
 
-//            if (!hasFocus) {
-//                for (i in pixels.indices) {
-//                    pixels[i] = (pixels[i] and 0xFCFCFC) shr 2
-//                }
-//                if (System.currentTimeMillis() / 450 % 2 != 0L) {
-//                    val msg = "Click to focus!"
-//                    draw(msg, (width - msg.length * 6) / 2, height / 3 + 4, 0xFFFFFF)
-//                }
-//            }
+            if (!hasFocus) {
+                for (i in pixels.indices) {
+                    pixels[i] = (pixels[i] and 0xFCFCFC) shr 2
+                }
+                if (System.currentTimeMillis() / 450 % 2 != 0L) {
+                    val msg = "Click to focus!"
+                    draw(msg, (width - msg.length * 6) / 2, height / 3 + 4, 0xFFFFFF)
+                }
+            }
+
+            postProcess(this, false)
         }
-        postProcess(this)
     }
 
-    fun postProcess(bitmap: Bitmap) {
+    fun postProcess(bitmap: Bitmap, dither: Boolean) {
+        val MAX_LEVEL = 4
+
+        fun distance(a: Triple<Double, Double, Double>, b: Triple<Double, Double, Double>): Double {
+            return sqrt((b.first - a.first).pow(2) + (b.second - a.second).pow(2) + (b.third - a.third).pow(2))
+        }
+        fun bayer2x2(x: Int, y: Int): Int {
+            return (4 - x - (y shl 1)) % 4
+        }
+        fun bayer(x: Int, y: Int): Float {
+            var sum = 0
+            for (i in 0 until MAX_LEVEL) {
+                sum += bayer2x2(x shr (MAX_LEVEL - 1 - i) and 1, y shr (MAX_LEVEL - 1 - i) and 1) shl (2 * i)
+            }
+            return sum.toFloat() / (2 shl (MAX_LEVEL * 2 - 1)).toFloat()
+        }
+
+        val colorDetail = 1.0
+
         if (GameSettings.graphics == 1 || GameSettings.graphics == 2) {
+            // Shamelessly copied from https://www.shadertoy.com/view/4dXSzl
             for (i in bitmap.pixels.indices) {
                 val x = i / bitmap.width
                 val y = i % bitmap.width
-                val alternate = (((x % 2) + (y % 2)) % 2) == 1
-                val ega = arrayOf(0x00, 0x55, 0xAA, 0xFF)
 
                 // 0x00, 0x55, 0xAA, 0xFF
                 val pixel = bitmap.pixels[i]
                 val r = (pixel shr 16) and 0xFF
                 val g = (pixel shr  8) and 0xFF
                 val b = (pixel shr  0) and 0xFF
-                var nr = ega[((r / 255.0) * (ega.size - 1)).toInt()]
-                var ng = ega[((g / 255.0) * (ega.size - 1)).toInt()]
-                var nb = ega[((b / 255.0) * (ega.size - 1)).toInt()]
+                var s = Triple(r / 255.0, g / 255.0, b / 255.0)
+                if (dither) {
+                    val bayer = bayer(x, y)
+                    s = Triple(s.first + (bayer - 0.5) * 0.5, s.second + (bayer - 0.5) * 0.5, s.third + (bayer - 0.5) * 0.5)
+                }
+                s = Triple(floor(s.first * colorDetail + 0.5) / colorDetail, floor(s.second * colorDetail + 0.5) / colorDetail, floor(s.third * colorDetail + 0.5) / colorDetail)
 
-                if (GameSettings.graphics == 2) {
-                    var higher = false
-                    if ((nr == 0xFF || ng == 0xFF || nb == 0xFF) || ((nr == 0xAA && ng == 0xAA) || (nr == 0xAA && nb == 0xAA) || (ng == 0xAA && nb == 0xAA))) {
-                        higher = true
-                    }
-                    if (higher) {
-                        nr = if (nr == 0x00 || nr == 0xAA) {
-                            0
-                        } else {
-                            1
-                        }
-                        ng = if (ng == 0x00 || ng == 0xAA) {
-                            0
-                        } else {
-                            1
-                        }
-                        nb = if (nb == 0x00 || nb == 0xAA) {
-                            0
-                        } else {
-                            1
-                        }
-                        nr = 0x55 + nr * 0xAA
-                        ng = 0x55 + ng * 0xAA
-                        nb = 0x55 + nb * 0xAA
+                var dist = 0.0
+                var bestDistance = 1000.0
+                var bestColor = Triple(0.0, 0.0, 0.0)
+                fun check(r: Double, g: Double, b: Double) {
+                    val color = Triple(r, g, b)
+                    dist = distance(s, color)
+                    if (dist < bestDistance) {
+                        bestDistance = dist
+                        bestColor = color
                     }
                 }
 
-                bitmap.pixels[i] = (nr shl 16) or (ng shl 8) or (nb shl 0)
+                run {
+                    val u = 0.0
+                    val o = 1.0 / 3.0
+                    val b = 2.0 / 3.0
+                    val B = 1.0
+
+                    if (GameSettings.graphics == 1) {
+                        check(u, u, u)
+                        check(u, u, b)
+                        check(u, b, u)
+                        check(u, b, b)
+                        check(b, u, u)
+                        check(b, u, b)
+                        check(b, b, u)
+                        check(b, b, b)
+
+                        check(o, o, o)
+                        check(o, o, B)
+                        check(o, B, o)
+                        check(o, B, B)
+                        check(B, o, o)
+                        check(B, o, B)
+                        check(B, B, o)
+                        check(B, B, B)
+                    } else if (GameSettings.graphics == 2) {
+                        check(u, u, u)
+                        check(o, B, B)
+                        check(B, o, B)
+                        check(B, B, B)
+                    }
+                }
+
+                bitmap.pixels[i] = ((bestColor.first * 255).toInt() shl 16) or ((bestColor.second * 255).toInt() shl 8) or ((bestColor.third * 255).toInt() shl 0)
             }
         }
     }
