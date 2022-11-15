@@ -4,11 +4,23 @@ import com.mojang.escape.Art
 import com.mojang.escape.Game
 import com.mojang.escape.Sound
 import com.mojang.escape.gui.Bitmap
+import com.mojang.escape.json.JsonHandler
+import com.mojang.escape.json.JsonHandler.Companion.fromJson
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import java.io.InputStream
+import java.nio.charset.Charset
+
+@Serializable
+data class Item(
+    @SerialName("test") val test: String,
+)
 
 class TitleMenu: Menu() {
     private val options = arrayOf("New game", "Settings", "About")
     private var selected = 0
     private var firstTick = true
+
 
     override fun render(target: Bitmap) {
         target.fill(0, 0, 160, 120, 0)
@@ -23,7 +35,12 @@ class TitleMenu: Menu() {
             }
             target.draw(msg, 40, 60 + index * 10, Art.getCol(col))
         }
-        target.draw("Copyright (C) 2011 Mojang", 1 + 4, 120 - 9, Art.getCol(0x303030))
+
+        val inputStream = JsonHandler.readFile("/json/hello_world.json")?.fromJson<Item>();
+        if (inputStream != null) {
+            target.draw(inputStream.test, 1 + 4, 120 - 9, Art.getCol(0x303030))
+        }
+        //target.draw("Copyright (C) 2011 Mojang", 1 + 4, 120 - 9, Art.getCol(0x303030))
     }
 
     override fun tick(game: Game, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
