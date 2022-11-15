@@ -15,6 +15,7 @@ class SettingsMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         var keyStrafeLeft = Keys.KEY_A
         var keyStrafeRight = Keys.KEY_D
         var keyInteract = Keys.KEY_SPACE
+        val keySlots = arrayOf(Keys.KEY_1, Keys.KEY_2, Keys.KEY_3, Keys.KEY_4, Keys.KEY_5, Keys.KEY_6, Keys.KEY_7, Keys.KEY_8)
     }
 
     private var selected = -1
@@ -57,6 +58,38 @@ class SettingsMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         keySetting("Interact", keyInteract)
             .onChanged { _, newValue ->
                 keyInteract = newValue
+            }
+        keySetting("Slot 1", keySlots[0])
+            .onChanged { _, newValue ->
+                keySlots[0] = newValue
+            }
+        keySetting("Slot 2", keySlots[1])
+            .onChanged { _, newValue ->
+                keySlots[1] = newValue
+            }
+        keySetting("Slot 3", keySlots[2])
+            .onChanged { _, newValue ->
+                keySlots[2] = newValue
+            }
+        keySetting("Slot 4", keySlots[3])
+            .onChanged { _, newValue ->
+                keySlots[3] = newValue
+            }
+        keySetting("Slot 5", keySlots[4])
+            .onChanged { _, newValue ->
+                keySlots[4] = newValue
+            }
+        keySetting("Slot 6", keySlots[5])
+            .onChanged { _, newValue ->
+                keySlots[5] = newValue
+            }
+        keySetting("Slot 7", keySlots[6])
+            .onChanged { _, newValue ->
+                keySlots[6] = newValue
+            }
+        keySetting("Slot 8", keySlots[7])
+            .onChanged { _, newValue ->
+                keySlots[7] = newValue
             }
     }
 

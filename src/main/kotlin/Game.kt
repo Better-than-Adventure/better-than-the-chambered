@@ -98,8 +98,8 @@ class Game {
             }
 
             for (i in 0 until 8) {
-                if (keys[Keys.KEY_1.ordinal + i]) {
-                    keys[Keys.KEY_1.ordinal + i] = false
+                if (keys[SettingsMenu.keySlots[i].ordinal]) {
+                    keys[SettingsMenu.keySlots[i].ordinal] = false
                     player?.selectedSlot = i
                     player?.itemUseTime = 0
                 }
