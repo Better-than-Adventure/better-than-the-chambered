@@ -29,7 +29,7 @@ class GameSettings {
             mouseLook = booleanSetting("Mouselook", true)
             graphics = rangeSetting("Graphics", 0, 0, 2)
                 .valueString {
-                    arrayOf("VGA", "EGA", "CGA")[it]
+                    arrayOf("Full", "EGA", "CGA")[it]
                 }
             as Settings.RangeSetting
             keyForward = keySetting("Forward", Keys.KEY_W)

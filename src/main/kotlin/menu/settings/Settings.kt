@@ -4,6 +4,7 @@ import com.mojang.escape.Keys
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.util.EnumMap
 import java.util.Properties
 
 class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by mutableListOf() {

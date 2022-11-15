@@ -4,6 +4,7 @@ import com.mojang.escape.Art
 import com.mojang.escape.Game
 import com.mojang.escape.closest
 import com.mojang.escape.entities.Item
+import com.mojang.escape.gui.palette.Palette
 import com.mojang.escape.menu.SettingsMenu
 import com.mojang.escape.menu.settings.GameSettings
 import java.util.*
@@ -145,7 +146,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
         val MAX_LEVEL = 4
 
         fun distance(a: Triple<Double, Double, Double>, b: Triple<Double, Double, Double>): Double {
-            return sqrt((b.first - a.first).pow(2) + (b.second - a.second).pow(2) + (b.third - a.third).pow(2))
+            return (b.first - a.first).pow(2) + (b.second - a.second).pow(2) + (b.third - a.third).pow(2)
         }
         fun bayer2x2(x: Int, y: Int): Int {
             return (4 - x - (y shl 1)) % 4
@@ -160,7 +161,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
 
         val colorDetail = 1.0
 
-        if (GameSettings.graphics.value == 1 || GameSettings.graphics.value == 2) {
+        if (GameSettings.graphics.value > 0) {
             // Shamelessly copied from https://www.shadertoy.com/view/4dXSzl
             for (i in bitmap.pixels.indices) {
                 val x = i / bitmap.width
@@ -176,7 +177,10 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                     val bayer = bayer(x, y)
                     s = Triple(s.first + (bayer - 0.5) * 0.5, s.second + (bayer - 0.5) * 0.5, s.third + (bayer - 0.5) * 0.5)
                 }
-                s = Triple(floor(s.first * colorDetail + 0.5) / colorDetail, floor(s.second * colorDetail + 0.5) / colorDetail, floor(s.third * colorDetail + 0.5) / colorDetail)
+                if (GameSettings.graphics.value == 1) {
+                    val blend = Triple(floor(s.first * colorDetail + 0.5) / colorDetail, floor(s.second * colorDetail + 0.5) / colorDetail, floor(s.third * colorDetail + 0.5) / colorDetail)
+                    s = Triple(s.first * 0.6 + blend.first * 0.4, s.second * 0.6 + blend.second * 0.4, s.third * 0.6 + blend.third * 0.4)
+                }
 
                 var dist = 0.0
                 var bestDistance = 1000.0
@@ -190,36 +194,12 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                     }
                 }
 
-                run {
-                    val u = 0.0
-                    val o = 1.0 / 3.0
-                    val b = 2.0 / 3.0
-                    val B = 1.0
-
-                    if (GameSettings.graphics.value == 1) {
-                        check(u, u, u)
-                        check(u, u, b)
-                        check(u, b, u)
-                        check(u, b, b)
-                        check(b, u, u)
-                        check(b, u, b)
-                        check(b, b, u)
-                        check(b, b, b)
-
-                        check(o, o, o)
-                        check(o, o, B)
-                        check(o, B, o)
-                        check(o, B, B)
-                        check(B, o, o)
-                        check(B, o, B)
-                        check(B, B, o)
-                        check(B, B, B)
-                    } else if (GameSettings.graphics.value == 2) {
-                        check(u, u, u)
-                        check(o, B, B)
-                        check(B, o, B)
-                        check(B, B, B)
-                    }
+                val palette = when (GameSettings.graphics.value) {
+                    2 -> Palette.cga
+                    else -> Palette.ega
+                }
+                for (color in palette.iterator()) {
+                    check(color.first / 255.0, color.second / 255.0, color.third / 255.0)
                 }
 
                 bitmap.pixels[i] = ((bestColor.first * 255).toInt() shl 16) or ((bestColor.second * 255).toInt() shl 8) or ((bestColor.third * 255).toInt() shl 0)
