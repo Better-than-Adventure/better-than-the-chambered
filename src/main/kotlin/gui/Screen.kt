@@ -15,7 +15,6 @@ import kotlin.math.sqrt
 class Screen(width: Int, height: Int): Bitmap(width, height) {
     companion object {
         const val PANEL_HEIGHT = 29
-        private val ega = arrayOf(0x000000, 0x0000AA, 0x00AA00, 0x00AAAA, 0xAA0000, 0xAA00AA, 0xAA5500, 0xAAAAAA, 0x555555, 0x5555FF, 0x55FF55, 0x55FFFF, 0xFF5555, 0xFF55FF, 0xFFFF55, 0xFFFFFF)
     }
 
     private val testBitmap: Bitmap
@@ -161,7 +160,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
 
         val colorDetail = 1.0
 
-        if (GameSettings.graphics == 1 || GameSettings.graphics == 2) {
+        if (GameSettings.graphics.value == 1 || GameSettings.graphics.value == 2) {
             // Shamelessly copied from https://www.shadertoy.com/view/4dXSzl
             for (i in bitmap.pixels.indices) {
                 val x = i / bitmap.width
@@ -197,7 +196,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                     val b = 2.0 / 3.0
                     val B = 1.0
 
-                    if (GameSettings.graphics == 1) {
+                    if (GameSettings.graphics.value == 1) {
                         check(u, u, u)
                         check(u, u, b)
                         check(u, b, u)
@@ -215,7 +214,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                         check(B, o, B)
                         check(B, B, o)
                         check(B, B, B)
-                    } else if (GameSettings.graphics == 2) {
+                    } else if (GameSettings.graphics.value == 2) {
                         check(u, u, u)
                         check(o, B, B)
                         check(B, o, B)

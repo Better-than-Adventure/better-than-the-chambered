@@ -51,7 +51,7 @@ class Sound(private val clip: Clip?) {
                 Thread {
                     synchronized(clip) {
                         val fc = clip.getControl(FloatControl.Type.MASTER_GAIN) as FloatControl
-                        val volPercentage = GameSettings.volume / 4.0f
+                        val volPercentage = GameSettings.volume.value / 4.0f
                         var dbs = 10 * log10(503570175.0 * volPercentage * volPercentage * volPercentage * volPercentage * volPercentage) + fc.minimum - 1
                         clip.stop()
                         clip.framePosition = 0

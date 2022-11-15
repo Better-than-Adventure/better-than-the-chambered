@@ -10,7 +10,7 @@ class SettingsMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         const val LINES_ON_SCREEN = 6
     }
 
-    private var selected = -1
+    private var selected = 0
     private var scroll = 0
     private var pickingKey: Settings.KeySetting? = null
 
@@ -68,6 +68,9 @@ class SettingsMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
             } else {
                 selected = -1
             }
+        }
+        if (left || right) {
+            selected = -1
         }
         if (use) {
             Sound.click1.play()

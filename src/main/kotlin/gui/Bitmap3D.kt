@@ -59,8 +59,8 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
                 val e = level.getBlock(xb + 1, zb)
                 val s = level.getBlock(xb, zb + 1)
 
-                val cAltCol = if (GameSettings.graphics == 0) (c.col and 0xFEFEFE) shr 1 else c.col and 0x7F7F7F
-                val eAltCol = if (GameSettings.graphics == 0) (s.col and 0xFEFEFE) shr 1 else s.col and 0x7F7F7F
+                val cAltCol = if (GameSettings.graphics.value == 0) (c.col and 0xFEFEFE) shr 1 else c.col and 0x7F7F7F
+                val eAltCol = if (GameSettings.graphics.value == 0) (s.col and 0xFEFEFE) shr 1 else s.col and 0x7F7F7F
 
                 if (c is DoorBlock) {
                     val rr = 1 / 8.0

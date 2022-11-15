@@ -136,11 +136,12 @@ class EscapeComponent: Canvas(), Runnable {
     }
 
     private fun render() {
-        if (hadFocus != hasFocus()) {
-            hadFocus = !hadFocus
-            cursor = if (hadFocus) emptyCursor else defaultCursor
+        if (game.menu != null || !hasFocus()) {
+            cursor = defaultCursor
+        } else {
+            cursor = emptyCursor
         }
-        var bs = bufferStrategy
+        val bs = bufferStrategy
         if (bs == null) {
             createBufferStrategy(3)
             return
