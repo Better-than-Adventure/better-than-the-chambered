@@ -139,7 +139,7 @@ class EscapeComponent: Canvas(), Runnable {
                 cursor = emptyCursor
                 robot.mouseMove(locationOnScreen.x + width / 2, locationOnScreen.y + height / 2)
             }
-            game.tick(inputHandler.keys, Pair(inputHandler.mousePos.first - width / 2, inputHandler.mousePos.second - height / 2))
+            game.tick(inputHandler.keys, Pair(inputHandler.mousePos.first - width / 2, inputHandler.mousePos.second - height / 2), inputHandler.mouseButtons)
         }
     }
 
