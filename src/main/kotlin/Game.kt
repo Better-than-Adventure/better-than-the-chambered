@@ -104,8 +104,10 @@ class Game {
                 mouseButtons[0] = false
             }
 
-            if (mousePos.first < 0) player?.rot = player?.rot?.minus(mousePos.first * 0.01)!!
-            else if (mousePos.first > 0) player?.rot = player?.rot?.minus(mousePos.first * 0.01)!!
+            if (GameSettings.mouseLook.value) {
+                if (mousePos.first < 0) player?.rot = player?.rot?.minus(mousePos.first * 0.01)!!
+                else if (mousePos.first > 0) player?.rot = player?.rot?.minus(mousePos.first * 0.01)!!
+            }
 
             for (i in 0 until 8) {
                 if (keys[GameSettings.keySlots[i].value.ordinal]) {
