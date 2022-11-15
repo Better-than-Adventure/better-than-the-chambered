@@ -61,15 +61,18 @@ class SettingsMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     }
 
     override fun render(target: Bitmap) {
-        //target.fill(0, 0, 160, 120, 0)
-
         target.draw("Settings", 40, 8, Art.getCol(0xFFFFFF))
+
+        val scrollProgress = scroll.toDouble() / (settings.size - LINES_ON_SCREEN).toDouble()
+        val scrollbarY = scrollProgress * (LINES_ON_SCREEN - 1) * 8
+        target.fill(target.width - 6, 32, target.width - 1, 32 + LINES_ON_SCREEN * 8 - 1, 0x505050.col)
+        target.draw("ç", target.width - 6, 32 + scrollbarY.toInt(), 0xA0A0A0.col)
 
         for (index in scroll until (scroll + LINES_ON_SCREEN)) {
             val setting = settings[index]
             val str = if (index == selected) "-> ${setting.valueString}" else setting.valueString
             target.draw(setting.name, 4, 32 + (index - scroll) * 8, (if (index == selected) 0xFFFF80 else 0xA0A0A0).col)
-            target.draw(str, target.width - 4 - str.displayWidth, 32 + (index - scroll) * 8, (if (index == selected) 0xFFFF80 else 0xA0A0A0).col)
+            target.draw(str, target.width - 8 - str.displayWidth, 32 + (index - scroll) * 8, (if (index == selected) 0xFFFF80 else 0xA0A0A0).col)
         }
 
         val str = if (selected == -1) "-> Back" else "   Back"
