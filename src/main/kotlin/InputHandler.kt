@@ -4,7 +4,7 @@ import java.awt.event.*
 import java.util.*
 
 class InputHandler: KeyListener, FocusListener, MouseListener, MouseMotionListener {
-    val keys = BooleanArray(65536)
+    val keys = BooleanArray(Keys.values().size)
 
     override fun mouseDragged(e: MouseEvent?) {
     }
@@ -36,18 +36,22 @@ class InputHandler: KeyListener, FocusListener, MouseListener, MouseMotionListen
 
     override fun keyPressed(e: KeyEvent?) {
         if (e != null) {
-            val code = e.keyCode
-            if (code > 0 && code < keys.size) {
-                keys[code] = true
+            for (key in Keys.values()) {
+                if (key.code == e.keyCode) {
+                    keys[key.ordinal] = true
+                    break
+                }
             }
         }
     }
 
     override fun keyReleased(e: KeyEvent?) {
         if (e != null) {
-            val code = e.keyCode
-            if (code > 0 && code < keys.size) {
-                keys[code] = false
+            for (key in Keys.values()) {
+                if (key.code == e.keyCode) {
+                    keys[key.ordinal] = false
+                    break
+                }
             }
         }
     }

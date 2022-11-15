@@ -6,7 +6,7 @@ import com.mojang.escape.Sound
 import com.mojang.escape.entities.Player
 import com.mojang.escape.gui.Bitmap
 
-class WinMenu(private val player: Player): Menu() {
+class WinMenu(private val player: Player, lastMenu: Menu? = null): Menu(lastMenu) {
     /**
      * The number of ticks remaining until the Continue button is displayed.
      */
@@ -26,7 +26,7 @@ class WinMenu(private val player: Player): Menu() {
         }
     }
 
-    override fun tick(game: Game, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
+    override fun tick(game: Game, keys: BooleanArray, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
         if (tickDelay > 0) {
             tickDelay--
         } else if (use) {

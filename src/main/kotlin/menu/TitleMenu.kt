@@ -5,7 +5,7 @@ import com.mojang.escape.Game
 import com.mojang.escape.Sound
 import com.mojang.escape.gui.Bitmap
 
-class TitleMenu: Menu() {
+class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     private val options = arrayOf("New game", "Settings", "About")
     private var selected = 0
     private var firstTick = true
@@ -26,7 +26,7 @@ class TitleMenu: Menu() {
         target.draw("Copyright (C) 2011 Mojang", 1 + 4, 120 - 9, Art.getCol(0x303030))
     }
 
-    override fun tick(game: Game, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
+    override fun tick(game: Game, keys: BooleanArray, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
         if (firstTick) {
             firstTick = false
             Sound.altar.play()
@@ -54,7 +54,7 @@ class TitleMenu: Menu() {
                     game.newGame()
                 }
                 1 -> {
-                    game.menu = SettingsMenu()
+                    game.menu = SettingsMenu(this)
                 }
                 2 -> {
                     game.menu = AboutMenu()
