@@ -39,7 +39,7 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
         private var _onChanged: ((oldValue: T, newValue: T) -> Unit)? = null
         private var _valueString: ((value: T) -> String)? = null
 
-        protected var _value = value
+        private var _value = value
         open var value: T
             get() {
                 return _value
@@ -90,7 +90,7 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
         }
 
         override fun fromConfigString(string: String) {
-            _value = string.toInt()
+            value = string.toInt()
         }
     }
 
@@ -104,7 +104,7 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
         }
 
         override fun fromConfigString(string: String) {
-            _value = string.toBoolean()
+            value = string.toBoolean()
         }
     }
 
@@ -123,17 +123,12 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
         }
 
         override fun fromConfigString(string: String) {
-            _value = Keys.values()[string.toInt()]
+            value = Keys.values()[string.toInt()]
         }
     }
 
     init {
         init(this)
-        try {
-            Settings.readFromFile(this)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
     fun rangeSetting(name: String, value: Int, minValue: Int, maxValue: Int): RangeSetting {

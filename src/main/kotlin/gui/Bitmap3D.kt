@@ -4,6 +4,8 @@ import com.mojang.escape.Art
 import com.mojang.escape.Game
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.DoorBlock
+import com.mojang.escape.menu.SettingsMenu
+import com.mojang.escape.menu.settings.GameSettings
 import java.util.*
 import kotlin.math.ceil
 import kotlin.math.cos
@@ -57,17 +59,20 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
                 val e = level.getBlock(xb + 1, zb)
                 val s = level.getBlock(xb, zb + 1)
 
+                val cAltCol = if (GameSettings.graphics == 0) (c.col and 0xFEFEFE) shr 1 else c.col and 0x7F7F7F
+                val eAltCol = if (GameSettings.graphics == 0) (s.col and 0xFEFEFE) shr 1 else s.col and 0x7F7F7F
+
                 if (c is DoorBlock) {
                     val rr = 1 / 8.0
                     val openness = 1 - c.openness * 7 / 8
                     if (e.solidRender) {
-                        renderWall(xb + openness, zb + 0.5 - rr, xb.toDouble(), zb + 0.5 - rr, c.tex, (c.col and 0xFEFEFE) shr 1, 0.0, openness)
-                        renderWall(xb.toDouble(), zb + 0.5 + rr, xb + openness, zb + 0.5 + rr, c.tex, (c.col and 0xFEFEFE) shr 1, openness, 0.0)
+                        renderWall(xb + openness, zb + 0.5 - rr, xb.toDouble(), zb + 0.5 - rr, c.tex, cAltCol, 0.0, openness)
+                        renderWall(xb.toDouble(), zb + 0.5 + rr, xb + openness, zb + 0.5 + rr, c.tex, cAltCol, openness, 0.0)
                         renderWall(xb + openness, zb + 0.5 + rr, xb + openness, zb + 0.5 - rr, c.tex, c.col, 0.5 - rr, 0.5 + rr)
                     } else {
                         renderWall(xb + 0.5 - rr, zb.toDouble(), xb + 0.5 - rr, zb + openness, c.tex, c.col, openness, 0.0)
                         renderWall(xb + 0.5 + rr, zb + openness, xb + 0.5 + rr, zb.toDouble(), c.tex, c.col, 0.0, openness)
-                        renderWall(xb + 0.5 - rr, zb + openness, xb + 0.5 + rr, zb + openness, c.tex, (c.col and 0xFEFEFE) shr 1, 0.5 - rr, 0.5 + rr)
+                        renderWall(xb + 0.5 - rr, zb + openness, xb + 0.5 + rr, zb + openness, c.tex, cAltCol, 0.5 - rr, 0.5 + rr)
                     }
                 }
 
@@ -76,14 +81,14 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
                         renderWall(xb + 1.0, zb + 1.0, xb + 1.0, zb + 0.0, c.tex, c.col)
                     }
                     if (!s.solidRender) {
-                        renderWall(xb + 0.0, zb + 1.0, xb + 1.0, zb + 1.0, c.tex, (c.col and 0xFEFEFE) shr 1)
+                        renderWall(xb + 0.0, zb + 1.0, xb + 1.0, zb + 1.0, c.tex, cAltCol)
                     }
                 } else {
                     if (e.solidRender) {
                         renderWall(xb + 1.0, zb + 0.0, xb + 1.0, zb + 1.0, e.tex, e.col)
                     }
                     if (s.solidRender) {
-                        renderWall(xb + 1.0, zb + 1.0, xb + 0.0, zb + 1.0, s.tex, (s.col and 0xFEFEFE) shr 1)
+                        renderWall(xb + 1.0, zb + 1.0, xb + 0.0, zb + 1.0, s.tex, eAltCol)
                     }
                 }
             }

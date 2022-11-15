@@ -2,7 +2,10 @@ package com.mojang.escape.gui
 
 import com.mojang.escape.Art
 import com.mojang.escape.Game
+import com.mojang.escape.closest
 import com.mojang.escape.entities.Item
+import com.mojang.escape.menu.SettingsMenu
+import com.mojang.escape.menu.settings.GameSettings
 import java.util.*
 import kotlin.math.sin
 import kotlin.math.sqrt
@@ -10,6 +13,7 @@ import kotlin.math.sqrt
 class Screen(width: Int, height: Int): Bitmap(width, height) {
     companion object {
         const val PANEL_HEIGHT = 29
+        private val ega = arrayOf(0x000000, 0x0000AA, 0x00AA00, 0x00AAAA, 0xAA0000, 0xAA00AA, 0xAA5500, 0xAAAAAA, 0x555555, 0x5555FF, 0x55FF55, 0x55FFFF, 0xFF5555, 0xFF55FF, 0xFFFF55, 0xFFFFFF)
     }
 
     private val testBitmap: Bitmap
@@ -120,14 +124,64 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                 game.menu!!.render(this)
             }
 
-            if (!hasFocus) {
-                for (i in pixels.indices) {
-                    pixels[i] = (pixels[i] and 0xFCFCFC) shr 2
+//            if (!hasFocus) {
+//                for (i in pixels.indices) {
+//                    pixels[i] = (pixels[i] and 0xFCFCFC) shr 2
+//                }
+//                if (System.currentTimeMillis() / 450 % 2 != 0L) {
+//                    val msg = "Click to focus!"
+//                    draw(msg, (width - msg.length * 6) / 2, height / 3 + 4, 0xFFFFFF)
+//                }
+//            }
+        }
+        postProcess(this)
+    }
+
+    fun postProcess(bitmap: Bitmap) {
+        if (GameSettings.graphics == 1 || GameSettings.graphics == 2) {
+            for (i in bitmap.pixels.indices) {
+                val x = i / bitmap.width
+                val y = i % bitmap.width
+                val alternate = (((x % 2) + (y % 2)) % 2) == 1
+                val ega = arrayOf(0x00, 0x55, 0xAA, 0xFF)
+
+                // 0x00, 0x55, 0xAA, 0xFF
+                val pixel = bitmap.pixels[i]
+                val r = (pixel shr 16) and 0xFF
+                val g = (pixel shr  8) and 0xFF
+                val b = (pixel shr  0) and 0xFF
+                var nr = ega[((r / 255.0) * (ega.size - 1)).toInt()]
+                var ng = ega[((g / 255.0) * (ega.size - 1)).toInt()]
+                var nb = ega[((b / 255.0) * (ega.size - 1)).toInt()]
+
+                if (GameSettings.graphics == 2) {
+                    var higher = false
+                    if ((nr == 0xFF || ng == 0xFF || nb == 0xFF) || ((nr == 0xAA && ng == 0xAA) || (nr == 0xAA && nb == 0xAA) || (ng == 0xAA && nb == 0xAA))) {
+                        higher = true
+                    }
+                    if (higher) {
+                        nr = if (nr == 0x00 || nr == 0xAA) {
+                            0
+                        } else {
+                            1
+                        }
+                        ng = if (ng == 0x00 || ng == 0xAA) {
+                            0
+                        } else {
+                            1
+                        }
+                        nb = if (nb == 0x00 || nb == 0xAA) {
+                            0
+                        } else {
+                            1
+                        }
+                        nr = 0x55 + nr * 0xAA
+                        ng = 0x55 + ng * 0xAA
+                        nb = 0x55 + nb * 0xAA
+                    }
                 }
-                if (System.currentTimeMillis() / 450 % 2 != 0L) {
-                    val msg = "Click to focus!"
-                    draw(msg, (width - msg.length * 6) / 2, height / 3 + 4, 0xFFFFFF)
-                }
+
+                bitmap.pixels[i] = (nr shl 16) or (ng shl 8) or (nb shl 0)
             }
         }
     }
