@@ -12,17 +12,17 @@ class AboutMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     override fun render(target: Bitmap) {
         target.fill(0, 0, 160, 120, 0)
 
-        target.draw("gui.menu.about.title".translatable, 60, 8, Art.getCol(0xFFFFFF))
+        target.draw("gui.menu.about.title".toTranslatable(), 60, 8, Art.getCol(0xFFFFFF))
 
         val lines = arrayOf(
-            "gui.menu.about.line0".translatable,
-            "gui.menu.about.line1".translatable,
-            "gui.menu.about.line2".translatable,
-            "gui.menu.about.line3".translatable,
-            "gui.menu.about.line4".translatable,
-            "gui.menu.about.line5".translatable,
-            "gui.menu.about.line6".translatable,
-            "gui.menu.about.line7".translatable,
+            "gui.menu.about.line0".toTranslatable(),
+            "gui.menu.about.line1".toTranslatable(),
+            "gui.menu.about.line2".toTranslatable(),
+            "gui.menu.about.line3".toTranslatable(),
+            "gui.menu.about.line4".toTranslatable(),
+            "gui.menu.about.line5".toTranslatable(),
+            "gui.menu.about.line6".toTranslatable(),
+            "gui.menu.about.line7".toTranslatable(),
         )
 
         lines.forEachIndexed { index, s ->
@@ -30,7 +30,7 @@ class AboutMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         }
 
         if (tickDelay == 0) {
-            target.draw("-> " and "gui.menu.about.buttonContinue".translatable, 40, target.height - 16, Art.getCol(0xFFFF80))
+            target.draw("-> ".toLiteral() + "gui.menu.about.buttonContinue".toTranslatable(), 40, target.height - 16, Art.getCol(0xFFFF80))
         }
     }
 

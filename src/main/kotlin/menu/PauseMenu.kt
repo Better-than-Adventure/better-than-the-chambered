@@ -5,9 +5,9 @@ import com.mojang.escape.gui.Bitmap
 
 class PauseMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     private val options = arrayOf(
-        "gui.menu.pause.buttonAbortGame".translatable,
-        "gui.menu.pause.buttonSettings".translatable,
-        "gui.menu.pause.buttonContinue".translatable
+        "gui.menu.pause.buttonAbortGame".toTranslatable(),
+        "gui.menu.pause.buttonSettings".toTranslatable(),
+        "gui.menu.pause.buttonContinue".toTranslatable()
     )
     private var selected = 2
 
@@ -17,7 +17,7 @@ class PauseMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         options.forEachIndexed { index, s ->
             var col = 0x909090
             if (selected == index) {
-                val msg = "-> " and s
+                val msg = "-> ".toLiteral() + s
                 col = 0xFFFF80
                 target.draw(msg, 40, 60 + index * 10, Art.getCol(col))
             } else {

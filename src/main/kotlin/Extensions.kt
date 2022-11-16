@@ -1,8 +1,6 @@
 package com.mojang.escape
 
-import com.mojang.escape.lang.ITranslatable
-import com.mojang.escape.lang.Translatable
-import com.mojang.escape.lang.TranslatableGroup
+import com.mojang.escape.lang.*
 import kotlin.math.abs
 
 val String.displayWidth: Int
@@ -33,10 +31,9 @@ get() {
     }
     return i
 }
-
-inline val String.translatable: Translatable
-get() = Translatable(this)
-
-infix fun String.and(other: ITranslatable): TranslatableGroup {
-    return TranslatableGroup(this, other)
+fun String.toLiteral(lang: Language? = null): StringUnitLiteral {
+    return StringUnitLiteral(this, lang)
+}
+fun String.toTranslatable(lang: Language? = null): StringUnitTranslatable {
+    return StringUnitTranslatable(this, lang)
 }

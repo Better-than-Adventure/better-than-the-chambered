@@ -1,8 +1,6 @@
 package com.mojang.escape.menu
 
-import com.mojang.escape.Art
-import com.mojang.escape.Game
-import com.mojang.escape.Sound
+import com.mojang.escape.*
 import com.mojang.escape.entities.Player
 import com.mojang.escape.gui.Bitmap
 
@@ -18,11 +16,11 @@ class WinMenu(private val player: Player, lastMenu: Menu? = null): Menu(lastMenu
         val seconds = (player.time / 60) % 60
         val minutes = (player.time / 60) / 60
 
-        target.draw("Trinkets: " + player.loot + "/12", 40, 45 + 10 * 0, Art.getCol(0x909090))
-        target.draw("Time: ${"%d:%02d".format(minutes, seconds)}", 40, 45 + 10 * 1, Art.getCol(0x909090))
+        target.draw("gui.menu.win.trinkets".toTranslatable() + ("" + player.loot + "/12").toLiteral(), 40, 45 + 10 * 0, Art.getCol(0x909090))
+        target.draw("gui.menu.win.time".toTranslatable() + "%d:%02d".format(minutes, seconds).toLiteral(), 40, 45 + 10 * 1, Art.getCol(0x909090))
 
         if (tickDelay == 0) {
-            target.draw("-> Continue", 40, target.height - 40, Art.getCol(0xFFFF80))
+            target.draw("-> ".toLiteral() + "gui.menu.win.buttonContinue".toTranslatable(), 40, target.height - 40, Art.getCol(0xFFFF80))
         }
     }
 

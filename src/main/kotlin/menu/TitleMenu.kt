@@ -5,9 +5,9 @@ import com.mojang.escape.gui.Bitmap
 
 class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     private val options = arrayOf(
-        "gui.menu.title.buttonNewGame".translatable,
-        "gui.menu.title.buttonSettings".translatable,
-        "gui.menu.title.buttonAbout".translatable
+        "gui.menu.title.buttonNewGame".toTranslatable(),
+        "gui.menu.title.buttonSettings".toTranslatable(),
+        "gui.menu.title.buttonAbout".toTranslatable()
     )
     private var selected = 0
     private var firstTick = true
@@ -19,14 +19,14 @@ class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         options.forEachIndexed { index, s ->
             var col = 0x909090
             if (selected == index) {
-                val msg = "-> " and s
+                val msg = "-> ".toLiteral() + s
                 col = 0xFFFF80
                 target.draw(msg, 40, 60 + index * 10, Art.getCol(col))
             } else {
                 target.draw(s, 40, 60 + index * 10, Art.getCol(col))
             }
         }
-        target.draw("Copyright (C) 2011 Mojang", 1 + 4, 120 - 9, Art.getCol(0x303030))
+        target.draw("gui.menu.title.copyright".toTranslatable(), 1 + 4, 120 - 9, Art.getCol(0x303030))
     }
 
     override fun tick(game: Game, keys: BooleanArray, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {

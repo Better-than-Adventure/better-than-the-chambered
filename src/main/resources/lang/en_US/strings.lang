@@ -65,6 +65,7 @@ gui.
             line6=and was made from scratch
             line7=in just 48 hours.
         title.
+            copyright=Copyright (C) 2011 Mojang
             buttonNewGame=New game
             buttonSettings=Settings
             buttonAbout=About
@@ -72,15 +73,23 @@ gui.
             text=You found the %s!
             buttonContinue=Continue
         lose.
-            trinkets=Trinkets:
-            time=Time:
+            trinkets=Trinkets: 
+            time=Time: 
             buttonContinue=Continue
         pause.
             buttonAbortGame=Abort game
             buttonSettings=Settings
             buttonContinue=Continue
+        settings.
+            title=Settings
+            buttonBack=Back
+        win.
+            trinkets=Trinkets: 
+            time=Time: 
+            buttonContinue=Continue
     ingame.
         enteringLevel=Entering %s
+        focusLost=Click to focus!
 item.
     none.
         name=

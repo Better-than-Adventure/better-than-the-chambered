@@ -3,7 +3,7 @@ package com.mojang.escape.level
 import com.mojang.escape.Art
 import com.mojang.escape.Game
 import com.mojang.escape.entities.*
-import com.mojang.escape.lang.Translatable
+import com.mojang.escape.lang.StringUnitTranslatable
 import com.mojang.escape.level.block.*
 import com.mojang.escape.menu.GotLootMenu
 import java.lang.Exception
@@ -72,7 +72,7 @@ abstract class Level {
 
     val entities = mutableListOf<Entity>()
     lateinit var game: Game
-    var name = Translatable("")
+    var name = StringUnitTranslatable("")
 
     lateinit var player: Player
 

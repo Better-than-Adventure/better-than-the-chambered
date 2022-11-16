@@ -20,7 +20,7 @@ class StructuredProperties: Properties() {
         val parts = mutableListOf<String>()
         for (line in reader.lines()) {
             val indent = line.indent / 4
-            val line = line.trim()
+            val line = line.trimStart()
             while (parts.size > indent) {
                 parts.removeLast()
             }

@@ -1,7 +1,7 @@
 package com.mojang.escape.level
 
 import com.mojang.escape.entities.Item
-import com.mojang.escape.translatable
+import com.mojang.escape.toTranslatable
 
 class OverworldLevel: Level() {
     init {
@@ -9,7 +9,7 @@ class OverworldLevel: Level() {
         floorCol = 0x508253
         floorTex = 8 + 3
         wallCol = 0xa0a0a0
-        name = "level.island.name".translatable
+        name = "level.island.name".toTranslatable()
     }
 
     override fun switchLevel(id: Int) {

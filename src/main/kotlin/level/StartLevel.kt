@@ -1,11 +1,11 @@
 package com.mojang.escape.level
 
 import com.mojang.escape.level.block.Block
-import com.mojang.escape.translatable
+import com.mojang.escape.toTranslatable
 
 class StartLevel: Level() {
     init {
-        name = "level.start.name".translatable
+        name = "level.start.name".toTranslatable()
     }
 
     override fun switchLevel(id: Int) {
