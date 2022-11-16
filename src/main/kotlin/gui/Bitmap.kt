@@ -1,16 +1,9 @@
 package com.mojang.escape.gui
 
-import com.mojang.escape.Art.font
+import com.mojang.escape.Game
+import com.mojang.escape.lang.Language
 
 open class Bitmap(val width: Int, val height: Int) {
-    companion object {
-        const val chars = "" +  //
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZ.,!?\"'/\\<>()[]{}" +  //
-                "abcdefghijklmnopqrstuvwxyz_               " +  //
-                "0123456789+-=*:;ÖÅÄåç                     " +  //
-                "%"
-    }
-
     val pixels = IntArray(width * height)
 
     fun draw(bitmap: Bitmap, xOffs: Int, yOffs: Int) {
@@ -92,14 +85,14 @@ open class Bitmap(val width: Int, val height: Int) {
         }
     }
 
-    fun draw(string: String, x: Int, y: Int, col: Int) {
+    fun draw(string: String, x: Int, y: Int, col: Int, lang: Language = Game.lang) {
         for (i in string.indices) {
-            val ch = chars.indexOf(string[i])
+            val ch = lang.fontString.indexOf(string[i])
             if (ch < 0) continue
 
             val xx = ch % 42
             val yy = ch / 42
-            draw(font, x + i * 6, y, xx * 6, yy * 8, 5, 8, col)
+            draw(lang.fontBitmap, x + i * 6, y, xx * 6, yy * 8, 5, 8, col)
         }
     }
 

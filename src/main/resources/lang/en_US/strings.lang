@@ -26,3 +26,28 @@ gui.
             buttonNewGame=New game
             buttonSettings=Settings
             buttonAbout=About
+item.
+    none.
+        name=
+        desc=
+    powerGlove.
+        name=Power Glove
+        desc=Smaaash!!
+    pistol.
+        name=Pistol
+        desc=Pew, pew, pew!
+    flippers.
+        name=Flippers
+        desc=Splish splash!
+    cutters.
+        name=Cutters
+        desc=Snip, snip!
+    skates.
+        name=Skates
+        desc=Sharp!
+    key.
+        name=Key
+        desc=How did you get this?
+    potion.
+        name=Potion
+        desc=Healthy!

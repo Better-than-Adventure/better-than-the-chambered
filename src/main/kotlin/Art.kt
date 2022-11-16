@@ -11,7 +11,6 @@ object Art {
     val walls = loadBitmap("/tex/walls.png")
     val floors = loadBitmap("/tex/floors.png")
     val sprites = loadBitmap("/tex/sprites.png")
-    val font = loadBitmap("/lang/en_US/font.png")
     val panel = loadBitmap("/tex/gamepanel.png")
     val items = loadBitmap("/tex/items.png")
     val sky = loadBitmap("/tex/sky.png")

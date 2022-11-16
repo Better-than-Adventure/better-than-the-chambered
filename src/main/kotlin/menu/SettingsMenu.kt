@@ -20,7 +20,7 @@ class SettingsMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         val scrollProgress = scroll.toDouble() / (GameSettings.settings.size - LINES_ON_SCREEN).toDouble()
         val scrollbarY = scrollProgress * (LINES_ON_SCREEN - 1) * 8
         target.fill(target.width - 6, 32, target.width - 1, 32 + LINES_ON_SCREEN * 8 - 1, 0x505050.col)
-        target.draw("ç", target.width - 6, 32 + scrollbarY.toInt(), 0xA0A0A0.col)
+        target.draw("4", target.width - 6, 32 + scrollbarY.toInt(), 0xA0A0A0.col, Game.symbols)
 
         for (index in scroll until (scroll + LINES_ON_SCREEN)) {
             val setting = GameSettings.settings[index]

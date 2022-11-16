@@ -1,4 +1,4 @@
-ABCDEFGHIJKLMNOPQRSTUVWXYZ.,!?\"'/\\<>()[]{}
+ABCDEFGHIJKLMNOPQRSTUVWXYZ.,!?"'/\<>()[]{}
 abcdefghijklmnopqrstuvwxyz_
-0123456789+-=*:;ÖÅÄåç
-%                                           
+0123456789+-=*:;%
+

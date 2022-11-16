@@ -96,11 +96,11 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
 
                 draw(Art.panel, 0, height - PANEL_HEIGHT, 0, 0, width, PANEL_HEIGHT, Art.getCol(0x707070))
 
-                draw("å", 3, height - 26 + 0, 0x00ffff)
+                draw("3", 3, height - 26 + 0, 0x00ffff, Game.symbols)
                 draw("" + player.keys + "/4", 10, height - 26 + 0, 0xffffff)
-                draw("Ä", 3, height - 26 + 8, 0xffff00)
+                draw("2", 3, height - 26 + 8, 0xffff00, Game.symbols)
                 draw("" + player.loot, 10, height - 26 + 8, 0xffffff)
-                draw("Å", 3, height - 26 + 16, 0xff0000)
+                draw("1", 3, height - 26 + 16, 0xff0000, Game.symbols)
                 draw("" + player.health, 10, height - 26 + 16, 0xffffff)
 
                 for (i in 0 until 8) {
