@@ -2,8 +2,14 @@ package com.mojang.escape.gui
 
 import com.mojang.escape.Art
 import com.mojang.escape.Game
+import com.mojang.escape.closest
 import com.mojang.escape.entities.Item
+import com.mojang.escape.gui.palette.Palette
+import com.mojang.escape.menu.SettingsMenu
+import com.mojang.escape.menu.settings.GameSettings
 import java.util.*
+import kotlin.math.floor
+import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.sqrt
 
@@ -31,6 +37,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
             if (game.menu != null) {
                 game.menu!!.render(this)
             }
+            postProcess(this, false)
         } else {
             val player = game.player!!
             val level = game.level!!
@@ -57,6 +64,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
 
                 }
 
+                postProcess(viewport, true)
                 draw(viewport, 0, 0)
                 var xx = (player.turnBob * 32).toInt()
                 var yy = (sin(player.bobPhase * 0.4) * 1 * player.bob + player.bob * 2).toInt()
@@ -128,6 +136,73 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                     val msg = "Click to focus!"
                     draw(msg, (width - msg.length * 6) / 2, height / 3 + 4, 0xFFFFFF)
                 }
+            }
+
+            postProcess(this, false)
+        }
+    }
+
+    fun postProcess(bitmap: Bitmap, dither: Boolean) {
+        val MAX_LEVEL = 4
+
+        fun distance(a: Triple<Double, Double, Double>, b: Triple<Double, Double, Double>): Double {
+            return (b.first - a.first).pow(2) + (b.second - a.second).pow(2) + (b.third - a.third).pow(2)
+        }
+        fun bayer2x2(x: Int, y: Int): Int {
+            return (4 - x - (y shl 1)) % 4
+        }
+        fun bayer(x: Int, y: Int): Float {
+            var sum = 0
+            for (i in 0 until MAX_LEVEL) {
+                sum += bayer2x2(x shr (MAX_LEVEL - 1 - i) and 1, y shr (MAX_LEVEL - 1 - i) and 1) shl (2 * i)
+            }
+            return sum.toFloat() / (2 shl (MAX_LEVEL * 2 - 1)).toFloat()
+        }
+
+        val colorDetail = 1.0
+
+        if (GameSettings.graphics.value > 0) {
+            // Shamelessly copied from https://www.shadertoy.com/view/4dXSzl
+            for (i in bitmap.pixels.indices) {
+                val x = i / bitmap.width
+                val y = i % bitmap.width
+
+                // 0x00, 0x55, 0xAA, 0xFF
+                val pixel = bitmap.pixels[i]
+                val r = (pixel shr 16) and 0xFF
+                val g = (pixel shr  8) and 0xFF
+                val b = (pixel shr  0) and 0xFF
+                var s = Triple(r / 255.0, g / 255.0, b / 255.0)
+                if (dither) {
+                    val bayer = bayer(x, y)
+                    s = Triple(s.first + (bayer - 0.5) * 0.5, s.second + (bayer - 0.5) * 0.5, s.third + (bayer - 0.5) * 0.5)
+                }
+                if (GameSettings.graphics.value == 1) {
+                    val blend = Triple(floor(s.first * colorDetail + 0.5) / colorDetail, floor(s.second * colorDetail + 0.5) / colorDetail, floor(s.third * colorDetail + 0.5) / colorDetail)
+                    s = Triple(s.first * 0.6 + blend.first * 0.4, s.second * 0.6 + blend.second * 0.4, s.third * 0.6 + blend.third * 0.4)
+                }
+
+                var dist = 0.0
+                var bestDistance = 1000.0
+                var bestColor = Triple(0.0, 0.0, 0.0)
+                fun check(r: Double, g: Double, b: Double) {
+                    val color = Triple(r, g, b)
+                    dist = distance(s, color)
+                    if (dist < bestDistance) {
+                        bestDistance = dist
+                        bestColor = color
+                    }
+                }
+
+                val palette = when (GameSettings.graphics.value) {
+                    2 -> Palette.cga
+                    else -> Palette.ega
+                }
+                for (color in palette.iterator()) {
+                    check(color.first / 255.0, color.second / 255.0, color.third / 255.0)
+                }
+
+                bitmap.pixels[i] = ((bestColor.first * 255).toInt() shl 16) or ((bestColor.second * 255).toInt() shl 8) or ((bestColor.third * 255).toInt() shl 0)
             }
         }
     }

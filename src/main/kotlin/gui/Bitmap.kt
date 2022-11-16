@@ -7,8 +7,8 @@ open class Bitmap(val width: Int, val height: Int) {
         const val chars = "" +  //
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ.,!?\"'/\\<>()[]{}" +  //
                 "abcdefghijklmnopqrstuvwxyz_               " +  //
-                "0123456789+-=*:;жедЕ                      " +  //
-                ""
+                "0123456789+-=*:;жедЕГ                     " +  //
+                "%"
     }
 
     val pixels = IntArray(width * height)

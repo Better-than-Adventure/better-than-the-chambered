@@ -5,9 +5,9 @@ import com.mojang.escape.Game
 import com.mojang.escape.Sound
 import com.mojang.escape.gui.Bitmap
 
-class PauseMenu: Menu() {
-    private val options = arrayOf("Abort game", "Continue")
-    private var selected = 1
+class PauseMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
+    private val options = arrayOf("Abort game", "Settings", "Continue")
+    private var selected = 2
 
     override fun render(target: Bitmap) {
         target.draw(Art.logo, 0, 8, 0, 0, 160, 36, Art.getCol(0xFFFFFF))
@@ -23,7 +23,7 @@ class PauseMenu: Menu() {
         }
     }
 
-    override fun tick(game: Game, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
+    override fun tick(game: Game, keys: BooleanArray, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
         if (up || down) {
             Sound.click2.play()
         }
@@ -47,6 +47,7 @@ class PauseMenu: Menu() {
                     game.player = null
                     TitleMenu()
                 }
+                1 -> SettingsMenu(this)
                 else -> null
             }
         }
