@@ -11,7 +11,7 @@ object Art {
     val walls = loadBitmap("/tex/walls.png")
     val floors = loadBitmap("/tex/floors.png")
     val sprites = loadBitmap("/tex/sprites.png")
-    val font = loadBitmap("/tex/font.png")
+    val font = loadBitmap("/lang/en_US/font.png")
     val panel = loadBitmap("/tex/gamepanel.png")
     val items = loadBitmap("/tex/items.png")
     val sky = loadBitmap("/tex/sky.png")
@@ -38,7 +38,7 @@ object Art {
      * @throws RuntimeException Thrown when the given image could not be read.
      * @throws FileNotFoundException Thrown when the given path could not be found.
      */
-    private fun loadBitmap(fileName: String): Bitmap {
+    fun loadBitmap(fileName: String): Bitmap {
         val fileUrl: URL? = Art::class.java.getResource(fileName)
         if (fileUrl != null) {
             try {

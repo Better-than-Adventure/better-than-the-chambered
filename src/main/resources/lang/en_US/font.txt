@@ -1,0 +1,4 @@
+ABCDEFGHIJKLMNOPQRSTUVWXYZ.,!?\"'/\\<>()[]{}
+abcdefghijklmnopqrstuvwxyz_
+0123456789+-=*:;ÖÅÄåç
+%                                           

@@ -19,3 +19,14 @@ fun Int.closest(a: Int, b: Int): Int {
     if (da < db) return a
     return b
 }
+
+inline val String.indent: Int
+get() {
+    var i = 0
+    for (c in this) {
+        if (c == ' ') {
+            i++
+        } else break
+    }
+    return i
+}

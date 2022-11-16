@@ -1,0 +1,28 @@
+window.
+    title=Better than the Chambered!
+settings.
+    volume.
+        name=Volume
+        valueString.
+            0=0%
+            25=25%
+            50=50%
+            75=75%
+            100=100%
+    mouselook.
+        name=Mouselook
+        valueString.
+            on=On
+            off=Off
+    graphics.
+        name=Graphics
+        valueString.
+            full=Full
+            ega=EGA
+            cga=CGA
+gui.
+    menu.
+        title.
+            buttonNewGame=New game
+            buttonSettings=Settings
+            buttonAbout=About
