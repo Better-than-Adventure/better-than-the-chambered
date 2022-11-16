@@ -20,8 +20,49 @@ settings.
             full=Full
             ega=EGA
             cga=CGA
+    keyForward.
+        name=Forward
+    keyBackward.
+        name=Backward
+    keyTurnLeft.
+        name=Turn Left
+    keyTurnRight.
+        name=Turn Right
+    keyStrafeLeft.
+        name=Strafe Left
+    keyStrafeRight.
+        name=Strafe Right
+    keyInteract.
+        name=Interact
+    keySlots.
+        1.
+            name=Slot 1
+        2.
+            name=Slot 2
+        3.
+            name=Slot 3
+        4.
+            name=Slot 4
+        5.
+            name=Slot 5
+        6.
+            name=Slot 6
+        7.
+            name=Slot 7
+        8.
+            name=Slot 8
 gui.
     menu.
+        about.
+            title=About
+            line0=Prelude of the Chambered
+            line1=by Markus Persson.
+            line2=Made Aug 2011 for the
+            line3=21'st Ludum Dare compo.
+            line4=
+            line5=This game is freeware,
+            line6=and was made from scratch
+            line7=in just 48 hours.
         title.
             buttonNewGame=New game
             buttonSettings=Settings

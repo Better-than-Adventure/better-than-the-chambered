@@ -17,7 +17,7 @@ class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         target.draw(Art.logo, 0, 8, 0, 0, 160, 36, Art.getCol(0xFFFFFF))
 
         options.forEachIndexed { index, s ->
-            var msg = s
+            var msg = s.value
             var col = 0x909090
             if (selected == index) {
                 msg = "-> $msg"

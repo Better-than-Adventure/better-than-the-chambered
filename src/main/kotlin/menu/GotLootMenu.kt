@@ -13,11 +13,11 @@ class GotLootMenu(private val item: Item, lastMenu: Menu? = null): Menu(lastMenu
     private var tickDelay = 30
 
     override fun render(target: Bitmap) {
-        val str = "You found the ${item.itemName.translated}!"
+        val str = "You found the ${item.itemName.value}!"
         target.scaleDraw(Art.items, 3, target.width / 2 - 8 * 3, 2, item.icon * 16, 0, 16, 16, Art.getCol(item.color))
         target.draw(str, (target.width - str.length * 6) / 2 + 2, 60 - 10, Art.getCol(0xFFFF80))
 
-        target.draw(item.description.translated, (target.width - item.description.translated.length * 6) / 2 + 2, 60, Art.getCol(0xA0A0A0))
+        target.draw(item.description, (target.width - item.description.value.length * 6) / 2 + 2, 60, Art.getCol(0xA0A0A0))
 
         if (tickDelay == 0) {
             target.draw("-> Continue", 40, target.height - 40, Art.getCol(0xFFFF80))

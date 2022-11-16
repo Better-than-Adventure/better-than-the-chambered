@@ -1,5 +1,6 @@
 package com.mojang.escape
 
+import com.mojang.escape.util.TranslatedString
 import kotlin.math.abs
 
 val String.displayWidth: Int
@@ -31,5 +32,5 @@ get() {
     return i
 }
 
-inline val String.translated: String
-get() = Game.lang.strings.getProperty(this) ?: this
+inline val String.translated: TranslatedString
+get() = TranslatedString(this)

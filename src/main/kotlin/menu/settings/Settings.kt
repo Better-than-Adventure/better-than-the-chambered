@@ -1,6 +1,8 @@
 package com.mojang.escape.menu.settings
 
 import com.mojang.escape.Keys
+import com.mojang.escape.translated
+import com.mojang.escape.util.TranslatedString
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -14,7 +16,7 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
                 val prop = Properties()
                 var comments = ""
                 for (setting in settings) {
-                    prop.setProperty("config.${setting.name.lowercase()}", setting.toConfigString().lowercase())
+                    prop.setProperty("config.${setting.name.key.lowercase()}", setting.toConfigString().lowercase())
                     comments += "${setting.name}: ${setting::class.simpleName}\n"
                 }
 
@@ -29,14 +31,14 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
                     prop.load(it)
 
                     for (setting in settings) {
-                        setting.fromConfigString(prop.getProperty("config.${setting.name.lowercase()}"))
+                        setting.fromConfigString(prop.getProperty("config.${setting.name.key.lowercase()}"))
                     }
                 }
             }
         }
     }
 
-    abstract class Setting<T>(private val settings: Settings, val name: String, value: T) {
+    abstract class Setting<T>(private val settings: Settings, val name: TranslatedString, value: T) {
         private var _onChanged: ((oldValue: T, newValue: T) -> Unit)? = null
         private var _valueString: ((value: T) -> String)? = null
 
@@ -72,7 +74,7 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
         abstract fun fromConfigString(string: String)
     }
 
-    class RangeSetting(settings: Settings, name: String, value: Int, private val minValue: Int, private val maxValue: Int): Setting<Int>(settings, name, value) {
+    class RangeSetting(settings: Settings, name: TranslatedString, value: Int, private val minValue: Int, private val maxValue: Int): Setting<Int>(settings, name, value) {
         override var value: Int
             get() = super.value
             set(value) {
@@ -95,7 +97,7 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
         }
     }
 
-    class BooleanSetting(settings: Settings, name: String, value: Boolean): Setting<Boolean>(settings, name, value) {
+    class BooleanSetting(settings: Settings, name: TranslatedString, value: Boolean): Setting<Boolean>(settings, name, value) {
         override fun onActivated() {
             value = !value
         }
@@ -109,7 +111,7 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
         }
     }
 
-    class KeySetting(settings: Settings, name: String, value: Keys): Setting<Keys>(settings, name, value) {
+    class KeySetting(settings: Settings, name: TranslatedString, value: Keys): Setting<Keys>(settings, name, value) {
         var picking = false
 
         override val valueString: String
@@ -132,19 +134,19 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
         init(this)
     }
 
-    fun rangeSetting(name: String, value: Int, minValue: Int, maxValue: Int): RangeSetting {
+    fun rangeSetting(name: TranslatedString, value: Int, minValue: Int, maxValue: Int): RangeSetting {
         val setting = RangeSetting(this, name, value, minValue, maxValue)
         add(setting)
         return setting
     }
 
-    fun booleanSetting(name: String, value: Boolean): BooleanSetting {
+    fun booleanSetting(name: TranslatedString, value: Boolean): BooleanSetting {
         val setting = BooleanSetting(this, name, value)
         add(setting)
         return setting
     }
 
-    fun keySetting(name: String, value: Keys): KeySetting {
+    fun keySetting(name: TranslatedString, value: Keys): KeySetting {
         val setting = KeySetting(this, name, value)
         add(setting)
         return setting

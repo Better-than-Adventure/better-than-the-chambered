@@ -119,7 +119,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                 }
 
                 draw(Art.items, 30 + player.selectedSlot * 16, height - PANEL_HEIGHT + 2, 0, 48, 17, 17, Art.getCol(0xFFFFFF))
-                draw(item.itemName.translated, 26 + (8 * 16 - item.itemName.translated.length * 4) / 2, height - 9, 0xFFFFFF)
+                draw(item.itemName, 26 + (8 * 16 - item.itemName.value.length * 4) / 2, height - 9, 0xFFFFFF)
             }
 
             if (game.menu != null) {

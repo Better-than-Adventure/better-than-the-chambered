@@ -2,6 +2,7 @@ package com.mojang.escape.gui
 
 import com.mojang.escape.Game
 import com.mojang.escape.lang.Language
+import com.mojang.escape.util.TranslatedString
 
 open class Bitmap(val width: Int, val height: Int) {
     val pixels = IntArray(width * height)
@@ -83,6 +84,10 @@ open class Bitmap(val width: Int, val height: Int) {
                 }
             }
         }
+    }
+
+    fun draw(string: TranslatedString, x: Int, y: Int, col: Int, lang: Language = Game.lang) {
+        draw(string.value, x, y, col, lang)
     }
 
     fun draw(string: String, x: Int, y: Int, col: Int, lang: Language = Game.lang) {
