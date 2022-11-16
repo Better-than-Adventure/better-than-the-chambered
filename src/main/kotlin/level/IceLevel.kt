@@ -1,13 +1,14 @@
 package com.mojang.escape.level
 
 import com.mojang.escape.entities.Item
+import com.mojang.escape.translatable
 
 class IceLevel: Level() {
     init {
         floorCol = 0xB8DBE0
         ceilCol = 0xB8DBE0
         wallCol = 0x6BE8FF
-        name = "The Frost Cave"
+        name = "level.ice.name".translatable
     }
 
     override fun switchLevel(id: Int) {

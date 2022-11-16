@@ -20,12 +20,12 @@ class StructuredProperties: Properties() {
         val parts = mutableListOf<String>()
         for (line in reader.lines()) {
             val indent = line.indent / 4
-            val line = line.trim().filter { it != '.' }
+            val line = line.trim()
             while (parts.size > indent) {
                 parts.removeLast()
             }
             if (!line.contains('=')) {
-                parts += line
+                parts += line.trim('.')
             } else {
                 val split = line.split("=")
                 setProperty(parts.joinToString(".") + "." + split[0], split[1])

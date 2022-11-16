@@ -5,9 +5,9 @@ import com.mojang.escape.gui.Bitmap
 
 class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     private val options = arrayOf(
-        "gui.menu.title.buttonNewGame".translated,
-        "gui.menu.title.buttonSettings".translated,
-        "gui.menu.title.buttonAbout".translated
+        "gui.menu.title.buttonNewGame".translatable,
+        "gui.menu.title.buttonSettings".translatable,
+        "gui.menu.title.buttonAbout".translatable
     )
     private var selected = 0
     private var firstTick = true
@@ -17,13 +17,14 @@ class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         target.draw(Art.logo, 0, 8, 0, 0, 160, 36, Art.getCol(0xFFFFFF))
 
         options.forEachIndexed { index, s ->
-            var msg = s.value
             var col = 0x909090
             if (selected == index) {
-                msg = "-> $msg"
+                val msg = "-> " and s
                 col = 0xFFFF80
+                target.draw(msg, 40, 60 + index * 10, Art.getCol(col))
+            } else {
+                target.draw(s, 40, 60 + index * 10, Art.getCol(col))
             }
-            target.draw(msg, 40, 60 + index * 10, Art.getCol(col))
         }
         target.draw("Copyright (C) 2011 Mojang", 1 + 4, 120 - 9, Art.getCol(0x303030))
     }

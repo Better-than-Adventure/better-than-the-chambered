@@ -55,6 +55,7 @@ gui.
     menu.
         about.
             title=About
+            buttonContinue=Continue
             line0=Prelude of the Chambered
             line1=by Markus Persson.
             line2=Made Aug 2011 for the
@@ -67,6 +68,19 @@ gui.
             buttonNewGame=New game
             buttonSettings=Settings
             buttonAbout=About
+        gotLoot.
+            text=You found the %s!
+            buttonContinue=Continue
+        lose.
+            trinkets=Trinkets:
+            time=Time:
+            buttonContinue=Continue
+        pause.
+            buttonAbortGame=Abort game
+            buttonSettings=Settings
+            buttonContinue=Continue
+    ingame.
+        enteringLevel=Entering %s
 item.
     none.
         name=
@@ -92,3 +106,16 @@ item.
     potion.
         name=Potion
         desc=Healthy!
+level.
+    crypt.
+        name=The Crypt
+    dungeon.
+        name=The Dungeons
+    ice.
+        name=The Frost Cave
+    overworld.
+        name=The Island
+    start.
+        name=The Prison
+    temple.
+        name=The Temple

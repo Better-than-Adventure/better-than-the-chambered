@@ -2,13 +2,14 @@ package com.mojang.escape.level
 
 import com.mojang.escape.Game
 import com.mojang.escape.entities.Item
+import com.mojang.escape.translatable
 
 class DungeonLevel: Level() {
     init {
         wallCol = 0xC64954
         floorCol = 0x8E4A51
         ceilCol = 0x8E4A51
-        name = "The Dungeons"
+        name = "level.dungeon.name".translatable
     }
 
     override fun init(game: Game, name: String, w: Int, h: Int, pixels: IntArray) {

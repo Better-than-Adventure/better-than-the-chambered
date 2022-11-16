@@ -1,13 +1,14 @@
 package com.mojang.escape.level
 
 import com.mojang.escape.entities.Item
+import com.mojang.escape.translatable
 
 class CryptLevel: Level() {
     init {
         floorCol = 0x404040
         ceilCol = 0x404040
         wallCol = 0x404040
-        name = "The Crypt"
+        name = "level.crypt.name".translatable
     }
 
     override fun switchLevel(id: Int) {

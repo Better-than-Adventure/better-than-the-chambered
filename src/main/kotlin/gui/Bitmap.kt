@@ -1,8 +1,10 @@
 package com.mojang.escape.gui
 
 import com.mojang.escape.Game
+import com.mojang.escape.lang.ITranslatable
 import com.mojang.escape.lang.Language
-import com.mojang.escape.util.TranslatedString
+import com.mojang.escape.lang.Translatable
+import com.mojang.escape.lang.TranslatableGroup
 
 open class Bitmap(val width: Int, val height: Int) {
     val pixels = IntArray(width * height)
@@ -86,8 +88,8 @@ open class Bitmap(val width: Int, val height: Int) {
         }
     }
 
-    fun draw(string: TranslatedString, x: Int, y: Int, col: Int, lang: Language = Game.lang) {
-        val str = string.value
+    fun draw(string: ITranslatable, x: Int, y: Int, col: Int, lang: Language = Game.lang) {
+        val str = string.translated
         for (i in str.indices) {
             val ch = lang.fontString.indexOf(str[i])
             if (ch < 0) continue
@@ -98,7 +100,7 @@ open class Bitmap(val width: Int, val height: Int) {
         }
     }
 
-    @Deprecated("Use TranslatedString.")
+    @Deprecated("Use Translatable.")
     fun draw(string: String, x: Int, y: Int, col: Int, lang: Language = Game.lang) {
         for (i in string.indices) {
             val ch = lang.fontString.indexOf(string[i])

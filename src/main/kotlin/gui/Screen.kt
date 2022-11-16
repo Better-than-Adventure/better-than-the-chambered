@@ -2,12 +2,10 @@ package com.mojang.escape.gui
 
 import com.mojang.escape.Art
 import com.mojang.escape.Game
-import com.mojang.escape.closest
 import com.mojang.escape.entities.Item
 import com.mojang.escape.gui.palette.Palette
-import com.mojang.escape.menu.SettingsMenu
 import com.mojang.escape.menu.settings.GameSettings
-import com.mojang.escape.translated
+import com.mojang.escape.translatable
 import java.util.*
 import kotlin.math.floor
 import kotlin.math.pow
@@ -47,11 +45,9 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
 
             if (game.pauseTime > 0) {
                 fill(0, 0, width, height, 0)
-                val messages = arrayOf("Entering ${level.name}")
-                for (message in messages.withIndex()) {
-                    draw(message.value, (width - message.value.length * 6) / 2, (viewport.height - messages.size * 8) / 2 + message.index * 8 + 1, 0x111111)
-                    draw(message.value, (width - message.value.length * 6) / 2, (viewport.height - messages.size * 8) / 2 + message.index * 8, 0x555544)
-                }
+                val message = "gui.ingame.enteringLevel".translatable.format(level.name)
+                draw(message, (width - message.length * 6) / 2, (viewport.height - 8) / 2 + 8 + 1, 0x111111)
+                draw(message, (width - message.length * 6) / 2, (viewport.height - 8) / 2 + 8, 0x555544)
             } else {
                 viewport.render(game)
                 viewport.postProcess(level)
@@ -119,7 +115,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                 }
 
                 draw(Art.items, 30 + player.selectedSlot * 16, height - PANEL_HEIGHT + 2, 0, 48, 17, 17, Art.getCol(0xFFFFFF))
-                draw(item.itemName, 26 + (8 * 16 - item.itemName.value.length * 4) / 2, height - 9, 0xFFFFFF)
+                draw(item.itemName, 26 + (8 * 16 - item.itemName.length * 4) / 2, height - 9, 0xFFFFFF)
             }
 
             if (game.menu != null) {
