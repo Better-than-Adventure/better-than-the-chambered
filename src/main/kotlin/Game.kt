@@ -2,6 +2,7 @@ package com.mojang.escape
 
 import com.mojang.escape.entities.Item
 import com.mojang.escape.entities.Player
+import com.mojang.escape.lang.Language
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.LadderBlock
 import com.mojang.escape.menu.*
@@ -11,6 +12,11 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 class Game {
+    companion object {
+        val lang = Language("en_US")
+        val symbols = Language("symbols")
+    }
+
     var time = 0
     var level: Level? = null
     var player: Player? = null

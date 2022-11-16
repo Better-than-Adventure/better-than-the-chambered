@@ -4,6 +4,7 @@ import com.mojang.escape.entities.Entity
 import com.mojang.escape.entities.Item
 import com.mojang.escape.entities.Player
 import com.mojang.escape.gui.Sprite
+import com.mojang.escape.lang.IStringUnit
 import com.mojang.escape.level.Level
 import java.util.*
 import kotlin.collections.ArrayList
@@ -14,7 +15,7 @@ open class Block {
     protected var blocksMotion = false
     var solidRender = false
 
-    val messages: Array<String>? = null
+    val messages: Array<IStringUnit>? = null
 
     val sprites = ArrayList<Sprite>()
     val entities = ArrayList<Entity>()

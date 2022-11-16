@@ -1,8 +1,6 @@
 package com.mojang.escape.menu
 
-import com.mojang.escape.Art
-import com.mojang.escape.Game
-import com.mojang.escape.Sound
+import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
 
 class AboutMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
@@ -14,17 +12,17 @@ class AboutMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     override fun render(target: Bitmap) {
         target.fill(0, 0, 160, 120, 0)
 
-        target.draw("About", 60, 8, Art.getCol(0xFFFFFF))
+        target.draw("gui.menu.about.title".toTranslatable(), 60, 8, Art.getCol(0xFFFFFF))
 
         val lines = arrayOf(
-            "Prelude of the Chambered",
-            "by Markus Persson.",
-            "Made Aug 2011 for the",
-            "21'st Ludum Dare compo.",
-            "",
-            "This game is freeware,",
-            "and was made from scratch",
-            "in just 48 hours."
+            "gui.menu.about.line0".toTranslatable(),
+            "gui.menu.about.line1".toTranslatable(),
+            "gui.menu.about.line2".toTranslatable(),
+            "gui.menu.about.line3".toTranslatable(),
+            "gui.menu.about.line4".toTranslatable(),
+            "gui.menu.about.line5".toTranslatable(),
+            "gui.menu.about.line6".toTranslatable(),
+            "gui.menu.about.line7".toTranslatable(),
         )
 
         lines.forEachIndexed { index, s ->
@@ -32,7 +30,7 @@ class AboutMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         }
 
         if (tickDelay == 0) {
-            target.draw("-> Continue", 40, target.height - 16, Art.getCol(0xFFFF80))
+            target.draw("-> ".toLiteral() + "gui.menu.about.buttonContinue".toTranslatable(), 40, target.height - 16, Art.getCol(0xFFFF80))
         }
     }
 

@@ -1,25 +1,28 @@
 package com.mojang.escape.menu
 
-import com.mojang.escape.Art
-import com.mojang.escape.Game
-import com.mojang.escape.Sound
+import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
 
 class PauseMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
-    private val options = arrayOf("Abort game", "Settings", "Continue")
+    private val options = arrayOf(
+        "gui.menu.pause.buttonAbortGame".toTranslatable(),
+        "gui.menu.pause.buttonSettings".toTranslatable(),
+        "gui.menu.pause.buttonContinue".toTranslatable()
+    )
     private var selected = 2
 
     override fun render(target: Bitmap) {
         target.draw(Art.logo, 0, 8, 0, 0, 160, 36, Art.getCol(0xFFFFFF))
 
         options.forEachIndexed { index, s ->
-            var msg = s
             var col = 0x909090
             if (selected == index) {
-                msg = "-> $msg"
+                val msg = "-> ".toLiteral() + s
                 col = 0xFFFF80
+                target.draw(msg, 40, 60 + index * 10, Art.getCol(col))
+            } else {
+                target.draw(s, 40, 60 + index * 10, Art.getCol(col))
             }
-            target.draw(msg, 40, 60 + index * 10, Art.getCol(col))
         }
     }
 

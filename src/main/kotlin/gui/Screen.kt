@@ -2,11 +2,11 @@ package com.mojang.escape.gui
 
 import com.mojang.escape.Art
 import com.mojang.escape.Game
-import com.mojang.escape.closest
 import com.mojang.escape.entities.Item
 import com.mojang.escape.gui.palette.Palette
-import com.mojang.escape.menu.SettingsMenu
 import com.mojang.escape.menu.settings.GameSettings
+import com.mojang.escape.toLiteral
+import com.mojang.escape.toTranslatable
 import java.util.*
 import kotlin.math.floor
 import kotlin.math.pow
@@ -46,11 +46,9 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
 
             if (game.pauseTime > 0) {
                 fill(0, 0, width, height, 0)
-                val messages = arrayOf("Entering ${level.name}")
-                for (message in messages.withIndex()) {
-                    draw(message.value, (width - message.value.length * 6) / 2, (viewport.height - messages.size * 8) / 2 + message.index * 8 + 1, 0x111111)
-                    draw(message.value, (width - message.value.length * 6) / 2, (viewport.height - messages.size * 8) / 2 + message.index * 8, 0x555544)
-                }
+                val message = "gui.ingame.enteringLevel".toTranslatable().format(level.name)
+                message.draw(this, (width - message.length * 6) / 2, (viewport.height - 8) / 2 + 8 + 1, 0x111111)
+                message.draw(this, (width - message.length * 6) / 2, (viewport.height - 8) / 2 + 8 + 1, 0x555544)
             } else {
                 viewport.render(game)
                 viewport.postProcess(level)
@@ -58,8 +56,8 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                 val block = level.getBlock((player.x + 0.5).toInt(), (player.z + 0.5).toInt())
                 if (block.messages != null && hasFocus) {
                     for (message in block.messages.withIndex()) {
-                        draw(message.value, (width - message.value.length * 6) / 2, (viewport.height - block.messages.size * 8) / 2 + message.index * 8 + 1, 0x111111)
-                        draw(message.value, (width - message.value.length * 6) / 2, (viewport.height - block.messages.size * 8) / 2 + message.index * 8, 0x555544)
+                        message.value.draw(this, (width - message.value.length * 6) / 2, (viewport.height - block.messages.size * 8) / 2 + message.index * 8 + 1, 0x111111)
+                        message.value.draw(this, (width - message.value.length * 6) / 2, (viewport.height - block.messages.size * 8) / 2 + message.index * 8, 0x555544)
                     }
 
                 }
@@ -95,12 +93,12 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
 
                 draw(Art.panel, 0, height - PANEL_HEIGHT, 0, 0, width, PANEL_HEIGHT, Art.getCol(0x707070))
 
-                draw("å", 3, height - 26 + 0, 0x00ffff)
-                draw("" + player.keys + "/4", 10, height - 26 + 0, 0xffffff)
-                draw("Ä", 3, height - 26 + 8, 0xffff00)
-                draw("" + player.loot, 10, height - 26 + 8, 0xffffff)
-                draw("Å", 3, height - 26 + 16, 0xff0000)
-                draw("" + player.health, 10, height - 26 + 16, 0xffffff)
+                draw("symbols.key".toTranslatable(Game.symbols), 3, height - 26 + 0, 0x00ffff)
+                draw(("" + player.keys + "/4").toLiteral(), 10, height - 26 + 0, 0xffffff)
+                draw("symbols.trophy".toTranslatable(Game.symbols), 3, height - 26 + 8, 0xffff00)
+                draw(("" + player.loot).toLiteral(), 10, height - 26 + 8, 0xffffff)
+                draw("symbols.heart".toTranslatable(Game.symbols), 3, height - 26 + 16, 0xff0000)
+                draw(("" + player.health).toLiteral(), 10, height - 26 + 16, 0xffffff)
 
                 for (i in 0 until 8) {
                     val slotItem = player.items[i]
@@ -108,17 +106,17 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                         draw(Art.items, 30 + i * 16, height - PANEL_HEIGHT + 2, slotItem.icon * 16, 0, 16, 16, Art.getCol(slotItem.color))
                         if (slotItem == Item.Pistol) {
                             val str = "" + player.ammo
-                            draw(str, 30 + i * 16 + 17 - str.length * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555)
+                            draw(str.toLiteral(), 30 + i * 16 + 17 - str.length * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555)
                         }
                         if (slotItem == Item.Potion) {
                             val str = "" + player.potions
-                            draw(str, 30 + i * 16 + 17 - str.length * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555)
+                            draw(str.toLiteral(), 30 + i * 16 + 17 - str.length * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555)
                         }
                     }
                 }
 
                 draw(Art.items, 30 + player.selectedSlot * 16, height - PANEL_HEIGHT + 2, 0, 48, 17, 17, Art.getCol(0xFFFFFF))
-                draw(item.itemName, 26 + (8 * 16 - item.itemName.length * 4) / 2, height - 9, 0xFFFFFF)
+                item.itemName.draw(this, 26 + (8 * 16 - item.itemName.length * 4) / 2, height - 9, 0xFFFFFF)
             }
 
             if (game.menu != null) {
@@ -133,7 +131,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                     pixels[i] = (pixels[i] and 0xFCFCFC) shr 2
                 }
                 if (System.currentTimeMillis() / 450 % 2 != 0L) {
-                    val msg = "Click to focus!"
+                    val msg = "gui.ingame.focusLost".toTranslatable()
                     draw(msg, (width - msg.length * 6) / 2, height / 3 + 4, 0xFFFFFF)
                 }
             }

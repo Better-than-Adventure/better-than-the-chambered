@@ -1,6 +1,7 @@
 package com.mojang.escape.level
 
 import com.mojang.escape.entities.Item
+import com.mojang.escape.toTranslatable
 
 class TempleLevel: Level() {
     private var triggerMask = 0
@@ -9,7 +10,7 @@ class TempleLevel: Level() {
         floorCol = 0x8A6496
         ceilCol = 0x8A6496
         wallCol = 0xCFADD8
-        name = "The Temple"
+        name = "level.temple.name".toTranslatable()
     }
 
     override fun switchLevel(id: Int) {

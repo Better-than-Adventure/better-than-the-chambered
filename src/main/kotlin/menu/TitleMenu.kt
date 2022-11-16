@@ -1,8 +1,6 @@
 package com.mojang.escape.menu
 
-import com.mojang.escape.Art
-import com.mojang.escape.Game
-import com.mojang.escape.Sound
+import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.json.JsonHandler
 import com.mojang.escape.json.JsonHandler.Companion.fromJson
@@ -17,7 +15,11 @@ data class Item(
 )
 
 class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
-    private val options = arrayOf("New game", "Settings", "About")
+    private val options = arrayOf(
+        "gui.menu.title.buttonNewGame".toTranslatable(),
+        "gui.menu.title.buttonSettings".toTranslatable(),
+        "gui.menu.title.buttonAbout".toTranslatable()
+    )
     private var selected = 0
     private var firstTick = true
 
@@ -27,18 +29,18 @@ class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         target.draw(Art.logo, 0, 8, 0, 0, 160, 36, Art.getCol(0xFFFFFF))
 
         options.forEachIndexed { index, s ->
-            var msg = s
             var col = 0x909090
             if (selected == index) {
-                msg = "-> $msg"
+                val msg = "-> ".toLiteral() + s
                 col = 0xFFFF80
+                target.draw(msg, 40, 60 + index * 10, Art.getCol(col))
+            } else {
+                target.draw(s, 40, 60 + index * 10, Art.getCol(col))
             }
-            target.draw(msg, 40, 60 + index * 10, Art.getCol(col))
         }
-
         val inputStream = JsonHandler.readFile("/json/hello_world.json")?.fromJson<Item>();
         if (inputStream != null) {
-            target.draw(inputStream.test, 1 + 4, 120 - 9, Art.getCol(0x303030))
+            target.draw(inputStream.test.toLiteral(), 1 + 4, 120 - 9, Art.getCol(0x303030))
         }
         //target.draw("Copyright (C) 2011 Mojang", 1 + 4, 120 - 9, Art.getCol(0x303030))
     }

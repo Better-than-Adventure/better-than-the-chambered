@@ -2,6 +2,7 @@ package com.mojang.escape.menu.settings
 
 import com.mojang.escape.Keys
 import com.mojang.escape.Sound
+import com.mojang.escape.toTranslatable
 
 class GameSettings {
     companion object {
@@ -18,36 +19,54 @@ class GameSettings {
         lateinit var keySlots: Array<Settings.KeySetting>
 
         val settings = Settings {
-            volume = rangeSetting("Volume", 2, 0, 4)
+            volume = rangeSetting("volume", "settings.volume.name".toTranslatable(), 2, 0, 4)
                 .onChanged { _, _ ->
                     Sound.potion.play()
                 }
                 .valueString {
-                    arrayOf("0%", "25%", "50%", "75%", "100%")[it]
+                    arrayOf(
+                        "settings.volume.valueString.0".toTranslatable(),
+                        "settings.volume.valueString.25".toTranslatable(),
+                        "settings.volume.valueString.50".toTranslatable(),
+                        "settings.volume.valueString.75".toTranslatable(),
+                        "settings.volume.valueString.100".toTranslatable()
+                    )[it].value
                 }
             as Settings.RangeSetting
-            mouseLook = booleanSetting("Mouselook", true)
-            graphics = rangeSetting("Graphics", 0, 0, 2)
+            mouseLook = booleanSetting("mouselook", "settings.mouselook.name".toTranslatable(), true)
                 .valueString {
-                    arrayOf("Full", "EGA", "CGA")[it]
+                    if (it) {
+                        "settings.mouselook.valueString.on".toTranslatable()
+                    } else {
+                        "settings.mouselook.valueString.off".toTranslatable()
+                    }.value
+                }
+            as Settings.BooleanSetting
+            graphics = rangeSetting("graphics", "settings.graphics.name".toTranslatable(), 0, 0, 2)
+                .valueString {
+                    arrayOf(
+                        "settings.graphics.valueString.full".toTranslatable(),
+                        "settings.graphics.valueString.ega".toTranslatable(),
+                        "settings.graphics.valueString.cga".toTranslatable()
+                    )[it].value
                 }
             as Settings.RangeSetting
-            keyForward = keySetting("Forward", Keys.KEY_W)
-            keyBackward = keySetting("Backward", Keys.KEY_S)
-            keyTurnLeft = keySetting("Turn Left", Keys.KEY_Q)
-            keyTurnRight = keySetting("Turn Right", Keys.KEY_E)
-            keyStrafeLeft = keySetting("Strafe Left", Keys.KEY_A)
-            keyStrafeRight = keySetting("Strafe Right", Keys.KEY_D)
-            keyInteract = keySetting("Interact", Keys.KEY_SPACE)
+            keyForward = keySetting("keyForward", "settings.keyForward.name".toTranslatable(), Keys.KEY_W)
+            keyBackward = keySetting("keyBackward", "settings.keyBackward.name".toTranslatable(), Keys.KEY_S)
+            keyTurnLeft = keySetting("keyTurnLeft", "settings.keyTurnLeft.name".toTranslatable(), Keys.KEY_Q)
+            keyTurnRight = keySetting("keyTurnRight", "settings.keyTurnRight.name".toTranslatable(), Keys.KEY_E)
+            keyStrafeLeft = keySetting("keyStrafeLeft", "settings.keyStrafeLeft.name".toTranslatable(), Keys.KEY_A)
+            keyStrafeRight = keySetting("keyStrafeRight", "settings.keyStrafeRight.name".toTranslatable(), Keys.KEY_D)
+            keyInteract = keySetting("keyInteract", "settings.keyInteract.name".toTranslatable(), Keys.KEY_SPACE)
             keySlots = arrayOf(
-                keySetting("Slot 1", Keys.KEY_1),
-                keySetting("Slot 2", Keys.KEY_2),
-                keySetting("Slot 3", Keys.KEY_3),
-                keySetting("Slot 4", Keys.KEY_4),
-                keySetting("Slot 5", Keys.KEY_5),
-                keySetting("Slot 6", Keys.KEY_6),
-                keySetting("Slot 7", Keys.KEY_7),
-                keySetting("Slot 8", Keys.KEY_8)
+                keySetting("keySlot0", "settings.keySlots.1.name".toTranslatable(), Keys.KEY_1),
+                keySetting("keySlot1", "settings.keySlots.2.name".toTranslatable(), Keys.KEY_2),
+                keySetting("keySlot2", "settings.keySlots.3.name".toTranslatable(), Keys.KEY_3),
+                keySetting("keySlot3", "settings.keySlots.4.name".toTranslatable(), Keys.KEY_4),
+                keySetting("keySlot4", "settings.keySlots.5.name".toTranslatable(), Keys.KEY_5),
+                keySetting("keySlot5", "settings.keySlots.6.name".toTranslatable(), Keys.KEY_6),
+                keySetting("keySlot6", "settings.keySlots.7.name".toTranslatable(), Keys.KEY_7),
+                keySetting("keySlot7", "settings.keySlots.8.name".toTranslatable(), Keys.KEY_8)
             )
         }
 
@@ -58,6 +77,5 @@ class GameSettings {
                 e.printStackTrace()
             }
         }
-
     }
 }

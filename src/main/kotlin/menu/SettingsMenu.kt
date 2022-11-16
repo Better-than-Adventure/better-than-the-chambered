@@ -15,21 +15,21 @@ class SettingsMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     private var pickingKey: Settings.KeySetting? = null
 
     override fun render(target: Bitmap) {
-        target.draw("Settings", 40, 8, Art.getCol(0xFFFFFF))
+        target.draw("gui.menu.settings.title".toTranslatable(), 40, 8, Art.getCol(0xFFFFFF))
 
         val scrollProgress = scroll.toDouble() / (GameSettings.settings.size - LINES_ON_SCREEN).toDouble()
         val scrollbarY = scrollProgress * (LINES_ON_SCREEN - 1) * 8
         target.fill(target.width - 6, 32, target.width - 1, 32 + LINES_ON_SCREEN * 8 - 1, 0x505050.col)
-        target.draw("ç", target.width - 6, 32 + scrollbarY.toInt(), 0xA0A0A0.col)
+        target.draw("symbols.scrollbar".toTranslatable(Game.symbols), target.width - 6, 32 + scrollbarY.toInt(), 0xA0A0A0.col)
 
         for (index in scroll until (scroll + LINES_ON_SCREEN)) {
             val setting = GameSettings.settings[index]
-            val str = if (index == selected) "-> ${setting.valueString}" else setting.valueString
+            val str = ((if (index == selected) "-> " else "") + setting.valueString).toLiteral()
             target.draw(setting.name, 4, 32 + (index - scroll) * 8, (if (index == selected) 0xFFFF80 else 0xA0A0A0).col)
-            target.draw(str, target.width - 8 - str.displayWidth, 32 + (index - scroll) * 8, (if (index == selected) 0xFFFF80 else 0xA0A0A0).col)
+            target.draw(str, target.width - 8 - (6 * str.length), 32 + (index - scroll) * 8, (if (index == selected) 0xFFFF80 else 0xA0A0A0).col)
         }
 
-        val str = if (selected == -1) "-> Back" else "   Back"
+        val str = (if (selected == -1) "-> " else "   ").toLiteral() + "gui.menu.settings.buttonBack".toTranslatable()
         target.draw(str, 40, target.height - 32, (if (selected == -1) 0xFFFF80 else 0xA0A0A0).col)
     }
 
