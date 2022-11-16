@@ -90,18 +90,6 @@ open class Bitmap(val width: Int, val height: Int) {
         translatable.draw(this, x, y, col)
     }
 
-    @Deprecated("Use IStringUnit.draw().")
-    fun draw(string: String, x: Int, y: Int, col: Int, lang: Language = Game.lang) {
-        for (i in string.indices) {
-            val ch = lang.fontString.indexOf(string[i])
-            if (ch < 0) continue
-
-            val xx = ch % 42
-            val yy = ch / 42
-            draw(lang.fontBitmap, x + i * 6, y, xx * 6, yy * 8, 5, 8, col)
-        }
-    }
-
     fun fill(x0: Int, y0: Int, x1: Int, y1: Int, color: Int) {
         for (y in y0 until y1) {
             for (x in x0 until x1) {

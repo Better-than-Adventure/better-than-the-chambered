@@ -5,6 +5,7 @@ import com.mojang.escape.Game
 import com.mojang.escape.entities.Item
 import com.mojang.escape.gui.palette.Palette
 import com.mojang.escape.menu.settings.GameSettings
+import com.mojang.escape.toLiteral
 import com.mojang.escape.toTranslatable
 import java.util.*
 import kotlin.math.floor
@@ -93,11 +94,11 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                 draw(Art.panel, 0, height - PANEL_HEIGHT, 0, 0, width, PANEL_HEIGHT, Art.getCol(0x707070))
 
                 draw("symbols.key".toTranslatable(Game.symbols), 3, height - 26 + 0, 0x00ffff)
-                draw("" + player.keys + "/4", 10, height - 26 + 0, 0xffffff)
+                draw(("" + player.keys + "/4").toLiteral(), 10, height - 26 + 0, 0xffffff)
                 draw("symbols.trophy".toTranslatable(Game.symbols), 3, height - 26 + 8, 0xffff00)
-                draw("" + player.loot, 10, height - 26 + 8, 0xffffff)
+                draw(("" + player.loot).toLiteral(), 10, height - 26 + 8, 0xffffff)
                 draw("symbols.heart".toTranslatable(Game.symbols), 3, height - 26 + 16, 0xff0000)
-                draw("" + player.health, 10, height - 26 + 16, 0xffffff)
+                draw(("" + player.health).toLiteral(), 10, height - 26 + 16, 0xffffff)
 
                 for (i in 0 until 8) {
                     val slotItem = player.items[i]
@@ -105,11 +106,11 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                         draw(Art.items, 30 + i * 16, height - PANEL_HEIGHT + 2, slotItem.icon * 16, 0, 16, 16, Art.getCol(slotItem.color))
                         if (slotItem == Item.Pistol) {
                             val str = "" + player.ammo
-                            draw(str, 30 + i * 16 + 17 - str.length * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555)
+                            draw(str.toLiteral(), 30 + i * 16 + 17 - str.length * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555)
                         }
                         if (slotItem == Item.Potion) {
                             val str = "" + player.potions
-                            draw(str, 30 + i * 16 + 17 - str.length * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555)
+                            draw(str.toLiteral(), 30 + i * 16 + 17 - str.length * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555)
                         }
                     }
                 }
