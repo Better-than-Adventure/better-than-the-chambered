@@ -6,7 +6,7 @@ import kotlinx.serialization.json.Json
 class JsonHandler {
     companion object {
         fun readFile(filePath: String)
-                = this::class.java.getResource(filePath)?.readText(Charsets.UTF_8)
+                = this::class.java.getResourceAsStream(filePath)?.bufferedReader().use { it?.readText() ?: String }
 
         inline fun <reified T> T.toJson(): String = Json.encodeToString(this)
 
