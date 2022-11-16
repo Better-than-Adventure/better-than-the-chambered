@@ -1,15 +1,13 @@
 package com.mojang.escape.menu
 
-import com.mojang.escape.Art
-import com.mojang.escape.Game
-import com.mojang.escape.Sound
+import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
 
 class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     private val options = arrayOf(
-        Game.lang.strings.getProperty("gui.menu.title.buttonNewGame"),
-        Game.lang.strings.getProperty("gui.menu.title.buttonSettings"),
-        Game.lang.strings.getProperty("gui.menu.title.buttonAbout")
+        "gui.menu.title.buttonNewGame".translated,
+        "gui.menu.title.buttonSettings".translated,
+        "gui.menu.title.buttonAbout".translated
     )
     private var selected = 0
     private var firstTick = true

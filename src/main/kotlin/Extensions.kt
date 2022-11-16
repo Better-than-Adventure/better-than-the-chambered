@@ -30,3 +30,6 @@ get() {
     }
     return i
 }
+
+inline val String.translated: String
+get() = Game.lang.strings.getProperty(this) ?: this
