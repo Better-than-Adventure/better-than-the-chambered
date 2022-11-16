@@ -10,14 +10,19 @@ class StringUnitTranslatable(private val key: String, val lang: Language? = null
         }
 
     override fun draw(bitmap: Bitmap, x: Int, y: Int, col: Int) {
-        val str = value
-        for (i in str.indices) {
-            val ch = (lang ?: Game.lang).fontString.indexOf(str[i])
-            if (ch < 0) continue
+        for (i in value.indices) {
+            var chX = -1
+            var chY = -1
+            for (line in (lang ?: Game.lang).fontStringLines.withIndex()) {
+                val pos = line.value.indexOf(value[i])
+                if (pos != -1) {
+                    chX = pos
+                    chY = line.index
+                }
+            }
+            if (chX == -1 || chY == -1) continue
 
-            val xx = ch % 42
-            val yy = ch / 42
-            bitmap.draw((lang ?: Game.lang).fontBitmap, x + i * 6, y, xx * 6, yy * 8, 5, 8, col)
+            bitmap.draw((lang ?: Game.lang).fontBitmap, x + i * 6, y, chX * 6, chY * 8, 5, 8, col)
         }
     }
 }
