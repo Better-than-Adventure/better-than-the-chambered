@@ -87,9 +87,18 @@ open class Bitmap(val width: Int, val height: Int) {
     }
 
     fun draw(string: TranslatedString, x: Int, y: Int, col: Int, lang: Language = Game.lang) {
-        draw(string.value, x, y, col, lang)
+        val str = string.value
+        for (i in str.indices) {
+            val ch = lang.fontString.indexOf(str[i])
+            if (ch < 0) continue
+
+            val xx = ch % 42
+            val yy = ch / 42
+            draw(lang.fontBitmap, x + i * 6, y, xx * 6, yy * 8, 5, 8, col)
+        }
     }
 
+    @Deprecated("Use TranslatedString.")
     fun draw(string: String, x: Int, y: Int, col: Int, lang: Language = Game.lang) {
         for (i in string.indices) {
             val ch = lang.fontString.indexOf(string[i])
