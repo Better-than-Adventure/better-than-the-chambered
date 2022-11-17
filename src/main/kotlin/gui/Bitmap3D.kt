@@ -4,7 +4,6 @@ import com.mojang.escape.Art
 import com.mojang.escape.Game
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.DoorBlock
-import com.mojang.escape.menu.SettingsMenu
 import com.mojang.escape.menu.settings.GameSettings
 import java.util.*
 import kotlin.math.ceil

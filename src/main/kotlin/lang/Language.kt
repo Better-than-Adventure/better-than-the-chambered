@@ -12,4 +12,8 @@ class Language(val name: String) {
     init {
         strings.load(Language::class.java.getResourceAsStream("/lang/$name/strings.lang"))
     }
+
+    override fun toString(): String {
+        return name
+    }
 }

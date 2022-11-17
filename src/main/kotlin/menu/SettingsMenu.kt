@@ -2,38 +2,43 @@ package com.mojang.escape.menu
 
 import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
+import com.mojang.escape.lang.IStringUnit
 import com.mojang.escape.menu.settings.GameSettings
 import com.mojang.escape.menu.settings.Settings
 
-class SettingsMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
-    companion object {
-        const val LINES_ON_SCREEN = 6
-    }
-
-    private var selected = 0
-    private var scroll = 0
+class SettingsMenu(lastMenu: Menu? = null): ScrollableMenu(lastMenu) {
+    override val title: IStringUnit = "gui.menu.settings.title".toTranslatable()
+    override val lastButton: IStringUnit = "gui.menu.settings.buttonBack".toTranslatable()
+    override val numLines: Int = GameSettings.settings.size
+    
     private var pickingKey: Settings.KeySetting? = null
 
-    override fun render(target: Bitmap) {
-        target.draw("gui.menu.settings.title".toTranslatable(), 40, 8, Art.getCol(0xFFFFFF))
-
-        val scrollProgress = scroll.toDouble() / (GameSettings.settings.size - LINES_ON_SCREEN).toDouble()
-        val scrollbarY = scrollProgress * (LINES_ON_SCREEN - 1) * 8
-        target.fill(target.width - 6, 32, target.width - 1, 32 + LINES_ON_SCREEN * 8 - 1, 0x505050.col)
-        target.draw("symbols.scrollbar".toTranslatable(Game.symbols), target.width - 6, 32 + scrollbarY.toInt(), 0xA0A0A0.col)
-
-        for (index in scroll until (scroll + LINES_ON_SCREEN)) {
-            val setting = GameSettings.settings[index]
-            val str = ((if (index == selected) "-> " else "") + setting.valueString).toLiteral()
-            target.draw(setting.name, 4, 32 + (index - scroll) * 8, (if (index == selected) 0xFFFF80 else 0xA0A0A0).col)
-            target.draw(str, target.width - 8 - (6 * str.length), 32 + (index - scroll) * 8, (if (index == selected) 0xFFFF80 else 0xA0A0A0).col)
-        }
-
-        val str = (if (selected == -1) "-> " else "   ").toLiteral() + "gui.menu.settings.buttonBack".toTranslatable()
-        target.draw(str, 40, target.height - 32, (if (selected == -1) 0xFFFF80 else 0xA0A0A0).col)
+    override fun drawLine(target: Bitmap, lineIndex: Int, selected: Boolean) {
+        val setting = GameSettings.settings[lineIndex]
+        val str = ((if (selected) "-> " else "") + setting.valueString).toLiteral()
+        val col = (if (selected) 0xFFFF80 else 0xA0A0A0).col
+        target.draw(setting.name, 0, 0, col)
+        target.draw(str, target.width - (6 * str.length), 0, col)
     }
 
-    override fun tick(game: Game, keys: BooleanArray, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
+    override fun lineActivated(lineIndex: Int) {
+        if (GameSettings.settings[lineIndex] is Settings.KeySetting) {
+            (GameSettings.settings[lineIndex] as Settings.KeySetting).picking = true
+            pickingKey = GameSettings.settings[lineIndex] as Settings.KeySetting
+        } else {
+            GameSettings.settings[lineIndex].onActivated()
+        }
+    }
+
+    override fun tick(
+        game: Game,
+        keys: BooleanArray,
+        up: Boolean,
+        down: Boolean,
+        left: Boolean,
+        right: Boolean,
+        use: Boolean
+    ) {
         if (pickingKey != null) {
             val pickingKey = pickingKey!!
             if (keys[Keys.KEY_ESCAPE.ordinal]) {
@@ -51,46 +56,6 @@ class SettingsMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
             }
             return
         }
-        if (up) {
-            if (selected == -1) {
-                selected = GameSettings.settings.size - 1
-            } else if (selected > 0) {
-                selected--
-            } else {
-                selected = -1
-            }
-        }
-        if (down) {
-            if (selected == -1) {
-                selected = 0
-            } else if (selected < GameSettings.settings.size - 1) {
-                selected++
-            } else {
-                selected = -1
-            }
-        }
-        if (left || right) {
-            selected = -1
-        }
-        if (use) {
-            Sound.click1.play()
-            if (selected == -1) {
-                game.menu = lastMenu ?: TitleMenu()
-            } else if (GameSettings.settings[selected] is Settings.KeySetting) {
-                (GameSettings.settings[selected] as Settings.KeySetting).picking = true
-                pickingKey = GameSettings.settings[selected] as Settings.KeySetting
-            } else {
-                GameSettings.settings[selected].onActivated()
-            }
-        }
-
-        if (selected != -1) {
-            if (scroll > selected) {
-                scroll = selected
-            }
-            if (scroll + LINES_ON_SCREEN <= selected) {
-                scroll = selected - LINES_ON_SCREEN + 1
-            }
-        }
+        super.tick(game, keys, up, down, left, right, use)
     }
 }

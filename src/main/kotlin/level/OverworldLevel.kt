@@ -9,7 +9,7 @@ class OverworldLevel: Level() {
         floorCol = 0x508253
         floorTex = 8 + 3
         wallCol = 0xa0a0a0
-        name = "level.island.name".toTranslatable()
+        name = "level.overworld.name".toTranslatable()
     }
 
     override fun switchLevel(id: Int) {
