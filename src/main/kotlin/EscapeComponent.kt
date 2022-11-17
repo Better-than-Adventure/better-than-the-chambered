@@ -42,6 +42,7 @@ class EscapeComponent: Canvas(), Runnable {
         this.maximumSize = size
 
         this.game = Game()
+        Game.theGame = this.game
         this.screen = Screen(WIDTH, HEIGHT)
 
         this.img = BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB)

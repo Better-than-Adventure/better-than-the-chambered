@@ -9,7 +9,7 @@ import java.util.Properties
 
 class StructuredProperties: Properties() {
     override fun load(inStream: InputStream) {
-        load0(BufferedReader(InputStreamReader(inStream)))
+        load0(BufferedReader(InputStreamReader(inStream, "UTF-8")))
     }
 
     override fun load(reader: Reader) {

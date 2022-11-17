@@ -1,6 +1,8 @@
 window.
     title=Better than the Chambered!
 settings.
+    language.
+        name=Language
     volume.
         name=Volume
         valueString.
@@ -72,6 +74,9 @@ gui.
         gotLoot.
             text=You found the %s!
             buttonContinue=Continue
+        languages.
+            title=Languages
+            buttonBack=Back
         lose.
             trinkets=Trinkets: 
             time=Time: 
@@ -90,6 +95,9 @@ gui.
     ingame.
         enteringLevel=Entering %s
         focusLost=Click to focus!
+    languages.
+        en_US=English (US)
+        fr=French (Standard)
 item.
     none.
         name=

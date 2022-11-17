@@ -13,8 +13,8 @@ import kotlin.math.sin
 
 class Game {
     companion object {
-        val lang = Language("en_US")
         val symbols = Language("symbols")
+        var theGame: Game? = null
     }
 
     var time = 0

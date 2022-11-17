@@ -1,7 +1,10 @@
 package com.mojang.escape.menu.settings
 
+import com.mojang.escape.Game
 import com.mojang.escape.Keys
+import com.mojang.escape.lang.Language
 import com.mojang.escape.lang.StringUnitTranslatable
+import com.mojang.escape.menu.LanguagesMenu
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -127,6 +130,20 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
             value = Keys.values()[string.toInt()]
         }
     }
+    
+    class LanguageSetting(settings: Settings, key: String, name: StringUnitTranslatable, value: Language): Setting<Language>(settings, key, name, value) {
+        override fun onActivated() {
+            Game.theGame?.menu = LanguagesMenu(Game.theGame?.menu) 
+        }
+
+        override fun toConfigString(): String {
+            return value.name
+        }
+
+        override fun fromConfigString(string: String) {
+            value = Language(string)
+        }
+    }
 
     init {
         init(this)
@@ -146,6 +163,12 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
 
     fun keySetting(key: String, name: StringUnitTranslatable, value: Keys): KeySetting {
         val setting = KeySetting(this, key, name, value)
+        add(setting)
+        return setting
+    }
+    
+    fun languagesSetting(key: String, name: StringUnitTranslatable, value: Language): LanguageSetting {
+        val setting = LanguageSetting(this, key, name, value)
         add(setting)
         return setting
     }
