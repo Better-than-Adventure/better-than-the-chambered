@@ -3,6 +3,8 @@ package com.mojang.escape.level
 import com.mojang.escape.Art
 import com.mojang.escape.Game
 import com.mojang.escape.entities.*
+import com.mojang.escape.lang.IStringUnit
+import com.mojang.escape.lang.StringUnitLiteral
 import com.mojang.escape.lang.StringUnitTranslatable
 import com.mojang.escape.level.block.*
 import com.mojang.escape.menu.GotLootMenu
@@ -72,13 +74,16 @@ abstract class Level {
 
     val entities = mutableListOf<Entity>()
     lateinit var game: Game
-    var name = StringUnitTranslatable("")
+    var name: IStringUnit = StringUnitLiteral("")
 
     lateinit var player: Player
+
+    protected var nameId: String = ""
 
     open fun init(game: Game, name: String, w: Int, h: Int, pixels: IntArray) {
         this.game = game
 
+        nameId = name
         solidWall.col = Art.getCol(wallCol)
         solidWall.tex = Art.getCol(wallTex)
         width = w

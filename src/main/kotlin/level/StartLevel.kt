@@ -11,7 +11,7 @@ class StartLevel: Level() {
     override fun switchLevel(id: Int) {
         when (id) {
             1 -> game.switchLevel("overworld", 1)
-            2 -> game.switchLevel("dungeon", 1)
+            2 -> game.switchLevel("random_0", 1)
         }
     }
 }

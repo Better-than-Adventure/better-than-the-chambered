@@ -4,6 +4,7 @@ import com.mojang.escape.entities.Item
 import com.mojang.escape.entities.Player
 import com.mojang.escape.lang.Language
 import com.mojang.escape.level.Level
+import com.mojang.escape.level.RandomLevel
 import com.mojang.escape.level.block.LadderBlock
 import com.mojang.escape.menu.*
 import com.mojang.escape.menu.settings.GameSettings
@@ -43,7 +44,11 @@ class Game {
     fun switchLevel(name: String, id: Int) {
         pauseTime = 30
         level!!.removeEntityImmediately(player!!)
-        val localLevel = Level.loadLevel(this, name)
+        val localLevel = if (name.startsWith("random_")) {
+            RandomLevel.loadRandomLevel(this, name)
+        } else {
+            Level.loadLevel(this, name)
+        }
         val localPlayer = player!!
 
         localLevel.player = localPlayer
