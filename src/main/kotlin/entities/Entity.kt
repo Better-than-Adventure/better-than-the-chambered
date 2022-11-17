@@ -2,20 +2,24 @@ package com.mojang.escape.entities
 
 import com.mojang.escape.gui.Sprite
 import com.mojang.escape.level.Level
+import com.mojang.escape.network.INetworkable
+import com.mojang.escape.network.NetworkQueue
 import kotlin.math.abs
 import java.util.Random
 import kotlin.math.floor
 
-open class Entity {
+open class Entity: INetworkable {
     companion object {
         val random = Random()
     }
 
+    override val objectId: Int = NetworkQueue.getObjectId(this)
+
     val sprites = arrayListOf<Sprite>()
 
-    var x = 0.0
-    var z = 0.0
-    var rot = 0.0
+    var x by NetworkQueue.Networked(0, 0.0)
+    var z by NetworkQueue.Networked(1, 0.0)
+    var rot by NetworkQueue.Networked(2, 0.0)
 
     var xa = 0.0
     var za = 0.0
@@ -25,11 +29,11 @@ open class Entity {
 
     var level: Level? = null
 
-    var xTileO = -1
-    var zTileO = -1
+    var xTileO by NetworkQueue.Networked(3, -1)
+    var zTileO by NetworkQueue.Networked(4, -1)
     var flying = false
 
-    private var removed = false
+    override var removed by NetworkQueue.Remover()
 
     fun updatePos() {
         val xTile = (x + 0.5).toInt()
