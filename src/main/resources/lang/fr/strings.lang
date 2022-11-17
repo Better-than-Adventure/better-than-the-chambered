@@ -1,10 +1,10 @@
 window.
-    title=Mieux que le Chambered!
+    title=Better than the Chambered!
 settings.
     language.
         name=Langue
     volume.
-        name=Le Volume
+        name=Volume
         valueString.
             0=0%
             25=25%
@@ -12,127 +12,127 @@ settings.
             75=75%
             100=100%
     mouselook.
-        name=Regard de Souris
+        name=Contrôle de la vue subjective à la souris
         valueString.
             on=Activé
-            off=Off
+            off=Désactivé
     graphics.
-        name=Graphique
+        name=Graphismes
         valueString.
-            full=Complet
+            full=Palette complète
             ega=EGA
             cga=CGA
     keyForward.
-        name=En Avant
+        name=Avancer
     keyBackward.
-        name=Arriéré
+        name=Reculer
     keyTurnLeft.
-        name=Tourner à Gauche
+        name=Tourner vers la gauche
     keyTurnRight.
-        name=Tournez à Droite
+        name=Tourner vers la droite
     keyStrafeLeft.
-        name=Mitrailler à Gauche
+        name=Aller à gauche
     keyStrafeRight.
-        name=Mitrailler à Droite
+        name=Aller à droite
     keyInteract.
-        name=Interagir
+        name=Intéragir
     keySlots.
         1.
-            name=Insérer 1
+            name=Emplacement 1
         2.
-            name=Insérer 2
+            name=Emplacement 2
         3.
-            name=Insérer 3
+            name=Emplacement 3
         4.
-            name=Insérer 4
+            name=Emplacement 4
         5.
-            name=Insérer 5
+            name=Emplacement 5
         6.
-            name=Insérer 6
+            name=Emplacement 6
         7.
-            name=Insérer 7
+            name=Emplacement 7
         8.
-            name=Insérer 8
+            name=Emplacement 8
 gui.
     menu.
         about.
-            title=Sur
-            buttonContinue=Continuez
-            line0=Mieux que le Chambered
-            line1=de Markus Persson.
-            line2=Fabriqué en août 2011 pour le
-            line3=21e composition Ludum Dare
+            title=À propos
+            buttonContinue=Continuer
+            line0=Prelude of the Chambered
+            line1=par Markus Persson.
+            line2=Développé en août 2011 pour la
+            line3=21ème édition du concours Ludum Dare.
             line4=
-            line5=Ce jeu est gratuit
-            line6=et a été créé à partir de zéro
-            line7=en seulement 48 heures.
+            line5=Ce jeu est un logiciel gratuit,
+            line6=il a été développé à partir
+            line7=de zéro en moins de 48 heures.
         title.
-            copyright=Droit d'auteur (C) 2011 Mojang
-            buttonNewGame=Nouveau jeu
-            buttonSettings=Réglages
-            buttonAbout=Sur
+            copyright=Copyright (C) 2011 Mojang
+            buttonNewGame=Nouvelle partie
+            buttonSettings=Paramètres
+            buttonAbout=À propos
         gotLoot.
-            text=Vous avez trouvé le %s!
-            buttonContinue=Continuez
+            text=Vous avez trouvé : %s !
+            buttonContinue=Continuer
         languages.
             title=Langues
             buttonBack=Retour
         lose.
-            trinkets=Bibelots: 
-            time=Temps: 
-            buttonContinue=Continuez
+            trinkets=Objets trouvés :
+            time=Temps :
+            buttonContinue=Continuer
         pause.
-            buttonAbortGame=Abandonner le jeu
-            buttonSettings=Réglages
-            buttonContinue=Continuez
+            buttonAbortGame=Abandonner la partie
+            buttonSettings=Paramètres
+            buttonContinue=Continuer
         settings.
-            title=Réglages
+            title=Paramètres
             buttonBack=Retour
         win.
-            trinkets=Bibelots: 
-            time=Temps: 
-            buttonContinue=Continuez
+            trinkets=Objets trouvés :
+            time=Temps :
+            buttonContinue=Continuer
     ingame.
-        enteringLevel=Entrer dans %s
-        focusLost=Cliquez pour vous focaliser!
+        enteringLevel=Vous pénétrez dans %s
+        focusLost=Cliquer pour revenir dans le jeu !
     languages.
-        en_US=Anglais (États-Unis)
-		fr=Français (Norme)
+        en_US=English (US)
+        fr=French (France)
 item.
     none.
         name=
         desc=
     powerGlove.
-        name=Gant de Puissance
-        desc=Fracasseeer!!
+        name=Gant de puissance
+        desc=Paf !
     pistol.
         name=Pistolet
-        desc=Pew, pew, pew!
+        desc=Pan pan pan !
     flippers.
         name=Palmes
-        desc=Splish splash!
+        desc=Plouf !
     cutters.
-        name=Coupeurs
-        desc=Snip, snip!
+        name=Coupe-fils
+        desc=Coupe-coupe !
     skates.
         name=Patins
-        desc=Tranchant!
+        desc=Tranchant !
     key.
         name=Clé
-        desc=
+        desc=Comment est-ce que t'as eu ça ?
     potion.
         name=Potion
-        desc=Sain!
+        desc=Sain !
 level.
     crypt.
-        name=La Crypte
+        name=la crypte
     dungeon.
-        name=Les Donjons
+        name=les cachots
     ice.
-        name=La Grotte de Givre
+        name=la caverne givrée
     overworld.
-        name=L'Ile
+        name=l'île
     start.
-        name=La Prison
+        name=la prison
     temple.
-        name=Le Temple
+        name=le temple
