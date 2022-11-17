@@ -2,17 +2,10 @@ package com.mojang.escape.menu
 
 import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
-import com.mojang.escape.json.JsonHandler
-import com.mojang.escape.json.JsonHandler.Companion.fromJson
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.io.InputStream
 import java.nio.charset.Charset
-
-@Serializable
-data class Item(
-    @SerialName("test") val test: String,
-)
 
 class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     private val options = arrayOf(
@@ -38,11 +31,8 @@ class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
                 target.draw(s, 40, 60 + index * 10, Art.getCol(col))
             }
         }
-        val inputStream = JsonHandler.readFile("/json/hello_world.json")?.fromJson<Item>();
-        if (inputStream != null) {
-            target.draw(inputStream.test.toLiteral(), 1 + 4, 120 - 9, Art.getCol(0x303030))
-        }
-        //target.draw("Copyright (C) 2011 Mojang", 1 + 4, 120 - 9, Art.getCol(0x303030))
+
+        target.draw("gui.menu.title.copyright".toTranslatable(), 1 + 4, 120 - 9, Art.getCol(0x303030))
     }
 
     override fun tick(game: Game, keys: BooleanArray, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
