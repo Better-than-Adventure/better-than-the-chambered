@@ -32,6 +32,9 @@ object NetworkQueue {
             removed = value
             if (removed) {
                 networkables.remove(thisRef.objectId)
+                queue.removeIf {
+                    it.first == thisRef.objectId
+                }
             }
         }
     }
