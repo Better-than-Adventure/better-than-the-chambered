@@ -321,7 +321,7 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
             if (zl < 0) {
                 val xx = (floor((i % width) - rot * 512 / (Math.PI * 2)).toInt()) and 511
                 val yy = i / width
-                pixels[i] = Art.sky.pixels[xx + yy * 512] * 0x444455
+                if (xx + yy * 512 < Art.sky.pixels.size) pixels[i] = Art.sky.pixels[xx + yy * 512] * 0x444455
             } else {
                 val xp = (i % width)
                 val yp = (i / width) * 14

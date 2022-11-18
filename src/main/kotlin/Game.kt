@@ -4,6 +4,7 @@ import com.mojang.escape.entities.Item
 import com.mojang.escape.entities.Player
 import com.mojang.escape.lang.Language
 import com.mojang.escape.level.Level
+import com.mojang.escape.level.Wolf3DLevel
 import com.mojang.escape.level.block.LadderBlock
 import com.mojang.escape.menu.*
 import com.mojang.escape.menu.settings.GameSettings
@@ -26,7 +27,7 @@ class Game {
     fun newGame() {
         Level.clear()
 
-        val localLevel = Level.loadLevel(this, "start")
+        val localLevel = Wolf3DLevel.loadWolf3dLevel(this, 0)
         val localPlayer = Player()
 
         localPlayer.level = localLevel

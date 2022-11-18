@@ -37,3 +37,13 @@ fun String.toLiteral(lang: Language? = null): StringUnitLiteral {
 fun String.toTranslatable(lang: Language? = null): StringUnitTranslatable {
     return StringUnitTranslatable(this, lang)
 }
+
+@OptIn(ExperimentalUnsignedTypes::class)
+infix fun UByteArray.equalsTo(other: UByteArray): Boolean {
+    if (size != other.size) return false
+    for (i in indices) {
+        if (get(i) != other[i]) return false
+    }
+    
+    return true
+}

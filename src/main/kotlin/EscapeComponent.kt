@@ -1,9 +1,12 @@
 package com.mojang.escape
 
 import com.mojang.escape.gui.Screen
+import com.mojang.escape.level.wolf3d.GameMaps
+import com.mojang.escape.level.wolf3d.MapHead
 import java.awt.*
 import java.awt.image.BufferedImage
 import java.awt.image.DataBufferInt
+import java.lang.Exception
 import javax.swing.JFrame
 import javax.swing.JPanel
 
@@ -14,6 +17,8 @@ class EscapeComponent: Canvas(), Runnable {
         private const val WIDTH = 160
         private const val HEIGHT = 120
         private const val SCALE = 4
+        
+        lateinit var wolf3D: GameMaps
     }
 
     private var running = false
@@ -57,6 +62,17 @@ class EscapeComponent: Canvas(), Runnable {
 
         emptyCursor = Toolkit.getDefaultToolkit().createCustomCursor(BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB), Point(0, 0), "empty")
         defaultCursor = cursor
+        
+        // Read Wolf3D
+        EscapeComponent::class.java.getResourceAsStream("/wolf3d/MAPHEAD.WL6")!!.use { mapheadStream ->
+            EscapeComponent::class.java.getResourceAsStream("/wolf3d/GAMEMAPS.WL6")!!.use { gamemapsStream ->
+                val mapheadBytes = mapheadStream.readBytes()
+                val gamemapsBytes = gamemapsStream.readBytes()
+                
+                val mapHead = MapHead(mapheadBytes)
+                wolf3D = GameMaps(gamemapsBytes, mapHead)
+            }
+        }
     }
 
     @Synchronized

@@ -57,7 +57,7 @@ abstract class Level {
     var width = 0
     var height = 0
 
-    private val solidWall = SolidBlock()
+    protected val solidWall = SolidBlock()
 
     var xSpawn = 0
     var ySpawn = 0
@@ -80,7 +80,7 @@ abstract class Level {
         this.game = game
 
         solidWall.col = Art.getCol(wallCol)
-        solidWall.tex = Art.getCol(wallTex)
+        solidWall.tex = wallTex
         width = w
         height = h
         blocks = Array(width * height) {
