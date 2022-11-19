@@ -75,5 +75,6 @@ tasks {
 }
 
 application {
+    applicationDefaultJvmArgs = listOf("-XstartOnFirstThread")
     mainClass.set("com.mojang.escape.EscapeKt")
 }

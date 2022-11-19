@@ -55,7 +55,12 @@ class Escape {
         
         glfwDefaultWindowHints()
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
-        
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+
         window = glfwCreateWindow(WIDTH * SCALE, HEIGHT * SCALE, "Better than the Chambered!", NULL, NULL)
         if (window == NULL) {
             throw RuntimeException("Failed to create the GLFW window!")
@@ -105,12 +110,14 @@ class Escape {
         GL.createCapabilities()
         
         glEnable(GL_DEBUG_OUTPUT)
-        glDebugMessageCallback({ _, type, _, severity, length, message, _ ->
-            println(String.format("GL CALLBACK:%s type 0x%X, severity = 0x%X, message = %s",
-                (if (type == GL_DEBUG_TYPE_ERROR) " ** GL ERROR **" else ""), 
-                type, severity, GLDebugMessageCallback.getMessage(length, message))
-            )
-        }, 0)
+        if (GL.getCapabilities().OpenGL43) {
+            glDebugMessageCallback({ _, type, _, severity, length, message, _ ->
+                println(String.format("GL CALLBACK:%s type 0x%X, severity = 0x%X, message = %s",
+                    (if (type == GL_DEBUG_TYPE_ERROR) " ** GL ERROR **" else ""),
+                    type, severity, GLDebugMessageCallback.getMessage(length, message))
+                )
+            }, 0)
+        }
 
         display.init()
         display.bitmap = screen

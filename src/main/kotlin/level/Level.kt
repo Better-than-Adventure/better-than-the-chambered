@@ -6,9 +6,9 @@ import com.mojang.escape.entities.*
 import com.mojang.escape.lang.StringUnitTranslatable
 import com.mojang.escape.level.block.*
 import com.mojang.escape.menu.GotLootMenu
+import com.mojang.escape.util.Image
 import java.lang.Exception
 import java.lang.RuntimeException
-import javax.imageio.ImageIO
 import kotlin.math.floor
 
 abstract class Level {
@@ -25,12 +25,12 @@ abstract class Level {
             }
 
             try {
-                val img = ImageIO.read(Level::class.java.getResource("/level/$name.png"))
+                val img = Image.read(Level::class.java.getResource("/level/$name.png")!!)
 
                 val w = img.width
                 val h = img.height
                 val pixels = IntArray(w * h)
-                img.getRGB(0, 0, w, h, pixels, 0, w)
+                img.getRGB(pixels)
 
                 val level = Level.byName(name)
                 level.init(game, name, w, h, pixels)
