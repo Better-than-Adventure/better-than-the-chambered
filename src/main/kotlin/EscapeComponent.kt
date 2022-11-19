@@ -73,6 +73,29 @@ class EscapeComponent: Canvas(), Runnable {
                 wolf3D = GameMaps(gamemapsBytes, mapHead)
             }
         }
+        
+        val gamemap = wolf3D.levelHeaders[0]
+        println("\nPlane 0:")
+        for (y in 0 until 64) {
+            for (x in 0 until 64) {
+                print(String.format("%4d ", gamemap.plane0!![x + y * 64].toInt()))
+            }
+            println()
+        }
+        println("\nPlane 1:")
+        for (y in 0 until 64) {
+            for (x in 0 until 64) {
+                print(String.format("%4d ", gamemap.plane1!![x + y * 64].toInt()))
+            }
+            println()
+        }
+        println("\nPlane 2:")
+        for (y in 0 until 64) {
+            for (x in 0 until 64) {
+                print(String.format("%4d ", gamemap.plane2!![x + y * 64].toInt()))
+            }
+            println()
+        }
     }
 
     @Synchronized

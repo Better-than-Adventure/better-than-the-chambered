@@ -80,7 +80,6 @@ open class Entity {
     }
 
     fun isFree(xx: Double, yy: Double): Boolean {
-        if (true) return true
         val x0 = floor(xx + 0.5 - r).toInt()
         val x1 = floor(xx + 0.5 + r).toInt()
         val y0 = floor(yy + 0.5 - r).toInt()

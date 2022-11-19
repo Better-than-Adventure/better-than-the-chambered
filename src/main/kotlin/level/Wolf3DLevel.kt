@@ -7,9 +7,10 @@ import com.mojang.escape.col
 import com.mojang.escape.level.block.Block
 import com.mojang.escape.level.block.DoorBlock
 import com.mojang.escape.level.block.SolidBlock
+import com.mojang.escape.level.block.VanishBlock
 import com.mojang.escape.level.wolf3d.GameMaps
 
-class Wolf3DLevel(private val levelHeader: GameMaps.LevelHeader): Level() {
+class Wolf3DLevel(private val levelHeader: GameMaps.LevelHeader, val index: Int): Level() {
     companion object {
         fun loadWolf3dLevel(game: Game, index: Int): Level {
             val wolfLevel = EscapeComponent.wolf3D.levelHeaders[index]
@@ -18,7 +19,7 @@ class Wolf3DLevel(private val levelHeader: GameMaps.LevelHeader): Level() {
                 return loaded.getValue(wolfLevel.name)
             }
             
-            val level = Wolf3DLevel(wolfLevel)
+            val level = Wolf3DLevel(wolfLevel, index)
             level.init(game, wolfLevel.name, 0, 0, IntArray(0))
             loaded[wolfLevel.name] = level
             
@@ -66,11 +67,15 @@ class Wolf3DLevel(private val levelHeader: GameMaps.LevelHeader): Level() {
             
             block
         }
-
-        for (y in 0 until h) {
-            for (x in 0 until w) {
-                val col = pixels[x + y * w] and 0xFFFFFF
-                decorateBlock(x, y, blocks[x + y * w], col)
+        
+        for (i in blocks.indices) {
+            val x = i % width
+            val y = i / width
+            val id = levelHeader.plane1!![i].toInt()
+            if (id == 19 || id == 20 || id == 21 || id == 22) {
+                xSpawn = x
+                ySpawn = y
+                break
             }
         }
     }
@@ -102,7 +107,10 @@ class Wolf3DLevel(private val levelHeader: GameMaps.LevelHeader): Level() {
     
     private fun getBlockFromPlane(plane0: Int, plane1: Int): Block {
         return if (plane1 > 0) {
-            Block()
+            when (plane1) {
+                98 -> VanishBlock()
+                else -> Block()
+            }
         } else {
             when (plane0) {
                 in 1..63 -> SolidBlock()
