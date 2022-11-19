@@ -75,6 +75,8 @@ tasks {
 }
 
 application {
-    applicationDefaultJvmArgs = listOf("-XstartOnFirstThread")
+    if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+        applicationDefaultJvmArgs = listOf("-XstartOnFirstThread")
+    }
     mainClass.set("com.mojang.escape.EscapeKt")
 }

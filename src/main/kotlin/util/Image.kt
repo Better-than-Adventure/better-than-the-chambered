@@ -14,7 +14,12 @@ class Image(val width: Int, val height: Int) {
                 val _width = stack.mallocInt(1)
                 val _height = stack.mallocInt(1)
                 val channels = stack.mallocInt(1)
-                val img = STBImage.stbi_load(input.file, _width, _height, channels, 4)
+                val fileName = if (System.getProperty("os.name").lowercase().contains("win")) {
+                    input.file.trimStart('/')
+                } else {
+                    input.file
+                }
+                val img = STBImage.stbi_load(fileName, _width, _height, channels, 4)
                 width = _width[0]
                 height = _height[0]
                 return@use img!!
