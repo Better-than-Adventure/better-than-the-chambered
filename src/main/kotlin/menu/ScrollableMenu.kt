@@ -2,7 +2,7 @@ package com.mojang.escape.menu
 
 import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
-import com.mojang.escape.lang.IStringUnit
+import com.mojang.escape.lang.StringUnit
 
 abstract class ScrollableMenu(lastMenu: Menu? = null): Menu(lastMenu) {
     companion object {
@@ -12,8 +12,8 @@ abstract class ScrollableMenu(lastMenu: Menu? = null): Menu(lastMenu) {
     private var selected = 0
     private var scroll = 0
     
-    protected abstract val title: IStringUnit
-    protected abstract val lastButton: IStringUnit
+    protected abstract val title: StringUnit
+    protected abstract val lastButton: StringUnit
     
     protected abstract val numLines: Int
 
