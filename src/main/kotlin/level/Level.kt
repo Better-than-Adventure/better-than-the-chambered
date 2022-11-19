@@ -195,6 +195,7 @@ abstract class Level {
             0x3F3F60 -> IceBlock()
             0xC6C697 -> LockedDoorBlock()
             0xFFBA02 -> AltarBlock()
+            0x749327 -> SpiritWallBlock()
             0x1A2108 -> Block()
             0x00C2A7 -> FinalUnlockBlock()
             0x000056 -> WinBlock()

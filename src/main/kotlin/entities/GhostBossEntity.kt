@@ -18,8 +18,8 @@ class GhostBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.ge
         animTime++
         sprite.tex = defaultTex + animTime / 10 % 2
 
-        var xd = ((level?.player?.x ?: 0.0) + sin(rotatePos) * 2) - x
-        var zd = ((level?.player?.z ?: 0.0) + sin(rotatePos) * 2) - z
+        var xd = ((level!!.player.x ?: 0.0) + sin(rotatePos) * 2) - x
+        var zd = ((level!!.player.z ?: 0.0) + sin(rotatePos) * 2) - z
         var dd = xd * xd + zd * zd
 
         if (dd < 1) {
@@ -44,6 +44,11 @@ class GhostBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.ge
                 level?.addEntity(Bullet(this, x, z, atan2((level?.player?.x ?: 0.0) - x, (level?.player?.z ?: 0.0) - z), 0.20, 1, defaultColor))
             }
         }
+        
+        move()
+        
+        xa *= 0.9
+        za *= 0.9
     }
 
     override fun hurt(xd: Double, zd: Double) {
