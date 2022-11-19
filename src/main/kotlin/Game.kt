@@ -60,7 +60,7 @@ class Game {
         player = localPlayer
     }
 
-    fun tick(keys: BooleanArray, mousePos: Pair<Int, Int>, mouseButtons: BooleanArray) {
+    fun tick(keys: BooleanArray, mousePos: Pair<Double, Double>, mouseButtons: BooleanArray) {
         if (pauseTime > 0) {
             pauseTime--
             return
@@ -90,13 +90,13 @@ class Game {
             keys[Keys.KEY_ENTER.ordinal] = false
             keys[Keys.KEY_SPACE.ordinal] = false
         } else {
-            val strafe = keys[Keys.KEY_CONTROL.ordinal] || keys[Keys.KEY_ALT.ordinal] || keys[Keys.KEY_ALT_GRAPH.ordinal] || keys[Keys.KEY_SHIFT.ordinal]
+            val strafe = keys[Keys.KEY_LEFT_CONTROL.ordinal] || keys[Keys.KEY_LEFT_ALT.ordinal] || keys[Keys.KEY_LEFT_SHIFT.ordinal]
 
-            val lk = keys[Keys.KEY_LEFT.ordinal] || keys[Keys.KEY_NUMPAD4.ordinal]
-            val rk = keys[Keys.KEY_RIGHT.ordinal] || keys[Keys.KEY_NUMPAD6.ordinal]
+            val lk = keys[Keys.KEY_LEFT.ordinal] || keys[Keys.KEY_KP_4.ordinal]
+            val rk = keys[Keys.KEY_RIGHT.ordinal] || keys[Keys.KEY_KP_6.ordinal]
 
-            val up = keys[GameSettings.keyForward.value.ordinal] || keys[Keys.KEY_UP.ordinal] || keys[Keys.KEY_NUMPAD8.ordinal]
-            val down = keys[GameSettings.keyBackward.value.ordinal] || keys[Keys.KEY_DOWN.ordinal] || keys[Keys.KEY_NUMPAD2.ordinal]
+            val up = keys[GameSettings.keyForward.value.ordinal] || keys[Keys.KEY_UP.ordinal] || keys[Keys.KEY_KP_8.ordinal]
+            val down = keys[GameSettings.keyBackward.value.ordinal] || keys[Keys.KEY_DOWN.ordinal] || keys[Keys.KEY_KP_2.ordinal]
             val left = keys[GameSettings.keyStrafeLeft.value.ordinal] || (strafe && lk)
             val right = keys[GameSettings.keyStrafeRight.value.ordinal] || (strafe && rk)
 
@@ -111,8 +111,10 @@ class Game {
             }
 
             if (GameSettings.mouseLook.value) {
-                if (mousePos.first < 0) player?.rot = player?.rot?.minus(mousePos.first * 0.01)!!
-                else if (mousePos.first > 0) player?.rot = player?.rot?.minus(mousePos.first * 0.01)!!
+                if (mousePos.first < 0) 
+                    player?.rot = player?.rot?.minus(mousePos.first * 0.01)!!
+                else if (mousePos.first > 0) 
+                    player?.rot = player?.rot?.minus(mousePos.first * 0.01)!!
             }
 
             for (i in 0 until 8) {
