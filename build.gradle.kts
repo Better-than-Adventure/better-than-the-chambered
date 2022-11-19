@@ -10,20 +10,6 @@ plugins {
 
 val mainClassName = "com.mojang.escape.EscapeKt"
 val lwjglVersion = "3.3.1"
-val lwjglNatives = Pair(
-    System.getProperty("os.name")!!,
-    System.getProperty("os.arch")!!
-).let { (name, arch) ->
-    when {
-        arrayOf("Linux", "FreeBSD", "SunOS", "Unit").any { name.startsWith(it) } ->
-            "natives-linux"
-        arrayOf("Mac OS X", "Darwin").any { name.startsWith(it) }                ->
-            "natives-macos-arm64"
-        arrayOf("Windows").any { name.startsWith(it) }                           ->
-            "natives-windows"
-        else -> throw Error("Unrecognized or unsupported platform. Please set \"lwjglNatives\" manually")
-    }
-}
 
 group = "org.example"
 version = "1.0-SNAPSHOT"
@@ -42,13 +28,13 @@ dependencies {
     implementation("org.lwjgl", "lwjgl-opengl")
     implementation("org.lwjgl", "lwjgl-stb")
     implementation("org.lwjgl", "lwjgl-tinyfd")
-    runtimeOnly("org.lwjgl", "lwjgl", classifier = lwjglNatives)
-    runtimeOnly("org.lwjgl", "lwjgl-assimp", classifier = lwjglNatives)
-    runtimeOnly("org.lwjgl", "lwjgl-glfw", classifier = lwjglNatives)
-    runtimeOnly("org.lwjgl", "lwjgl-openal", classifier = lwjglNatives)
-    runtimeOnly("org.lwjgl", "lwjgl-opengl", classifier = lwjglNatives)
-    runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = lwjglNatives)
-    runtimeOnly("org.lwjgl", "lwjgl-tinyfd", classifier = lwjglNatives)
+    runtimeOnly("org.lwjgl", "lwjgl", classifier = "natives-windows")
+    runtimeOnly("org.lwjgl", "lwjgl-assimp", classifier = "natives-windows")
+    runtimeOnly("org.lwjgl", "lwjgl-glfw", classifier = "natives-windows")
+    runtimeOnly("org.lwjgl", "lwjgl-openal", classifier = "natives-windows")
+    runtimeOnly("org.lwjgl", "lwjgl-opengl", classifier = "natives-windows")
+    runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = "natives-windows")
+    runtimeOnly("org.lwjgl", "lwjgl-tinyfd", classifier = "natives-windows")
     runtimeOnly("org.lwjgl", "lwjgl", classifier = "natives-linux")
     runtimeOnly("org.lwjgl", "lwjgl-assimp", classifier = "natives-linux")
     runtimeOnly("org.lwjgl", "lwjgl-glfw", classifier = "natives-linux")
@@ -56,6 +42,20 @@ dependencies {
     runtimeOnly("org.lwjgl", "lwjgl-opengl", classifier = "natives-linux")
     runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = "natives-linux")
     runtimeOnly("org.lwjgl", "lwjgl-tinyfd", classifier = "natives-linux")
+    runtimeOnly("org.lwjgl", "lwjgl", classifier = "natives-macos")
+    runtimeOnly("org.lwjgl", "lwjgl-assimp", classifier = "natives-macos")
+    runtimeOnly("org.lwjgl", "lwjgl-glfw", classifier = "natives-macos")
+    runtimeOnly("org.lwjgl", "lwjgl-openal", classifier = "natives-macos")
+    runtimeOnly("org.lwjgl", "lwjgl-opengl", classifier = "natives-macos")
+    runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = "natives-macos")
+    runtimeOnly("org.lwjgl", "lwjgl-tinyfd", classifier = "natives-macos")
+    runtimeOnly("org.lwjgl", "lwjgl", classifier = "natives-macos-arm64")
+    runtimeOnly("org.lwjgl", "lwjgl-assimp", classifier = "natives-macos-arm64")
+    runtimeOnly("org.lwjgl", "lwjgl-glfw", classifier = "natives-macos-arm64")
+    runtimeOnly("org.lwjgl", "lwjgl-openal", classifier = "natives-macos-arm64")
+    runtimeOnly("org.lwjgl", "lwjgl-opengl", classifier = "natives-macos-arm64")
+    runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = "natives-macos-arm64")
+    runtimeOnly("org.lwjgl", "lwjgl-tinyfd", classifier = "natives-macos-arm64")
 
     testImplementation(kotlin("test"))
 }
