@@ -37,24 +37,20 @@ object Art {
      * @throws FileNotFoundException Thrown when the given path could not be found.
      */
     fun loadBitmap(fileName: String): Bitmap {
-        val fileUrl: URL? = Art::class.java.getResource(fileName)
-        if (fileUrl != null) {
-            try {
-                val img = Image.read(fileUrl)
+        try {
+            val img = Image.read(fileName)
 
-                val result = Bitmap(img.width, img.height)
-                img.getRGB(result.pixels)
-                result.pixels.forEachIndexed { index, pixel ->
-                    var col = (pixel and 0xf) shr 2;
-                    if (pixel.toUInt() == 0xFFFF00FFu) col = -1;
-                    result.pixels[index] = col;
-                }
-                return result
-            } catch (e: Exception) {
-                throw RuntimeException(e)
+            val result = Bitmap(img.width, img.height)
+            img.getRGB(result.pixels)
+            result.pixels.forEachIndexed { index, pixel ->
+                var col = (pixel and 0xf) shr 2;
+                if (pixel.toUInt() == 0xFFFF00FFu) col = -1;
+                result.pixels[index] = col;
             }
+            return result
+        } catch (e: Exception) {
+            throw RuntimeException(e)
         }
-        throw FileNotFoundException(fileName)
     }
 
 

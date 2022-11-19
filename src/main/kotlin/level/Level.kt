@@ -25,7 +25,7 @@ abstract class Level {
             }
 
             try {
-                val img = Image.read(Level::class.java.getResource("/level/$name.png")!!)
+                val img = Image.read("/level/$name.png")
 
                 val w = img.width
                 val h = img.height

@@ -4,25 +4,28 @@ import org.lwjgl.stb.STBImage
 import org.lwjgl.system.MemoryStack
 import java.awt.image.BufferedImage
 import java.net.URL
+import java.nio.ByteBuffer
 
 class Image(val width: Int, val height: Int) {
     companion object {
-        fun read(input: URL): Image {
+        fun read(path: String): Image {
+            val resource = Image::class.java.getResource(path) ?: throw Exception("Could not open image ${path}!")
+            val array = resource.readBytes()
             var width: Int
             var height: Int
+            val buffer = ByteBuffer.allocateDirect(array.size)
+            buffer.put(array)
+            buffer.flip()
             val img = MemoryStack.stackPush().use { stack ->
                 val _width = stack.mallocInt(1)
                 val _height = stack.mallocInt(1)
                 val channels = stack.mallocInt(1)
-                val fileName = if (System.getProperty("os.name").lowercase().contains("win")) {
-                    input.file.trimStart('/')
-                } else {
-                    input.file
-                }
-                val img = STBImage.stbi_load(fileName, _width, _height, channels, 4)
+                
+                val img = STBImage.stbi_load_from_memory(buffer, _width, _height, channels, 4)
                 width = _width[0]
                 height = _height[0]
-                return@use img!!
+                if (img == null) throw Exception("Could not open image ${path}!")
+                return@use img
             }
             val bImg = Image(width, height)
             img.get(bImg.buffer)

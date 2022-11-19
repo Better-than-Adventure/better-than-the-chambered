@@ -1,11 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.gradle.internal.os.OperatingSystem
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     kotlin("jvm") version "1.7.21"
     application
+    id("com.github.johnrengelman.shadow") version "5.1.0"
 }
 
+val mainClassName = "com.mojang.escape.EscapeKt"
 val lwjglVersion = "3.3.1"
 val lwjglNatives = Pair(
     System.getProperty("os.name")!!,
@@ -46,6 +49,14 @@ dependencies {
     runtimeOnly("org.lwjgl", "lwjgl-opengl", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-tinyfd", classifier = lwjglNatives)
+    runtimeOnly("org.lwjgl", "lwjgl", classifier = "natives-linux")
+    runtimeOnly("org.lwjgl", "lwjgl-assimp", classifier = "natives-linux")
+    runtimeOnly("org.lwjgl", "lwjgl-glfw", classifier = "natives-linux")
+    runtimeOnly("org.lwjgl", "lwjgl-openal", classifier = "natives-linux")
+    runtimeOnly("org.lwjgl", "lwjgl-opengl", classifier = "natives-linux")
+    runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = "natives-linux")
+    runtimeOnly("org.lwjgl", "lwjgl-tinyfd", classifier = "natives-linux")
+
     testImplementation(kotlin("test"))
 }
 
@@ -57,26 +68,17 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-tasks {
-    val fatJar = register<Jar>("fatJar") {
-        dependsOn.addAll(listOf("compileJava", "compileKotlin", "processResources")) // We need this for Gradle optimization to work
-        archiveClassifier.set("standalone") // Naming the jar
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        manifest { attributes(mapOf("Main-Class" to application.mainClass)) } // Provided we set it up in the application plugin configuration
-        val sourcesMain = sourceSets.main.get()
-        val contents = configurations.runtimeClasspath.get()
-            .map { if (it.isDirectory) it else zipTree(it) } +
-                sourcesMain.output
-        from(contents)
-    }
-    build {
-        dependsOn(fatJar) // Trigger fat jar creation during build
-    }
-}
-
 application {
     if (System.getProperty("os.name").toLowerCase().contains("mac")) {
         applicationDefaultJvmArgs = listOf("-XstartOnFirstThread")
     }
-    mainClass.set("com.mojang.escape.EscapeKt")
+    mainClass.set(mainClassName)
 }
+
+project.setProperty("mainClassName", mainClassName)
+tasks.withType<ShadowJar>() {
+    manifest {
+        attributes["Main-Class"] = mainClassName
+    }
+}
+
