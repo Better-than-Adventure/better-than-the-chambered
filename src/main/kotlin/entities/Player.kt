@@ -47,6 +47,14 @@ class Player: Entity() {
 
     init {
         this.r = 0.3
+        
+        if (true) {
+            items = Item.values()
+            health = 999
+            ammo = 999
+            keys = 999
+            potions = 999
+        }
     }
 
     fun tick(up: Boolean, down: Boolean, left: Boolean, right: Boolean, turnLeft: Boolean, turnRight: Boolean) {

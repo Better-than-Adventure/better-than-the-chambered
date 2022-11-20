@@ -1,11 +1,25 @@
 package com.mojang.escape.gui
 
-import com.mojang.escape.Game
-import com.mojang.escape.lang.Language
-import com.mojang.escape.lang.IStringUnit
+import com.mojang.escape.lang.StringUnit
 
 open class Bitmap(val width: Int, val height: Int) {
     val pixels = IntArray(width * height)
+    
+    val separatedPixels: ByteArray
+        get() {
+            val arr = ByteArray(width * height * 4)
+            for (x in 0 until width) {
+                for (y in (height - 1) downTo 0) {
+                    val i = x + (y * width)
+                    val revI = x + (((height - 1) - y) * width)
+                    arr[(revI * 4) + 0] = ((pixels[i] shr 16) and 0xFF).toByte()
+                    arr[(revI * 4) + 1] = ((pixels[i] shr 8 ) and 0xFF).toByte()
+                    arr[(revI * 4) + 2] = ((pixels[i] shr 0 ) and 0xFF).toByte()
+                    arr[(revI * 4) + 3] = 0xFF.toByte()
+                }
+            }
+            return arr
+        }
 
     fun draw(bitmap: Bitmap, xOffs: Int, yOffs: Int) {
         for (y in 0 until bitmap.height) {
@@ -86,7 +100,7 @@ open class Bitmap(val width: Int, val height: Int) {
         }
     }
 
-    fun draw(translatable: IStringUnit, x: Int, y: Int, col: Int) {
+    fun draw(translatable: StringUnit, x: Int, y: Int, col: Int) {
         translatable.draw(this, x, y, col)
     }
 

@@ -1,10 +1,9 @@
 package com.mojang.escape.lang
 
-import com.mojang.escape.Game
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.menu.settings.GameSettings
 
-class StringUnitTranslatable(private val key: String, val lang: Language? = null): IStringUnit {
+class StringUnitTranslatable(private val key: String, val lang: Language? = null): StringUnit {
     override val value: String
         get() {
             return (lang ?: GameSettings.language.value).strings.getProperty(key) ?: key

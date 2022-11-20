@@ -1,16 +1,11 @@
 package com.mojang.escape.level
 
+import com.mojang.escape.Game
 import com.mojang.escape.entities.Item
+import com.mojang.escape.level.provider.ILevelProvider
 import com.mojang.escape.toTranslatable
 
-class CryptLevel: Level() {
-    init {
-        floorCol = 0x404040
-        ceilCol = 0x404040
-        wallCol = 0x404040
-        name = "level.crypt.name".toTranslatable()
-    }
-
+class CryptLevel(game: Game, levelProvider: ILevelProvider) : Level(game, levelProvider) {
     override fun switchLevel(id: Int) {
         if (id == 1) {
             game.switchLevel("overworld", 2)

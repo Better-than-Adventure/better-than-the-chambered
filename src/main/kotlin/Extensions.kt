@@ -38,12 +38,57 @@ fun String.toTranslatable(lang: Language? = null): StringUnitTranslatable {
     return StringUnitTranslatable(this, lang)
 }
 
-@OptIn(ExperimentalUnsignedTypes::class)
-infix fun UByteArray.equalsTo(other: UByteArray): Boolean {
-    if (size != other.size) return false
-    for (i in indices) {
-        if (get(i) != other[i]) return false
+val Int.alpha: Int 
+    get() {
+        return (this shr 24) and 0xFF
     }
-    
-    return true
+
+val Int.red: Int
+    get() {
+        return (this shr 16) and 0xFF
+    }
+
+val Int.green: Int 
+    get() {
+        return (this shr 8) and 0xFF
+    }
+
+val Int.blue: Int
+    get() {
+        return (this shr 0) and 0xFF
+    }
+
+fun Int.Companion.fromARGB(a: Int, r: Int, g: Int, b: Int): Int {
+    return  (a.toUByte().toInt() shl 24) or 
+            (r.toUByte().toInt() shl 16) or
+            (g.toUByte().toInt() shl 8 ) or
+            (b.toUByte().toInt() shl 0 )
 }
+
+fun Int.Companion.fromRGB(r: Int, g: Int, b: Int): Int {
+    return fromARGB(0xFF, r, g, b)
+}
+
+val <F, S> Pair<F, S>.x: F
+    get() = first
+
+val <F, S> Pair<F, S>.y: S
+    get() = second
+
+val <F, S, T> Triple<F, S, T>.x: F
+    get() = first
+
+val <F, S, T> Triple<F, S, T>.y: S
+    get() = second
+
+val <F, S, T> Triple<F, S, T>.z: T
+    get() = third
+
+val <F, S, T> Triple<F, S, T>.red: F
+    get() = first
+
+val <F, S, T> Triple<F, S, T>.green: S
+    get() = second
+
+val <F, S, T> Triple<F, S, T>.blue: T
+    get() = third

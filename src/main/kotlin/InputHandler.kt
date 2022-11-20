@@ -1,68 +1,46 @@
 package com.mojang.escape
 
-import java.awt.MouseInfo
-import java.awt.event.*
-import java.util.*
+import org.lwjgl.glfw.GLFW.*
+import org.lwjgl.system.MemoryStack
 
-class InputHandler: KeyListener, FocusListener, MouseListener, MouseMotionListener {
+class InputHandler {
+    private val lastStates = IntArray(Keys.values().size) { GLFW_RELEASE }
     val keys = BooleanArray(Keys.values().size)
-    var mousePos = Pair(0, 0)
-    var mouseButtons = BooleanArray(MouseInfo.getNumberOfButtons())
-
-    override fun mouseDragged(e: MouseEvent?) {
-        mousePos = Pair(e!!.x, e.y)
-    }
-
-    override fun mouseMoved(e: MouseEvent?) {
-        mousePos = Pair(e!!.x, e.y)
-    }
-
-    override fun mouseClicked(e: MouseEvent?) {
-    }
-
-    override fun mouseEntered(e: MouseEvent?) {
-    }
-
-    override fun mouseExited(e: MouseEvent?) {
-    }
-
-    override fun mousePressed(e: MouseEvent?) {
-        mouseButtons[e!!.button - 1] = true
-    }
-
-    override fun mouseReleased(e: MouseEvent?) {
-        mouseButtons[e!!.button - 1] = false
-    }
-
-    override fun focusGained(e: FocusEvent?) {
-    }
-
-    override fun focusLost(e: FocusEvent?) {
-        Arrays.fill(keys, false)
-    }
-
-    override fun keyPressed(e: KeyEvent?) {
-        if (e != null) {
-            for (key in Keys.values()) {
-                if (key.code == e.keyCode) {
-                    keys[key.ordinal] = true
-                    break
-                }
+    private var lastMousePos = Pair(0.0, 0.0)
+    var mousePos = Pair(0.0, 0.0)
+    private val lastMouseButtons = IntArray(3) { GLFW_RELEASE }
+    val mouseButtons = BooleanArray(3)
+    
+    fun updateKeys() {
+        for (key in Keys.values()) {
+            val state = glfwGetKey(Escape.window, key.code)
+            if (state == GLFW_PRESS && lastStates[key.ordinal] == GLFW_RELEASE) {
+                keys[key.ordinal] = true
+            } else if (state == GLFW_RELEASE && lastStates[key.ordinal] == GLFW_PRESS) {
+                keys[key.ordinal] = false
             }
+            lastStates[key.ordinal] = state
         }
     }
-
-    override fun keyReleased(e: KeyEvent?) {
-        if (e != null) {
-            for (key in Keys.values()) {
-                if (key.code == e.keyCode) {
-                    keys[key.ordinal] = false
-                    break
-                }
-            }
+    
+    fun updateMouse() {
+        MemoryStack.stackPush().use { stack -> 
+            val x = stack.mallocDouble(1)
+            val y = stack.mallocDouble(1)
+            
+            glfwGetCursorPos(Escape.window, x, y)
+            
+            mousePos = Pair(x[0] - lastMousePos.first, y[0] - lastMousePos.second)
+            lastMousePos = Pair(x[0], y[0])
         }
-    }
-
-    override fun keyTyped(e: KeyEvent?) {
+        for (i in 0 until 3) {
+            val state = glfwGetMouseButton(Escape.window, i)
+            if (state == GLFW_PRESS && lastMouseButtons[i] == GLFW_RELEASE) {
+                mouseButtons[i] = true
+            } else if (state == GLFW_RELEASE && lastMouseButtons[i] == GLFW_RELEASE) {
+                mouseButtons[i] = false
+            }
+            lastMouseButtons[i] = state
+        }
     }
 }

@@ -3,7 +3,7 @@ package com.mojang.escape.lang
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.toLiteral
 
-class StringUnitFormatted(private val stringUnit: IStringUnit, private vararg val params: IStringUnit): IStringUnit {
+class StringUnitFormatted(private val stringUnit: StringUnit, private vararg val params: StringUnit): StringUnit {
     override val value: String
         get() {
             var str = stringUnit.value

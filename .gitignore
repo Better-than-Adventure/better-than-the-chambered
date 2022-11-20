@@ -2,3 +2,4 @@ build/
 .idea/
 .gradle/
 config.properties
+hs_err_pid*.log

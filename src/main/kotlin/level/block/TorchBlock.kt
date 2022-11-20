@@ -2,7 +2,6 @@ package com.mojang.escape.level.block
 
 import com.mojang.escape.Art
 import com.mojang.escape.gui.BasicSprite
-import com.mojang.escape.level.Level
 import java.util.*
 
 class TorchBlock: Block() {
@@ -12,24 +11,30 @@ class TorchBlock: Block() {
         addSprite(torchSprite)
     }
 
-    override fun decorate(level: Level, x: Int, y: Int) {
+    override fun decorate(blocks: Array<Block>, blocksWidth: Int, blocksHeight: Int, x: Int, y: Int) {
+        fun getBlock(x: Int, y: Int): Block {
+            return blocks.getOrElse(x + y * blocksWidth) {
+                level?.solidWall ?: SolidBlock()
+            }
+        }
+        
         val random = Random(((x + y * 1000) * 341871231).toLong())
         val r = 0.4
         for (i in 0 until 1000) {
             val face = random.nextInt(4)
-            if (face == 0 && level.getBlock(x - 1, y).solidRender) {
+            if (face == 0 && getBlock(x - 1, y).solidRender) {
                 torchSprite.x -= r
                 break
             }
-            if (face == 1 && level.getBlock(x, y - 1).solidRender) {
+            if (face == 1 && getBlock(x, y - 1).solidRender) {
                 torchSprite.z -= r
                 break
             }
-            if (face == 2 && level.getBlock(x + 1, y).solidRender) {
+            if (face == 2 && getBlock(x + 1, y).solidRender) {
                 torchSprite.x += r
                 break
             }
-            if (face == 3 && level.getBlock(x, y + 1).solidRender) {
+            if (face == 3 && getBlock(x, y + 1).solidRender) {
                 torchSprite.z += r
                 break
             }

@@ -2,13 +2,13 @@ package com.mojang.escape.menu
 
 import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
-import com.mojang.escape.lang.IStringUnit
+import com.mojang.escape.lang.StringUnit
 import com.mojang.escape.menu.settings.GameSettings
 import com.mojang.escape.menu.settings.Settings
 
 class SettingsMenu(lastMenu: Menu? = null): ScrollableMenu(lastMenu) {
-    override val title: IStringUnit = "gui.menu.settings.title".toTranslatable()
-    override val lastButton: IStringUnit = "gui.menu.settings.buttonBack".toTranslatable()
+    override val title: StringUnit = "gui.menu.settings.title".toTranslatable()
+    override val lastButton: StringUnit = "gui.menu.settings.buttonBack".toTranslatable()
     override val numLines: Int = GameSettings.settings.size
     
     private var pickingKey: Settings.KeySetting? = null

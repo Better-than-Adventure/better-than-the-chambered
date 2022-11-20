@@ -1,10 +1,9 @@
 package com.mojang.escape.lang
 
-import com.mojang.escape.Game
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.menu.settings.GameSettings
 
-class StringUnitLiteral(override val value: String, val lang: Language? = null) : IStringUnit {
+class StringUnitLiteral(override val value: String, val lang: Language? = null) : StringUnit {
     override fun draw(bitmap: Bitmap, x: Int, y: Int, col: Int) {
         for (i in value.indices) {
             var chX = -1
