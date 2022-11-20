@@ -1,12 +1,13 @@
 package com.mojang.escape.level.provider
 
 import com.mojang.escape.Art
-import com.mojang.escape.alpha
 import com.mojang.escape.col
-import com.mojang.escape.entities.AmmoEntity
+import com.mojang.escape.entities.wolf3d.AmmoEntity
 import com.mojang.escape.entities.Entity
-import com.mojang.escape.entities.OgreEntity
-import com.mojang.escape.entities.PotionEntity
+import com.mojang.escape.entities.prelude.BatEntity
+import com.mojang.escape.entities.wolf3d.GuardEntity
+import com.mojang.escape.entities.wolf3d.PotionEntity
+import com.mojang.escape.entities.wolf3d.SSEntity
 import com.mojang.escape.lang.StringUnit
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.*
@@ -126,6 +127,8 @@ class Wolf3DLevelProvider(val levelHeader: GameMaps.LevelHeader): ILevelProvider
     private fun getBlock(plane0: Int, plane1: Int, plane2: Int): Block {
         return if (plane1 > 0) {
             when (plane1) {
+                30 -> BarsBlock()
+                in 52..55 -> LootBlock()
                 98 -> VanishBlock()
                 else -> Block()
             }
@@ -164,10 +167,28 @@ class Wolf3DLevelProvider(val levelHeader: GameMaps.LevelHeader): ILevelProvider
     
     private fun getEntity(plane1: Int, x: Int, z: Int): Entity? {
         return when (plane1) {
-            in 108..111 -> OgreEntity(x.toDouble(), z.toDouble())
-            in 144..147 -> OgreEntity(x.toDouble(), z.toDouble())
-            in 148..151 -> OgreEntity(x.toDouble(), z.toDouble())
-            in 112..115 -> OgreEntity(x.toDouble(), z.toDouble())
+            // Guard
+            in 180..183 -> GuardEntity(x.toDouble(), z.toDouble())
+            in 144..147 -> GuardEntity(x.toDouble(), z.toDouble())
+            in 108..111 -> GuardEntity(x.toDouble(), z.toDouble())
+            in 184..187 -> GuardEntity(x.toDouble(), z.toDouble())
+            in 148..151 -> GuardEntity(x.toDouble(), z.toDouble())
+            in 112..115 -> GuardEntity(x.toDouble(), z.toDouble())
+            // SS
+            in 198..201 -> SSEntity(x.toDouble(), z.toDouble())
+            in 162..165 -> SSEntity(x.toDouble(), z.toDouble())
+            in 126..129 -> SSEntity(x.toDouble(), z.toDouble())
+            in 202..205 -> SSEntity(x.toDouble(), z.toDouble())
+            in 166..169 -> SSEntity(x.toDouble(), z.toDouble())
+            in 130..133 -> SSEntity(x.toDouble(), z.toDouble())
+            // "Dog"
+            in 206..209 -> BatEntity(x.toDouble(), z.toDouble())
+            in 170..173 -> BatEntity(x.toDouble(), z.toDouble())
+            in 134..137 -> BatEntity(x.toDouble(), z.toDouble())
+            in 210..213 -> BatEntity(x.toDouble(), z.toDouble())
+            in 174..177 -> BatEntity(x.toDouble(), z.toDouble())
+            in 138..141 -> BatEntity(x.toDouble(), z.toDouble())
+            // Items
             in 47..48 -> PotionEntity(x.toDouble(), z.toDouble())
             in 49..51 -> AmmoEntity(x.toDouble(), z.toDouble())
             else -> null

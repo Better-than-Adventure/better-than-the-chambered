@@ -1,6 +1,7 @@
-package com.mojang.escape.entities
+package com.mojang.escape.entities.prelude
 
 import com.mojang.escape.Art
+import com.mojang.escape.entities.EnemyEntity
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt

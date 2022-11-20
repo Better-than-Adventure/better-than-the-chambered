@@ -1,7 +1,9 @@
-package com.mojang.escape.entities
+package com.mojang.escape.entities.prelude
 
 import com.mojang.escape.Art
 import com.mojang.escape.Sound
+import com.mojang.escape.entities.Entity
+import com.mojang.escape.entities.Item
 import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.gui.Sprite
 import kotlin.math.cos

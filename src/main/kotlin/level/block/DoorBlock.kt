@@ -2,6 +2,7 @@ package com.mojang.escape.level.block
 
 import com.mojang.escape.Sound
 import com.mojang.escape.entities.*
+import com.mojang.escape.entities.prelude.OgreEntity
 import com.mojang.escape.level.Level
 
 open class DoorBlock: SolidBlock() {

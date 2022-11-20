@@ -3,8 +3,8 @@ package com.mojang.escape.level.block
 import com.mojang.escape.Art
 import com.mojang.escape.Sound
 import com.mojang.escape.entities.Entity
-import com.mojang.escape.entities.GhostBossEntity
-import com.mojang.escape.entities.GhostEntity
+import com.mojang.escape.entities.prelude.GhostBossEntity
+import com.mojang.escape.entities.prelude.GhostEntity
 import com.mojang.escape.entities.KeyEntity
 import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.gui.RubbleSprite

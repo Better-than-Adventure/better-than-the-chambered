@@ -1,7 +1,10 @@
-package com.mojang.escape.entities
+package com.mojang.escape.entities.prelude
 
 import com.mojang.escape.Art
 import com.mojang.escape.Sound
+import com.mojang.escape.entities.Bullet
+import com.mojang.escape.entities.EnemyEntity
+import com.mojang.escape.entities.KeyEntity
 
 class OgreBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0xFFFF00)) {
     private var shootDelay: Int = 0

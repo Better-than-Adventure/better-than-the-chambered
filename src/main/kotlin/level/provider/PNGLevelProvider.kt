@@ -4,6 +4,7 @@ import com.mojang.escape.Art
 import com.mojang.escape.alpha
 import com.mojang.escape.col
 import com.mojang.escape.entities.*
+import com.mojang.escape.entities.prelude.*
 import com.mojang.escape.lang.StringUnit
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.*
