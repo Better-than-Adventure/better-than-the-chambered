@@ -14,6 +14,7 @@ import org.lwjgl.system.MemoryStack.*
 import org.lwjgl.system.MemoryUtil.*
 import java.lang.IllegalStateException
 import java.lang.RuntimeException
+import kotlin.math.min
 
 
 class Escape {
@@ -52,12 +53,11 @@ class Escape {
         }
         
         glfwDefaultWindowHints()
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
+        //glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
 
         window = glfwCreateWindow(WIDTH * SCALE, HEIGHT * SCALE, "Better than the Chambered!", NULL, NULL)
         if (window == NULL) {
@@ -95,6 +95,17 @@ class Escape {
         // Try to do raw mouse input
         if (glfwRawMouseMotionSupported()) {
             glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE)
+        }
+
+        glfwSetWindowSizeCallback(window) { window, width, height ->
+            val widthScale = width / WIDTH.toDouble()
+            val heightScale = height / HEIGHT.toDouble()
+            val scale = min(widthScale, heightScale)
+            val vpWidth = WIDTH * scale
+            val vpHeight = HEIGHT * scale
+            val vpX = width / 2 - vpWidth / 2
+            val vpY = height / 2 - vpHeight / 2
+            glViewport(vpX.toInt(), vpY.toInt(), vpWidth.toInt(), vpHeight.toInt())
         }
     }
     
