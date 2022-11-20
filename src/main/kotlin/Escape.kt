@@ -33,8 +33,6 @@ class Escape {
     private val inputHandler: InputHandler = InputHandler()
     
     fun run() {
-        println("Hello LWJGL ${Version.getVersion()}!")
-        
         initGLFW()
         initGame()
         loop()

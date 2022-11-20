@@ -5,7 +5,7 @@ import org.lwjgl.system.MemoryStack
 import java.io.Closeable
 import java.io.FileNotFoundException
 
-class Shader(name: String): Closeable {
+class Shader(name: String, vararg others: String): Closeable {
     private var shaderProgram: Int = -1
     private val uniforms = mutableMapOf<String, Int>()
     
@@ -16,16 +16,29 @@ class Shader(name: String): Closeable {
         if (vertText == null || fragText == null) {
             throw FileNotFoundException("/shader/$name")
         }
+        val othersText = others.map {
+            return@map Shader::class.java.getResource("/shader/$it.glsl")?.readText()
+                ?: throw FileNotFoundException("/shader/$it.glsl")
+        }
         
         // Create shaders 
         val vertexShader = glCreateShader(GL_VERTEX_SHADER)
         val fragmentShader = glCreateShader(GL_FRAGMENT_SHADER)
+        val otherShaders = others.map {
+            glCreateShader(GL_FRAGMENT_SHADER)
+        }
         
         // Bind text to shaders and compile
         glShaderSource(vertexShader, vertText)
         glShaderSource(fragmentShader, fragText)
+        otherShaders.withIndex().map {
+            glShaderSource(it.value, othersText[it.index])
+        }
         glCompileShader(vertexShader)
         glCompileShader(fragmentShader)
+        otherShaders.map { 
+            glCompileShader(it)
+        }
         
         // Check for success
         MemoryStack.stackPush().use { stack -> 
@@ -37,10 +50,18 @@ class Shader(name: String): Closeable {
                 throw ShaderCompilationException(err, ShaderCompilationException.CompilationStage.COMPILE_VERTEX_SHADER)
             }
             
-            glGetShaderiv(vertexShader, GL_COMPILE_STATUS, buffer)
+            glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, buffer)
             if (buffer[0] == 0) {
                 val err = glGetShaderInfoLog(fragmentShader)
                 throw ShaderCompilationException(err, ShaderCompilationException.CompilationStage.COMPILE_FRAGMENT_SHADER)
+            }
+            
+            otherShaders.map {
+                glGetShaderiv(it, GL_COMPILE_STATUS, buffer)
+                if (buffer[0] == 0) {
+                    val err = glGetShaderInfoLog(it)
+                    throw ShaderCompilationException(err, ShaderCompilationException.CompilationStage.COMPILE_OTHER_SHADER)
+                }
             }
         }
         
@@ -50,6 +71,9 @@ class Shader(name: String): Closeable {
         // Attach shaders and link
         glAttachShader(shaderProgram, vertexShader)
         glAttachShader(shaderProgram, fragmentShader)
+        otherShaders.map {
+            glAttachShader(shaderProgram, it)
+        }
         glLinkProgram(shaderProgram)
         
         // Check for success
@@ -66,6 +90,9 @@ class Shader(name: String): Closeable {
         // Delete shaders (no longer needed)
         glDeleteShader(vertexShader)
         glDeleteShader(fragmentShader)
+        otherShaders.map {
+            glDeleteShader(it)
+        }
     }
     
     fun bind() {
@@ -93,6 +120,7 @@ class ShaderCompilationException(val error: String, val stage: CompilationStage)
     enum class CompilationStage {
         COMPILE_VERTEX_SHADER,
         COMPILE_FRAGMENT_SHADER,
+        COMPILE_OTHER_SHADER,
         CREATE_SHADER_PROGRAM
     }
 
