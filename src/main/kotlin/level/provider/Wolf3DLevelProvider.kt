@@ -3,8 +3,10 @@ package com.mojang.escape.level.provider
 import com.mojang.escape.Art
 import com.mojang.escape.alpha
 import com.mojang.escape.col
+import com.mojang.escape.entities.AmmoEntity
 import com.mojang.escape.entities.Entity
 import com.mojang.escape.entities.OgreEntity
+import com.mojang.escape.entities.PotionEntity
 import com.mojang.escape.lang.StringUnit
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.*
@@ -162,7 +164,12 @@ class Wolf3DLevelProvider(val levelHeader: GameMaps.LevelHeader): ILevelProvider
     
     private fun getEntity(plane1: Int, x: Int, z: Int): Entity? {
         return when (plane1) {
-            in 111..144 -> OgreEntity(x.toDouble(), z.toDouble())
+            in 108..111 -> OgreEntity(x.toDouble(), z.toDouble())
+            in 144..147 -> OgreEntity(x.toDouble(), z.toDouble())
+            in 148..151 -> OgreEntity(x.toDouble(), z.toDouble())
+            in 112..115 -> OgreEntity(x.toDouble(), z.toDouble())
+            in 47..48 -> PotionEntity(x.toDouble(), z.toDouble())
+            in 49..51 -> AmmoEntity(x.toDouble(), z.toDouble())
             else -> null
         }
     }

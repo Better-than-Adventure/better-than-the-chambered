@@ -8,8 +8,8 @@ import com.mojang.escape.level.wolf3d.MapHead
 class Wolf3DLevel(game: Game, private val levelProvider: Wolf3DLevelProvider) : Level(game, levelProvider) {
     companion object {
         val gameMaps: GameMaps by lazy { 
-            Wolf3DLevel::class.java.getResourceAsStream("/wolf3d/MAPHEAD.WL6")!!.use { mapheadStream ->
-                Wolf3DLevel::class.java.getResourceAsStream("/wolf3d/GAMEMAPS.WL6")!!.use { gamemapsStream ->
+            Wolf3DLevel::class.java.getResourceAsStream("/wolf3d/MAPHEAD.WL1")!!.use { mapheadStream ->
+                Wolf3DLevel::class.java.getResourceAsStream("/wolf3d/GAMEMAPS.WL1")!!.use { gamemapsStream ->
                     val mapheadBytes = mapheadStream.readBytes()
                     val gamemapsBytes = gamemapsStream.readBytes()
                     

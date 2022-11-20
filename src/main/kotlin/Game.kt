@@ -22,7 +22,7 @@ class Game {
     var player: Player? = null
     var pauseTime = 0
     var menu: Menu? = TitleMenu()
-    var gameType = GameType.PRELUDE
+    var gameType = GameType.WOLF3D
 
     fun newGame() {
         Level.clear()
