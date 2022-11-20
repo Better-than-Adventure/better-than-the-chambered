@@ -178,7 +178,7 @@ class Escape {
                 glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED)
             }
             inputHandler.updateMouse()
-            game.tick(inputHandler.keys, inputHandler.mousePos, booleanArrayOf(false, false, false))
+            game.tick(inputHandler.keys, inputHandler.mousePos, inputHandler.mouseButtons)
         }
     }
     
