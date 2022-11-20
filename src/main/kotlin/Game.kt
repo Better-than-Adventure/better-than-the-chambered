@@ -4,10 +4,10 @@ import com.mojang.escape.entities.Item
 import com.mojang.escape.entities.Player
 import com.mojang.escape.lang.Language
 import com.mojang.escape.level.Level
+import com.mojang.escape.level.Wolf3DLevel
 import com.mojang.escape.level.block.LadderBlock
 import com.mojang.escape.menu.*
 import com.mojang.escape.menu.settings.GameSettings
-import java.awt.event.KeyEvent
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -22,41 +22,26 @@ class Game {
     var player: Player? = null
     var pauseTime = 0
     var menu: Menu? = TitleMenu()
+    var gameType = GameType.WOLF3D
 
     fun newGame() {
-        Level.clear()
-
-        val localLevel = Level.loadLevel(this, "start")
-        val localPlayer = Player()
-
-        localPlayer.level = localLevel
-        localLevel.player = localPlayer
-        localPlayer.x = localLevel.xSpawn.toDouble()
-        localPlayer.z = localLevel.ySpawn.toDouble()
-        localLevel.addEntity(localPlayer)
-        localPlayer.rot = Math.PI + 0.4
-
-        level = localLevel
-        player = localPlayer
+        menu = GameTypePickerMenu(menu)
     }
 
-    fun switchLevel(name: String, id: Int) {
+    fun switchLevel(level: Level) {
         pauseTime = 30
-        level!!.removeEntityImmediately(player!!)
-        val localLevel = Level.loadLevel(this, name)
+        this.level?.removeEntityImmediately(player!!)
         val localPlayer = player!!
 
-        localLevel.player = localPlayer
-        localPlayer.level = localLevel
-        localLevel.findSpawn(id)
-        localPlayer.x = localLevel.xSpawn.toDouble()
-        localPlayer.z = localLevel.ySpawn.toDouble()
-        (localLevel.getBlock(localLevel.xSpawn, localLevel.ySpawn) as LadderBlock).wait = true
+        level.player = localPlayer
+        localPlayer.level = level
+        localPlayer.x = level.xSpawn.toDouble()
+        localPlayer.z = level.ySpawn.toDouble()
         localPlayer.x += sin(localPlayer.rot) * 0.2
         localPlayer.z += cos(localPlayer.rot) * 0.2
-        localLevel.addEntity(localPlayer)
+        level.addEntity(localPlayer)
 
-        level = localLevel
+        this.level = level
         player = localPlayer
     }
 

@@ -48,7 +48,7 @@ class Player: Entity() {
     init {
         this.r = 0.3
         
-        if (true) {
+        if (false) {
             items = Item.values()
             health = 999
             ammo = 999

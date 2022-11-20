@@ -17,5 +17,5 @@ interface ILevelProvider {
     fun getHeight(): Int
     fun getBlocks(level: Level): Array<Block>
     fun getEntities(level: Level): MutableList<Entity>
-    fun getSpawn(): Pair<Int, Int>?
+    fun getSpawn(level: Level): Pair<Int, Int>?
 }

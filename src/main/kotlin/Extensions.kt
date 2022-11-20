@@ -69,6 +69,16 @@ fun Int.Companion.fromRGB(r: Int, g: Int, b: Int): Int {
     return fromARGB(0xFF, r, g, b)
 }
 
+@OptIn(ExperimentalUnsignedTypes::class)
+infix fun UByteArray.equalsTo(other: UByteArray): Boolean {
+    if (size != other.size) return false
+    for (i in indices) {
+        if (get(i) != other[i]) return false
+    }
+
+    return true
+}
+
 val <F, S> Pair<F, S>.x: F
     get() = first
 

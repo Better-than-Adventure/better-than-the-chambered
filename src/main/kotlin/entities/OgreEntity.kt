@@ -4,12 +4,24 @@ import com.mojang.escape.Art
 import kotlin.math.atan2
 
 class OgreEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0x82A821)) {
+    companion object {
+        var dropAmmo = false
+    }
+    
     var shootDelay: Int = 0
+    
 
     init {
         this.health = 6
         this.r = 0.4
         this.spinSpeed = 0.05
+    }
+
+    override fun die() {
+        super.die()
+        if (dropAmmo) {
+            this.level!!.addEntity(AmmoEntity(x, z))
+        }
     }
 
     override fun hurt(xd: Double, zd: Double) {
