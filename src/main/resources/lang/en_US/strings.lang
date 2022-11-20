@@ -53,6 +53,9 @@ settings.
             name=Slot 7
         8.
             name=Slot 8
+gametype.
+    prelude=Prelude of the Chambered
+    wolf3d=Preludestein 3D
 gui.
     menu.
         about.
@@ -71,6 +74,9 @@ gui.
             buttonNewGame=New game
             buttonSettings=Settings
             buttonAbout=About
+        gametype.
+            title=Select Game Type
+            buttonCancel=Cancel
         gotLoot.
             text=You found the %s!
             buttonContinue=Continue

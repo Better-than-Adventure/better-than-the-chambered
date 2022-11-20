@@ -25,22 +25,7 @@ class Game {
     var gameType = GameType.WOLF3D
 
     fun newGame() {
-        Level.clear()
-
-        val localLevel = gameType.getFirstLevel(this)
-        val localPlayer = Player()
-
-        localPlayer.level = localLevel
-        localLevel.player = localPlayer
-        localPlayer.x = localLevel.xSpawn.toDouble()
-        localPlayer.z = localLevel.ySpawn.toDouble()
-        localLevel.addEntity(localPlayer)
-        localPlayer.rot = Math.PI + 0.4
-
-        level = localLevel
-        player = localPlayer
-        
-        gameType.onNewGame(this)
+        menu = GameTypePickerMenu(menu)
     }
 
     fun switchLevel(level: Level) {
