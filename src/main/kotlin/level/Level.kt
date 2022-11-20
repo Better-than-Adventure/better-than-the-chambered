@@ -3,15 +3,20 @@ package com.mojang.escape.level
 import com.mojang.escape.Art
 import com.mojang.escape.Game
 import com.mojang.escape.entities.*
+import com.mojang.escape.lang.StringUnit
 import com.mojang.escape.lang.StringUnitTranslatable
 import com.mojang.escape.level.block.*
+import com.mojang.escape.level.provider.ILevelProvider
+import com.mojang.escape.level.provider.PNGLevelProvider
 import com.mojang.escape.menu.GotLootMenu
 import com.mojang.escape.util.Image
+import com.mojang.escape.x
+import com.mojang.escape.y
 import java.lang.Exception
 import java.lang.RuntimeException
 import kotlin.math.floor
 
-abstract class Level {
+abstract class Level(game: Game, levelProvider: ILevelProvider) {
     companion object {
         val loaded = hashMapOf<String, Level>()
 
@@ -25,15 +30,46 @@ abstract class Level {
             }
 
             try {
-                val img = Image.read("/level/$name.png")
+                val levelProvider = PNGLevelProvider(
+                    name,
+                    wallCol = when (name) {
+                        "crypt" -> 0x404040
+                        "dungeon" -> 0xC64954
+                        "ice" -> 0x6BE8FF
+                        "overworld" -> 0xA0A0A0
+                        "temple" -> 0xCFADD8
+                        else -> 0xB3CEE2
+                    },
+                    floorCol = when (name) {
+                        "crypt" -> 0x404040
+                        "dungeon" -> 0x8E4A51
+                        "ice" -> 0xB8DBE0
+                        "overworld" -> 0x508253
+                        "temple" -> 0x8A6496
+                        else -> 0x9CA09B
+                    },
+                    ceilCol = when (name) {
+                        "crypt" -> 0x404040
+                        "dungeon" -> 0x8E4A51
+                        "ice" -> 0xB8DBE0
+                        "temple" -> 0x8A6496
+                        else -> 0x9CA09B
+                    },
+                    wallTex = when (name) {
+                        else -> 0
+                    },
+                    floorTex = when (name) {
+                        "overworld" -> 8 + 3
+                        else -> 0
+                    },
+                    ceilTex = when (name) {
+                        "overworld" -> -1
+                        else -> 0
+                    }
+                )
 
-                val w = img.width
-                val h = img.height
-                val pixels = IntArray(w * h)
-                img.getRGB(pixels)
-
-                val level = Level.byName(name)
-                level.init(game, name, w, h, pixels)
+                val level = Level.byName(name, game, levelProvider)
+                level.postInit()
                 loaded[name] = level
 
                 return level
@@ -42,89 +78,66 @@ abstract class Level {
             }
         }
 
-        private fun byName(name: String): Level {
+        private fun byName(name: String, game: Game, levelProvider: ILevelProvider): Level {
             try {
                 val className = name.substring(0, 1).uppercase() + name.substring(1) + "Level"
-                return Class.forName("com.mojang.escape.level.$className").newInstance() as Level
+                return Class.forName("com.mojang.escape.level.$className").constructors[0].newInstance(game, levelProvider) as Level
             } catch (e: Exception) {
                 throw RuntimeException(e)
             }
         }
     }
 
-    lateinit var blocks: Array<Block>
+    var blocks: Array<Block>
 
     var width = 0
     var height = 0
 
-    private val solidWall = SolidBlock()
+    val solidWall = SolidBlock()
 
-    var xSpawn = 0
-    var ySpawn = 0
+    var xSpawn: Int
+    var ySpawn: Int
 
-    var wallCol = 0xB3CEE2
-    var floorCol = 0x9CA09B
-    var ceilCol = 0x9CA09B
+    val wallCol: Int
+    val floorCol: Int
+    val ceilCol: Int
 
-    var wallTex = 0
-    var floorTex = 0
-    var ceilTex = 0
+    val wallTex: Int
+    val floorTex: Int
+    val ceilTex: Int
 
-    val entities = mutableListOf<Entity>()
-    lateinit var game: Game
-    var name = StringUnitTranslatable("")
+    val entities: MutableList<Entity>
+    val game: Game
+    val name: StringUnit
 
     lateinit var player: Player
-
-    open fun init(game: Game, name: String, w: Int, h: Int, pixels: IntArray) {
+    
+    init {
         this.game = game
-
-        solidWall.col = Art.getCol(wallCol)
-        solidWall.tex = Art.getCol(wallTex)
-        width = w
-        height = h
-        blocks = Array(width * height) {
-            val x = it % width
-            val y = it / width
-
-            val col = pixels[x + y * w] and 0xFFFFFF
-            val id = 255 - ((pixels[x + y * w] shr 24) and 0xFF)
-
-            val block = getBlock(x, y, col)
-            block.id = id
-
-            if (block.tex == -1) {
-                block.tex = wallTex
-            }
-            if (block.floorTex == -1) {
-                block.floorTex = floorTex
-            }
-            if (block.ceilTex == -1) {
-                block.ceilTex = ceilTex
-            }
-            if (block.col == -1) {
-                block.col = Art.getCol(wallCol)
-            }
-            if (block.floorCol == -1) {
-                block.floorCol = Art.getCol(floorCol)
-            }
-            if (block.ceilCol == -1) {
-                block.ceilCol = Art.getCol(ceilCol)
-            }
-
-            block.level = this
-            block.x = x
-            block.y = y
-
-            block
+        
+        this.name = levelProvider.getName()
+        this.wallCol = levelProvider.getWallCol()
+        this.wallTex = levelProvider.getWallTex()
+        this.floorCol = levelProvider.getFloorCol()
+        this.floorTex = levelProvider.getFloorTex()
+        this.ceilCol = levelProvider.getCeilCol()
+        this.ceilTex = levelProvider.getCeilTex()
+        this.width = levelProvider.getWidth()
+        this.height = levelProvider.getHeight()
+        this.blocks = levelProvider.getBlocks(this)
+        this.entities = levelProvider.getEntities(this)
+        val spawn = levelProvider.getSpawn()
+        if (spawn != null) {
+            xSpawn = spawn.x
+            ySpawn = spawn.y
+        } else {
+            xSpawn = 0
+            ySpawn = 0
         }
-
-        for (y in 0 until h) {
-            for (x in 0 until w) {
-                val col = pixels[x + y * w] and 0xFFFFFF
-                decorateBlock(x, y, blocks[x + y * w], col)
-            }
-        }
+    }
+    
+    open fun postInit() {
+        // Do nothing
     }
 
     fun addEntity(e: Entity) {
@@ -137,72 +150,7 @@ abstract class Level {
         entities.remove(player)
         getBlock(player.xTileO, player.zTileO).removeEntity(player)
     }
-
-    protected fun decorateBlock(x: Int, y: Int, block: Block, col: Int) {
-        block.decorate(this, x, y)
-
-        when (col) {
-            0xFFFF00 -> {
-                xSpawn = x
-                ySpawn = y
-            }
-            0x1A2108 -> {
-                block.floorTex = 7
-                block.ceilTex = 7
-            }
-            0xC6C6C6, 0xC6C697 -> block.col = Art.getCol(0xA0A0A0)
-            0x653A00 -> {
-                block.floorCol = Art.getCol(0xB56600)
-                block.floorTex = 3 * 8 + 1
-            }
-            0x93FF9B -> {
-                block.col = Art.getCol(0x2AAF33)
-                block.tex = 8
-            }
-            0xAA5500 -> addEntity(BoulderEntity(x, y))
-            0xFF0000 -> addEntity(BatEntity(x.toDouble(), y.toDouble()))
-            0xFF0001 -> addEntity(BatBossEntity(x.toDouble(), y.toDouble()))
-            0xFF0002 -> addEntity(OgreEntity(x.toDouble(), y.toDouble()))
-            0xFF0003 -> addEntity(OgreBossEntity(x.toDouble(), y.toDouble()))
-            0xFF0004 -> addEntity(EyeEntity(x.toDouble(), y.toDouble()))
-            0xFF0005 -> addEntity(EyeBossEntity(x.toDouble(), y.toDouble()))
-            0xFF0006 -> addEntity(GhostEntity(x.toDouble(), y.toDouble()))
-            0xFF0007 -> {
-                addEntity(GhostBossEntity(x.toDouble(), y.toDouble()))
-                block.floorTex = 7
-                block.ceilTex = 7
-            }
-        }
-    }
-
-    protected fun getBlock(x: Int, y: Int, col: Int): Block {
-        return when (col) {
-            0x93FF9B -> SolidBlock()
-            0x009300 -> PitBlock()
-            0xFFFFFF -> SolidBlock()
-            0x00FFFF -> VanishBlock()
-            0xFFFF64 -> ChestBlock()
-            0x0000FF -> WaterBlock()
-            0xFF3A02 -> TorchBlock()
-            0x4C4C4C -> BarsBlock()
-            0xFF66FF -> LadderBlock(false)
-            0x9E009E -> LadderBlock(true)
-            0xC1C14D -> LootBlock()
-            0xC6C6C6 -> DoorBlock()
-            0x00FFA7 -> SwitchBlock()
-            0x009380 -> PressurePlateBlock()
-            0xFF0005 -> IceBlock()
-            0x3F3F60 -> IceBlock()
-            0xC6C697 -> LockedDoorBlock()
-            0xFFBA02 -> AltarBlock()
-            0x749327 -> SpiritWallBlock()
-            0x1A2108 -> Block()
-            0x00C2A7 -> FinalUnlockBlock()
-            0x000056 -> WinBlock()
-            else -> Block()
-        }
-    }
-
+    
     fun getBlock(x: Int, y: Int): Block {
         if (x < 0 || y < 0 || x >= width || y >= height) {
             return solidWall

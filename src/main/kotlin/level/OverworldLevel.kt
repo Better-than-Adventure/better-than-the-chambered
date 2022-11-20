@@ -1,17 +1,11 @@
 package com.mojang.escape.level
 
+import com.mojang.escape.Game
 import com.mojang.escape.entities.Item
+import com.mojang.escape.level.provider.ILevelProvider
 import com.mojang.escape.toTranslatable
 
-class OverworldLevel: Level() {
-    init {
-        ceilTex = -1
-        floorCol = 0x508253
-        floorTex = 8 + 3
-        wallCol = 0xa0a0a0
-        name = "level.overworld.name".toTranslatable()
-    }
-
+class OverworldLevel(game: Game, levelProvider: ILevelProvider) : Level(game, levelProvider) {
     override fun switchLevel(id: Int) {
         when (id) {
             1 -> game.switchLevel("start", 1)

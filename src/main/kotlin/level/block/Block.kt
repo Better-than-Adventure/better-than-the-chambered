@@ -66,7 +66,7 @@ open class Block {
         return blocksMotion
     }
 
-    open fun decorate(level: Level, x: Int, y: Int) {
+    open fun decorate(blocks: Array<Block>, blocksWidth: Int, blocksHeight: Int, x: Int, y: Int) {
     }
 
     open fun getFloorHeight(e: Entity): Double {

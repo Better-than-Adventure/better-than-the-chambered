@@ -2,18 +2,11 @@ package com.mojang.escape.level
 
 import com.mojang.escape.Game
 import com.mojang.escape.entities.Item
+import com.mojang.escape.level.provider.ILevelProvider
 import com.mojang.escape.toTranslatable
 
-class DungeonLevel: Level() {
-    init {
-        wallCol = 0xC64954
-        floorCol = 0x8E4A51
-        ceilCol = 0x8E4A51
-        name = "level.dungeon.name".toTranslatable()
-    }
-
-    override fun init(game: Game, name: String, w: Int, h: Int, pixels: IntArray) {
-        super.init(game, name, w, h, pixels)
+class DungeonLevel(game: Game, levelProvider: ILevelProvider) : Level(game, levelProvider) {
+    override fun postInit() {
         super.trigger(6, true)
         super.trigger(7, true)
     }

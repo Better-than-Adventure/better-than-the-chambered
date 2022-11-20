@@ -1,17 +1,12 @@
 package com.mojang.escape.level
 
+import com.mojang.escape.Game
 import com.mojang.escape.entities.Item
+import com.mojang.escape.level.provider.ILevelProvider
 import com.mojang.escape.toTranslatable
 
-class TempleLevel: Level() {
+class TempleLevel(game: Game, levelProvider: ILevelProvider) : Level(game, levelProvider) {
     private var triggerMask = 0
-
-    init {
-        floorCol = 0x8A6496
-        ceilCol = 0x8A6496
-        wallCol = 0xCFADD8
-        name = "level.temple.name".toTranslatable()
-    }
 
     override fun switchLevel(id: Int) {
         if (id == 1) {

@@ -54,6 +54,8 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
         val zCenter = floor(yCam).toInt()
         for (zb in (zCenter - r)..(zCenter + r)) {
             for (xb in (xCenter - r)..(xCenter + r)) {
+                if (xb < 0 || zb >= level.width || zb < 0 || zb >= level.height) continue
+                
                 val c = level.getBlock(xb, zb)
                 val e = level.getBlock(xb + 1, zb)
                 val s = level.getBlock(xb, zb + 1)
