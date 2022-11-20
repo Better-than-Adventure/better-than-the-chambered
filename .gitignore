@@ -1,4 +1,7 @@
-build/
+core/build/
+core/mods/
+mods/prelude/build/
+mods/wolf3d/build/
 .idea/
 .gradle/
 config.properties
