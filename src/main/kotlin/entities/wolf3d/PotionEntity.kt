@@ -1,6 +1,8 @@
-package com.mojang.escape.entities
+package com.mojang.escape.entities.wolf3d
 
 import com.mojang.escape.col
+import com.mojang.escape.entities.ItemEntity
+import com.mojang.escape.entities.Player
 import kotlin.random.Random
 
 class PotionEntity(x: Double, z: Double): ItemEntity(x, z, 16 + 6, 0x00FF00.col) {

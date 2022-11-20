@@ -1,6 +1,7 @@
-package com.mojang.escape.entities
+package com.mojang.escape.entities.prelude
 
 import com.mojang.escape.Art
+import com.mojang.escape.entities.EnemyEntity
 
 class EyeEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 4, Art.getCol(0x84ECFF)) {
     init {

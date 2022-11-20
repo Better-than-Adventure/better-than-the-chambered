@@ -1,7 +1,7 @@
 package com.mojang.escape.level.block
 
 import com.mojang.escape.Sound
-import com.mojang.escape.entities.BoulderEntity
+import com.mojang.escape.entities.prelude.BoulderEntity
 import com.mojang.escape.entities.Entity
 import com.mojang.escape.gui.BasicSprite
 

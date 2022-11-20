@@ -1,7 +1,7 @@
 package com.mojang.escape
 
 import com.mojang.escape.entities.Item
-import com.mojang.escape.entities.OgreEntity
+import com.mojang.escape.entities.prelude.OgreEntity
 import com.mojang.escape.lang.StringUnit
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.PNGLevel
@@ -23,9 +23,6 @@ enum class GameType(val displayName: StringUnit) {
             game.player!!.items[0] = Item.PowerGlove
             game.player!!.items[1] = Item.Pistol
             game.player!!.ammo = 20
-            OgreEntity.dropAmmo = true
-        } else {
-            OgreEntity.dropAmmo = false
         }
     }
 }

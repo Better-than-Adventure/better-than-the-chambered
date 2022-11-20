@@ -49,7 +49,7 @@ class GameMaps(bytes: ByteArray, mapHead: MapHead) {
                     val plane0Bytes = Decompressor.decompress(it, levelHeader.lenPlane0, Decompressor.CompressionType.RLEW_CARMACK)
                     val ushortArray = Array(plane0Bytes.size / 2) { 0.toUShort() }
                     for (i in ushortArray.indices) {
-                        ushortArray[i] = ((plane0Bytes[(i * 2) + 1].toUShort().toInt() shl 8) or (plane0Bytes[i * 2].toUShort().toInt() shl 0)).toUShort()
+                        ushortArray[i] = ((plane0Bytes[(i * 2) + 1].toUByte().toInt() shl 8) or (plane0Bytes[i * 2].toUByte().toInt() shl 0)).toUShort()
                     }
                     return@use ushortArray
                 }
@@ -60,7 +60,7 @@ class GameMaps(bytes: ByteArray, mapHead: MapHead) {
                     val plane1Bytes = Decompressor.decompress(it, levelHeader.lenPlane1, Decompressor.CompressionType.RLEW_CARMACK)
                     val ushortArray = Array(plane1Bytes.size / 2) { 0.toUShort() }
                     for (i in ushortArray.indices) {
-                        ushortArray[i] = ((plane1Bytes[(i * 2) + 1].toUShort().toInt() shl 8) or (plane1Bytes[i * 2].toUShort().toInt() shl 0)).toUShort()
+                        ushortArray[i] = ((plane1Bytes[(i * 2) + 1].toUByte().toInt() shl 8) or (plane1Bytes[i * 2].toUByte().toInt() shl 0)).toUShort()
                     }
                     return@use ushortArray
                 }
@@ -71,7 +71,7 @@ class GameMaps(bytes: ByteArray, mapHead: MapHead) {
                     val plane2Bytes = Decompressor.decompress(it, levelHeader.lenPlane2, Decompressor.CompressionType.RLEW_CARMACK)
                     val ushortArray = Array(plane2Bytes.size / 2) { 0.toUShort() }
                     for (i in ushortArray.indices) {
-                        ushortArray[i] = ((plane2Bytes[(i * 2) + 1].toUShort().toInt() shl 8) or (plane2Bytes[i * 2].toUShort().toInt() shl 0)).toUShort()
+                        ushortArray[i] = ((plane2Bytes[(i * 2) + 1].toUByte().toInt() shl 8) or (plane2Bytes[i * 2].toUByte().toInt() shl 0)).toUShort()
                     }
                     return@use ushortArray
                 }

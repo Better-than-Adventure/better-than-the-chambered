@@ -2,6 +2,8 @@ package com.mojang.escape.level.block
 
 import com.mojang.escape.Art
 import com.mojang.escape.entities.*
+import com.mojang.escape.entities.prelude.EyeBossEntity
+import com.mojang.escape.entities.prelude.EyeEntity
 
 class IceBlock: Block() {
     init {

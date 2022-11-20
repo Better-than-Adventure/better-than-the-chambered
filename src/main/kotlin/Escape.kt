@@ -97,7 +97,7 @@ class Escape {
             glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE)
         }
 
-        glfwSetWindowSizeCallback(window) { window, width, height ->
+        glfwSetWindowSizeCallback(window) { _, width, height ->
             val widthScale = width / WIDTH.toDouble()
             val heightScale = height / HEIGHT.toDouble()
             val scale = min(widthScale, heightScale)

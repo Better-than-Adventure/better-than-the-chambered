@@ -1,13 +1,13 @@
-package com.mojang.escape.entities
+package com.mojang.escape.entities.wolf3d
 
 import com.mojang.escape.Art
+import com.mojang.escape.entities.Bullet
+import com.mojang.escape.entities.EnemyEntity
+import com.mojang.escape.entities.wolf3d.AmmoEntity
 import kotlin.math.atan2
 
-class OgreEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0x82A821)) {
-    companion object {
-        var dropAmmo = false
-    }
-    
+class GuardEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0xD4C192)) {
+   
     var shootDelay: Int = 0
     
 
@@ -19,9 +19,7 @@ class OgreEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(
 
     override fun die() {
         super.die()
-        if (dropAmmo) {
-            this.level!!.addEntity(AmmoEntity(x, z))
-        }
+        this.level!!.addEntity(AmmoEntity(x, z))
     }
 
     override fun hurt(xd: Double, zd: Double) {
