@@ -126,6 +126,8 @@ class Wolf3DLevelProvider(val levelHeader: GameMaps.LevelHeader): ILevelProvider
     private fun getBlock(plane0: Int, plane1: Int, plane2: Int): Block {
         return if (plane1 > 0) {
             when (plane1) {
+                30 -> BarsBlock()
+                in 52..55 -> LootBlock()
                 98 -> VanishBlock()
                 else -> Block()
             }
