@@ -151,7 +151,7 @@ class PNGLevelProvider(
         return entities
     }
     
-    override fun getSpawn(): Pair<Int, Int>? {
+    override fun getSpawn(level: Level): Pair<Int, Int>? {
         for (i in pixels.withIndex()) {
             if ((i.value and 0xFFFFFF) == 0xFFFF00) {
                 return Pair(i.index % width, i.index / width)

@@ -3,12 +3,13 @@ package com.mojang.escape.level
 import com.mojang.escape.Game
 import com.mojang.escape.entities.Item
 import com.mojang.escape.level.provider.ILevelProvider
+import com.mojang.escape.level.provider.PNGLevelProvider
 import com.mojang.escape.toTranslatable
 
-class CryptLevel(game: Game, levelProvider: ILevelProvider) : Level(game, levelProvider) {
+class CryptLevel(game: Game, levelProvider: PNGLevelProvider) : PNGLevel(game, levelProvider) {
     override fun switchLevel(id: Int) {
         if (id == 1) {
-            game.switchLevel("overworld", 2)
+            switchLevel("overworld", 2)
         }
     }
 

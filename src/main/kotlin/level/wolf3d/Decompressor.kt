@@ -23,8 +23,12 @@ object Decompressor {
 
             return@use inputArray
         }.toUByteArray()
-        val decarmackized = decarmackize(inputArray)
-        val derlewed = derlew(decarmackized)
+        val decompressed = when (type) {
+            CompressionType.RLEW -> inputArray
+            CompressionType.RLEW_CARMACK -> decarmackize(inputArray)
+            CompressionType.RLEW_HUFFMAN -> dehuffmanize(inputArray)
+        }
+        val derlewed = derlew(decompressed)
 
         return derlewed.toByteArray()
     }
@@ -55,7 +59,6 @@ object Decompressor {
         return output.toUByteArray()
     }
     
-    // This looks horrible because it's adapted from very pointer-y C code.
     private fun decarmackize(compressedData: UByteArray): UByteArray {
         val NEARPOINTER = 0xA7.toUByte()
         val FARPOINTER = 0xA8.toUByte()
@@ -102,6 +105,7 @@ object Decompressor {
         return output.toUByteArray()
     }
     
-    private fun dehuffmanize(source: Array<UShort>, dest: Array<UShort>, length: UShort) {
+    private fun dehuffmanize(compressedData: UByteArray): UByteArray {
+        return compressedData
     }
 }

@@ -3,14 +3,15 @@ package com.mojang.escape.level
 import com.mojang.escape.Game
 import com.mojang.escape.entities.Item
 import com.mojang.escape.level.provider.ILevelProvider
+import com.mojang.escape.level.provider.PNGLevelProvider
 import com.mojang.escape.toTranslatable
 
-class TempleLevel(game: Game, levelProvider: ILevelProvider) : Level(game, levelProvider) {
+class TempleLevel(game: Game, levelProvider: PNGLevelProvider) : PNGLevel(game, levelProvider) {
     private var triggerMask = 0
 
     override fun switchLevel(id: Int) {
         if (id == 1) {
-            game.switchLevel("overworld", 3)
+            switchLevel("overworld", 3)
         }
     }
 

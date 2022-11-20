@@ -8,7 +8,6 @@ import com.mojang.escape.level.Wolf3DLevel
 import com.mojang.escape.level.block.LadderBlock
 import com.mojang.escape.menu.*
 import com.mojang.escape.menu.settings.GameSettings
-import java.awt.event.KeyEvent
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -23,11 +22,12 @@ class Game {
     var player: Player? = null
     var pauseTime = 0
     var menu: Menu? = TitleMenu()
+    var gameType = GameType.PRELUDE
 
     fun newGame() {
         Level.clear()
 
-        val localLevel = Wolf3DLevel.loadWolf3dLevel(this, 0)
+        val localLevel = gameType.getFirstLevel(this)
         val localPlayer = Player()
 
         localPlayer.level = localLevel
@@ -39,25 +39,24 @@ class Game {
 
         level = localLevel
         player = localPlayer
+        
+        gameType.onNewGame(this)
     }
 
-    fun switchLevel(name: String, id: Int) {
+    fun switchLevel(level: Level) {
         pauseTime = 30
-        level!!.removeEntityImmediately(player!!)
-        val localLevel = Level.loadLevel(this, name)
+        this.level?.removeEntityImmediately(player!!)
         val localPlayer = player!!
 
-        localLevel.player = localPlayer
-        localPlayer.level = localLevel
-        localLevel.findSpawn(id)
-        localPlayer.x = localLevel.xSpawn.toDouble()
-        localPlayer.z = localLevel.ySpawn.toDouble()
-        (localLevel.getBlock(localLevel.xSpawn, localLevel.ySpawn) as LadderBlock).wait = true
+        level.player = localPlayer
+        localPlayer.level = level
+        localPlayer.x = level.xSpawn.toDouble()
+        localPlayer.z = level.ySpawn.toDouble()
         localPlayer.x += sin(localPlayer.rot) * 0.2
         localPlayer.z += cos(localPlayer.rot) * 0.2
-        localLevel.addEntity(localPlayer)
+        level.addEntity(localPlayer)
 
-        level = localLevel
+        this.level = level
         player = localPlayer
     }
 

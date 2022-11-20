@@ -3,9 +3,10 @@ package com.mojang.escape.level
 import com.mojang.escape.Game
 import com.mojang.escape.entities.Item
 import com.mojang.escape.level.provider.ILevelProvider
+import com.mojang.escape.level.provider.PNGLevelProvider
 import com.mojang.escape.toTranslatable
 
-class DungeonLevel(game: Game, levelProvider: ILevelProvider) : Level(game, levelProvider) {
+class DungeonLevel(game: Game, levelProvider: PNGLevelProvider) : PNGLevel(game, levelProvider) {
     override fun postInit() {
         super.trigger(6, true)
         super.trigger(7, true)
@@ -13,7 +14,7 @@ class DungeonLevel(game: Game, levelProvider: ILevelProvider) : Level(game, leve
 
     override fun switchLevel(id: Int) {
         if (id == 1) {
-            game.switchLevel("start", 2)
+            switchLevel("start", 2)
         }
     }
 
