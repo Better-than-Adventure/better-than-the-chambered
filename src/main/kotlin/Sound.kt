@@ -1,12 +1,10 @@
 package com.mojang.escape
 
-import com.mojang.escape.menu.SettingsMenu
 import com.mojang.escape.menu.settings.GameSettings
 import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.Clip
 import javax.sound.sampled.FloatControl
 import kotlin.math.log10
-import kotlin.math.pow
 
 class Sound(private val clip: Clip?) {
     companion object {

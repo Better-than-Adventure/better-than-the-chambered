@@ -1,0 +1,138 @@
+window.
+    title=Better than the Chambered!
+settings.
+    language.
+        name=Langue
+    volume.
+        name=Volume
+        valueString.
+            0=0%
+            25=25%
+            50=50%
+            75=75%
+            100=100%
+    mouselook.
+        name=Contrôle de la vue subjective à la souris
+        valueString.
+            on=Activé
+            off=Désactivé
+    graphics.
+        name=Graphismes
+        valueString.
+            full=Palette complète
+            ega=EGA
+            cga=CGA
+    keyForward.
+        name=Avancer
+    keyBackward.
+        name=Reculer
+    keyTurnLeft.
+        name=Tourner vers la gauche
+    keyTurnRight.
+        name=Tourner vers la droite
+    keyStrafeLeft.
+        name=Aller à gauche
+    keyStrafeRight.
+        name=Aller à droite
+    keyInteract.
+        name=Intéragir
+    keySlots.
+        1.
+            name=Emplacement 1
+        2.
+            name=Emplacement 2
+        3.
+            name=Emplacement 3
+        4.
+            name=Emplacement 4
+        5.
+            name=Emplacement 5
+        6.
+            name=Emplacement 6
+        7.
+            name=Emplacement 7
+        8.
+            name=Emplacement 8
+gui.
+    menu.
+        about.
+            title=À propos
+            buttonContinue=Continuer
+            line0=Prelude of the Chambered
+            line1=par Markus Persson.
+            line2=Développé en août 2011 pour la
+            line3=21ème édition du concours Ludum Dare.
+            line4=
+            line5=Ce jeu est un logiciel gratuit,
+            line6=il a été développé à partir
+            line7=de zéro en moins de 48 heures.
+        title.
+            copyright=Copyright (C) 2011 Mojang
+            buttonNewGame=Nouvelle partie
+            buttonSettings=Paramètres
+            buttonAbout=À propos
+        gotLoot.
+            text=Vous avez trouvé : %s !
+            buttonContinue=Continuer
+        languages.
+            title=Langues
+            buttonBack=Retour
+        lose.
+            trinkets=Objets trouvés :
+            time=Temps :
+            buttonContinue=Continuer
+        pause.
+            buttonAbortGame=Abandonner la partie
+            buttonSettings=Paramètres
+            buttonContinue=Continuer
+        settings.
+            title=Paramètres
+            buttonBack=Retour
+        win.
+            trinkets=Objets trouvés :
+            time=Temps :
+            buttonContinue=Continuer
+    ingame.
+        enteringLevel=Vous pénétrez dans %s
+        focusLost=Cliquer pour revenir dans le jeu !
+    languages.
+        en_US=English (US)
+        fr=French (France)
+item.
+    none.
+        name=
+        desc=
+    powerGlove.
+        name=Gant de puissance
+        desc=Paf !
+    pistol.
+        name=Pistolet
+        desc=Pan pan pan !
+    flippers.
+        name=Palmes
+        desc=Plouf !
+    cutters.
+        name=Coupe-fils
+        desc=Coupe-coupe !
+    skates.
+        name=Patins
+        desc=Tranchant !
+    key.
+        name=Clé
+        desc=Comment est-ce que t'as eu ça ?
+    potion.
+        name=Potion
+        desc=Sain !
+level.
+    crypt.
+        name=la crypte
+    dungeon.
+        name=les cachots
+    ice.
+        name=la caverne givrée
+    overworld.
+        name=l'île
+    start.
+        name=la prison
+    temple.
+        name=le temple

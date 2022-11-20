@@ -2,10 +2,12 @@ package com.mojang.escape.menu.settings
 
 import com.mojang.escape.Keys
 import com.mojang.escape.Sound
+import com.mojang.escape.lang.Language
 import com.mojang.escape.toTranslatable
 
 class GameSettings {
     companion object {
+        lateinit var language: Settings.LanguageSetting
         lateinit var volume: Settings.RangeSetting
         lateinit var mouseLook: Settings.BooleanSetting
         lateinit var graphics: Settings.RangeSetting
@@ -19,6 +21,7 @@ class GameSettings {
         lateinit var keySlots: Array<Settings.KeySetting>
 
         val settings = Settings {
+            language = languagesSetting("language", "settings.language.name".toTranslatable(), Language("en_US"))
             volume = rangeSetting("volume", "settings.volume.name".toTranslatable(), 2, 0, 4)
                 .onChanged { _, _ ->
                     Sound.potion.play()

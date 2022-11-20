@@ -1,10 +1,9 @@
 package com.mojang.escape.lang
 
-import com.mojang.escape.Game
 import com.mojang.escape.gui.Bitmap
 
-class StringUnitGroup(vararg params: IStringUnit): IStringUnit {
-    private val parts = mutableListOf<IStringUnit>()
+class StringUnitGroup(vararg params: StringUnit): StringUnit {
+    private val parts = mutableListOf<StringUnit>()
 
     override val value: String
         get() {
