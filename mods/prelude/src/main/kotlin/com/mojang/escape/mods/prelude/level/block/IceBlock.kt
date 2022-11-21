@@ -4,13 +4,14 @@ import com.mojang.escape.Art
 import com.mojang.escape.Sound
 import com.mojang.escape.entities.*
 import com.mojang.escape.level.block.Block
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 import com.mojang.escape.mods.prelude.entities.EyeBossEntity
 import com.mojang.escape.mods.prelude.entities.EyeEntity
 import kotlin.math.cos
 import kotlin.math.sin
 
-class IceBlock: Block() {
+class IceBlock: Block(ModArt.walls, ModArt.floors) {
     companion object {
         var playerSliding = false
     }

@@ -4,9 +4,10 @@ import com.mojang.escape.Art
 import com.mojang.escape.Sound
 import com.mojang.escape.entities.EnemyEntity
 import com.mojang.escape.entities.KeyEntity
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 
-class EyeBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 4, Art.getCol(0xFFFF00)) {
+class EyeBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 4, Art.getCol(0xFFFF00), ModArt.sprites) {
     init {
         this.health = 10
         this.r = 0.3

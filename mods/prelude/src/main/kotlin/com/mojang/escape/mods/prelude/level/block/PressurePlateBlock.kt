@@ -3,8 +3,9 @@ package com.mojang.escape.mods.prelude.level.block
 import com.mojang.escape.Sound
 import com.mojang.escape.entities.Entity
 import com.mojang.escape.level.block.Block
+import com.mojang.escape.mods.prelude.ModArt
 
-class PressurePlateBlock: Block() {
+class PressurePlateBlock: Block(ModArt.walls, ModArt.floors) {
     private var pressed = false
 
     init {

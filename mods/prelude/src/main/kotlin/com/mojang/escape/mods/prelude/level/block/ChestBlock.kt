@@ -6,10 +6,11 @@ import com.mojang.escape.entities.Item
 import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.Block
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 
-class ChestBlock: Block() {
-    private val chestSprite = BasicSprite(0.0, 0.0, 0.0, 8 * 2 + 0, Art.getCol(0xffff00))
+class ChestBlock: Block(ModArt.walls, ModArt.floors) {
+    private val chestSprite = BasicSprite(0.0, 0.0, 0.0, 8 * 2 + 0, Art.getCol(0xffff00), ModArt.sprites)
     private var open = false
 
     init {

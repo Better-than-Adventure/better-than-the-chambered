@@ -4,10 +4,11 @@ import com.mojang.escape.Art
 import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.level.block.Block
 import com.mojang.escape.level.block.SolidBlock
+import com.mojang.escape.mods.prelude.ModArt
 import java.util.*
 
-class TorchBlock: Block() {
-    private var torchSprite = BasicSprite(0.0, 0.0, 0.0, 3, Art.getCol(0xFFFF00))
+class TorchBlock: Block(ModArt.walls, ModArt.floors) {
+    private var torchSprite = BasicSprite(0.0, 0.0, 0.0, 3, Art.getCol(0xFFFF00), ModArt.sprites)
 
     init {
         addSprite(torchSprite)
@@ -16,7 +17,7 @@ class TorchBlock: Block() {
     override fun decorate(blocks: Array<Block>, blocksWidth: Int, blocksHeight: Int, x: Int, y: Int) {
         fun getBlock(x: Int, y: Int): Block {
             return blocks.getOrElse(x + y * blocksWidth) {
-                level?.solidWall ?: SolidBlock()
+                level?.solidWall ?: SolidBlock(ModArt.walls, ModArt.floors)
             }
         }
         

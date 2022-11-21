@@ -6,10 +6,11 @@ import com.mojang.escape.entities.Entity
 import com.mojang.escape.entities.Player
 import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.level.block.Block
+import com.mojang.escape.mods.prelude.ModArt
 
-class LootBlock: Block() {
+class LootBlock: Block(ModArt.walls, ModArt.floors) {
     private var taken = false
-    private val sprite = BasicSprite(0.0, 0.0, 0.0, 16 + 2, Art.getCol(0xFFFF80))
+    private val sprite = BasicSprite(0.0, 0.0, 0.0, 16 + 2, Art.getCol(0xFFFF80), ModArt.sprites)
 
     init {
         addSprite(sprite)

@@ -4,9 +4,10 @@ import com.mojang.escape.mods.prelude.entities.BoulderEntity
 import com.mojang.escape.entities.Entity
 import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.level.block.Block
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 
-class PitBlock: Block() {
+class PitBlock: Block(ModArt.walls, ModArt.floors) {
     private var filled = false
 
     init {
@@ -20,7 +21,7 @@ class PitBlock: Block() {
             entity.remove()
             filled = true
             blocksMotion = false
-            addSprite(BasicSprite(0.0, 0.0, 0.0, 8 + 2, BoulderEntity.COLOR))
+            addSprite(BasicSprite(0.0, 0.0, 0.0, 8 + 2, BoulderEntity.COLOR, ModArt.sprites))
             ModSound.thud.play()
         }
     }

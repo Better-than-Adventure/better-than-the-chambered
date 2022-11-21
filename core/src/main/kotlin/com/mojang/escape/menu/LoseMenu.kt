@@ -29,6 +29,7 @@ class LoseMenu(private val player: Player, lastMenu: Menu? = null): Menu(lastMen
             tickDelay--
         } else if (use) {
             Sound.click1.play()
+            game.level = null
             game.menu = TitleMenu()
         }
     }

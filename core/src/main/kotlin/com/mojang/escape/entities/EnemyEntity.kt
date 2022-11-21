@@ -3,13 +3,14 @@ package com.mojang.escape.entities
 import com.mojang.escape.Art
 import com.mojang.escape.Sound
 import com.mojang.escape.gui.BasicSprite
+import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.PoofSprite
 import com.mojang.escape.gui.Sprite
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, protected val defaultColor: Int): Entity() {
+open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, protected val defaultColor: Int, art: Bitmap): Entity(art) {
     protected val sprite: Sprite
     protected var hurtTime = 0
     protected var animTime = 0
@@ -20,7 +21,7 @@ open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, prot
     init {
         this.x = x
         this.z = z
-        this.sprite = BasicSprite(0.0, 0.0, 0.0, 4 * 8, defaultColor)
+        this.sprite = BasicSprite(0.0, 0.0, 0.0, 4 * 8, defaultColor, art)
         this.sprites.add(this.sprite)
         this.r = 0.3
     }

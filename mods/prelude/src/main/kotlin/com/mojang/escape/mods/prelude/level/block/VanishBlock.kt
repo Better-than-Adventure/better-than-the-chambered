@@ -5,9 +5,10 @@ import com.mojang.escape.entities.Item
 import com.mojang.escape.mods.prelude.gui.RubbleSprite
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.SolidBlock
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 
-class VanishBlock: SolidBlock() {
+class VanishBlock: SolidBlock(ModArt.walls, ModArt.floors) {
     private var gone = false
 
     init {

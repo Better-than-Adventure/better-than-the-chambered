@@ -3,9 +3,10 @@ package com.mojang.escape.mods.prelude.entities
 import com.mojang.escape.Art
 import com.mojang.escape.entities.Bullet
 import com.mojang.escape.entities.EnemyEntity
+import com.mojang.escape.mods.prelude.ModArt
 import kotlin.math.atan2
 
-class OgreEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0x82A821)) {
+class OgreEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0x82A821), ModArt.sprites) {
     
     var shootDelay: Int = 0
     

@@ -5,7 +5,7 @@ import com.mojang.escape.gui.BasicSprite
 import kotlin.math.cos
 import kotlin.math.sin
 
-class Bullet(val owner: Entity, x: Double, z: Double, rot: Double, pow: Double, sprite: Int, col: Int): Entity() {
+class Bullet(val owner: Entity, x: Double, z: Double, rot: Double, pow: Double, sprite: Int, col: Int): Entity(Art.sprites) {
     init {
         this.r = 0.01
 
@@ -14,7 +14,7 @@ class Bullet(val owner: Entity, x: Double, z: Double, rot: Double, pow: Double, 
         this.x = x - this.za / 2
         this.z = z + this.xa / 2
 
-        this.sprites.add(BasicSprite(0.0, 0.0, 0.0, 8 * 3 + sprite, Art.getCol(col)))
+        this.sprites.add(BasicSprite(0.0, 0.0, 0.0, 8 + sprite, Art.getCol(col), Art.sprites))
 
         this.flying = true
     }

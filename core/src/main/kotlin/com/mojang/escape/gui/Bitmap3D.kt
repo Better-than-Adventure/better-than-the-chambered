@@ -61,17 +61,17 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
                 if (!c.doRender(this, xb, zb, c, e, s)) {
                     if (c.solidRender) {
                         if (!e.solidRender) {
-                            renderWall(xb + 1.0, zb + 1.0, xb + 1.0, zb + 0.0, c.tex, c.col)
+                            renderWall(xb + 1.0, zb + 1.0, xb + 1.0, zb + 0.0, c.tex, c.col, c.wallArt)
                         }
                         if (!s.solidRender) {
-                            renderWall(xb + 0.0, zb + 1.0, xb + 1.0, zb + 1.0, c.tex, (c.col and 0xFEFEFE) shr 1)
+                            renderWall(xb + 0.0, zb + 1.0, xb + 1.0, zb + 1.0, c.tex, (c.col and 0xFEFEFE) shr 1, c.wallArt)
                         }
                     } else {
                         if (e.solidRender) {
-                            renderWall(xb + 1.0, zb + 0.0, xb + 1.0, zb + 1.0, e.tex, e.col)
+                            renderWall(xb + 1.0, zb + 0.0, xb + 1.0, zb + 1.0, e.tex, e.col, c.wallArt)
                         }
                         if (s.solidRender) {
-                            renderWall(xb + 1.0, zb + 1.0, xb + 0.0, zb + 1.0, s.tex, (s.col and 0xFEFEFE) shr 1)
+                            renderWall(xb + 1.0, zb + 1.0, xb + 0.0, zb + 1.0, s.tex, (s.col and 0xFEFEFE) shr 1, c.wallArt)
                         }
                     }
                 }
@@ -85,12 +85,12 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
 
                 for (e in c.entities) {
                     for (sprite in e.sprites) {
-                        renderSprite(e.x + sprite.x, 0 - sprite.y, e.z + sprite.z, sprite.tex, sprite.col)
+                        renderSprite(e.x + sprite.x, 0 - sprite.y, e.z + sprite.z, sprite.tex, sprite.col, sprite.art)
                     }
                 }
 
                 for (sprite in c.sprites) {
-                    renderSprite(xb + sprite.x, 0 - sprite.y, zb + sprite.z, sprite.tex, sprite.col)
+                    renderSprite(xb + sprite.x, 0 - sprite.y, zb + sprite.z, sprite.tex, sprite.col, sprite.art)
                 }
             }
         }
@@ -137,13 +137,13 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
                     zBuffer[x + y * width] = -1.0
                 } else {
                     zBuffer[x + y * width] = zd
-                    pixels[x + y * width] = Art.floors.pixels[((xPix and 15) + (tex % 8) * 16) + ((yPix and 15) + (tex / 8) * 16) * 128] * col
+                    pixels[x + y * width] = block.floorArt.pixels[((xPix and 15) + (tex % 8) * 16) + ((yPix and 15) + (tex / 8) * 16) * 128] * col
                 }
             }
         }
     }
 
-    fun renderSprite(x: Double, y: Double, z: Double, tex: Int, color: Int) {
+    fun renderSprite(x: Double, y: Double, z: Double, tex: Int, color: Int, art: Bitmap) {
         val xc = (x - xCam) * 2 - rSin * 0.2
         val yc = (y - zCam) * 2
         val zc = (z - yCam) * 2 - rCos * 0.2
@@ -188,7 +188,7 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
                 val xpr = (xp - xPixel0) / (xPixel1 - xPixel0)
                 val xt = (xpr * 16).toInt()
                 if (zBuffer[xp + yp * width] > zz) {
-                    val col = Art.sprites.pixels[(xt + tex % 8 * 16) + (yt + (tex / 8) * 16) * 128]
+                    val col = art.pixels[(xt + tex % 8 * 16) + (yt + (tex / 8) * 16) * 128]
                     if (col >= 0) {
                         pixels[xp + yp * width] = col * color
                         zBuffer[xp + yp * width] = zz
@@ -198,11 +198,11 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
         }
     }
 
-    fun renderWall(x0: Double, y0: Double, x1: Double, y1: Double, tex: Int, color: Int) {
-        renderWall(x0, y0, x1, y1, tex, color, 0.0, 1.0)
+    fun renderWall(x0: Double, y0: Double, x1: Double, y1: Double, tex: Int, color: Int, art: Bitmap) {
+        renderWall(x0, y0, x1, y1, tex, color, art, 0.0, 1.0)
     }
 
-    fun renderWall(x0: Double, y0: Double, x1: Double, y1: Double, tex: Int, color: Int, xt0: Double, xt1: Double) {
+    fun renderWall(x0: Double, y0: Double, x1: Double, y1: Double, tex: Int, color: Int, art: Bitmap, xt0: Double, xt1: Double) {
         val xc0 = ((x0 - 0.5) - xCam) * 2
         val yc0 = ((y0 - 0.5) - yCam) * 2
 
@@ -295,7 +295,7 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
             for (y in yp0 until yp1) {
                 val pry = (y - yPixel0) * ih
                 val yTex = (16 * pry).toInt()
-                pixels[x + y * width] = Art.walls.pixels[((xTex) + (tex % 8) * 16) + (yTex + tex / 8 * 16) * 128] * color
+                pixels[x + y * width] = art.pixels[((xTex) + (tex % 8) * 16) + (yTex + tex / 8 * 16) * 128] * color
                 zBuffer[x + y * width] = 1 / iz * 4
             }
         }

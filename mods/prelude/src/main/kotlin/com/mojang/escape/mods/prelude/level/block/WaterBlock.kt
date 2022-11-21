@@ -7,9 +7,10 @@ import com.mojang.escape.entities.Entity
 import com.mojang.escape.entities.Item
 import com.mojang.escape.entities.Player
 import com.mojang.escape.level.block.Block
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 
-class WaterBlock: Block() {
+class WaterBlock: Block(ModArt.walls, ModArt.floors) {
     private var steps = 0
 
     init {

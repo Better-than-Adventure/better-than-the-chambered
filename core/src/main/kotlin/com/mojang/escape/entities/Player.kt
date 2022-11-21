@@ -1,12 +1,13 @@
 package com.mojang.escape.entities
 
+import com.mojang.escape.Art
 import com.mojang.escape.Sound
 import com.mojang.escape.level.block.Block
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-class Player: Entity() {
+class Player: Entity(Art.sprites) {
     var bob = 0.0
     var bobPhase = 0.0
     var turnBob = 0.0

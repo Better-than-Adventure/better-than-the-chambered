@@ -1,8 +1,9 @@
 package com.mojang.escape.mods.prelude.gui
 
 import com.mojang.escape.gui.Sprite
+import com.mojang.escape.mods.prelude.ModArt
 
-class RubbleSprite: Sprite(Math.random() - 0.5, Math.random() * 0.8, Math.random() - 0.5, 2, 0x555555) {
+class RubbleSprite: Sprite(Math.random() - 0.5, Math.random() * 0.8, Math.random() - 0.5, 2, 0x555555, ModArt.sprites) {
     private var xa = Math.random() - 0.5
     private var ya = Math.random()
     private var za = Math.random() - 0.5

@@ -9,9 +9,9 @@ import java.nio.ByteBuffer
 
 class Image(val width: Int, val height: Int) {
     companion object {
-        fun read(path: String, mod: IMod?): Image {
-            val resource = if (mod != null) {
-                mod::class.java.getResource(path)
+        fun read(path: String, clazz: Class<*>?): Image {
+            val resource = if (clazz != null) {
+                clazz.getResource(path)
             } else {
                 Image::class.java.getResource(path)
             } ?: throw Exception("Could not open image ${path}!")

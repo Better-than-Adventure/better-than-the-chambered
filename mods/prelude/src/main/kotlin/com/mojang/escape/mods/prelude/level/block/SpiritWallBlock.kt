@@ -5,8 +5,9 @@ import com.mojang.escape.entities.Bullet
 import com.mojang.escape.entities.Entity
 import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.level.block.Block
+import com.mojang.escape.mods.prelude.ModArt
 
-class SpiritWallBlock: Block() {
+class SpiritWallBlock: Block(ModArt.walls, ModArt.floors) {
     init {
         floorTex = 7
         ceilTex = 7
@@ -15,7 +16,7 @@ class SpiritWallBlock: Block() {
             val x = (random.nextDouble() - 0.5)
             val y = (random.nextDouble() - 0.7) * 0.3
             val z = (random.nextDouble() - 0.5)
-            addSprite(BasicSprite(x, y, z, 4 * 8 + 6 + random.nextInt(2), Art.getCol(0x202020)))
+            addSprite(BasicSprite(x, y, z, 4 * 8 + 6 + random.nextInt(2), Art.getCol(0x202020), ModArt.sprites))
         }
     }
 

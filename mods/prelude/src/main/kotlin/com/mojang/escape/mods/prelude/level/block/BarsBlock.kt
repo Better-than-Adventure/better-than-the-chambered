@@ -9,10 +9,11 @@ import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.gui.Sprite
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.Block
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 
-class BarsBlock: Block() {
-    private val sprite: Sprite = BasicSprite(0.0, 0.0, 0.0, 0, 0x202020)
+class BarsBlock: Block(ModArt.walls, ModArt.floors) {
+    private val sprite: Sprite = BasicSprite(0.0, 0.0, 0.0, 0, 0x202020, ModArt.sprites)
     private var open: Boolean = false
 
     init {

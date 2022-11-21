@@ -3,11 +3,12 @@ package com.mojang.escape.mods.prelude.entities
 import com.mojang.escape.Art
 import com.mojang.escape.entities.Bullet
 import com.mojang.escape.entities.EnemyEntity
+import com.mojang.escape.mods.prelude.ModArt
 import kotlin.math.atan2
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-class GhostBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.getCol(0xFFFF00)) {
+class GhostBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.getCol(0xFFFF00), ModArt.sprites) {
     private var rotatePos = 0.0
     private var shootDelay = 0
 

@@ -4,15 +4,13 @@ import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.util.Image
 import java.io.FileNotFoundException
 import java.lang.RuntimeException
-import java.net.URL
 
 object Art {
-    val walls = loadBitmap("/tex/walls.png")
-    val floors = loadBitmap("/tex/floors.png")
     val sprites = loadBitmap("/tex/sprites.png")
     val panel = loadBitmap("/tex/gamepanel.png")
     val items = loadBitmap("/tex/items.png")
     val sky = loadBitmap("/tex/sky.png")
+    val missing = loadBitmap("/tex/missing.png")
 
     val logo = loadBitmap("/gui/logo.png")
 
@@ -36,9 +34,9 @@ object Art {
      * @throws RuntimeException Thrown when the given image could not be read.
      * @throws FileNotFoundException Thrown when the given path could not be found.
      */
-    fun loadBitmap(fileName: String): Bitmap {
+    fun loadBitmap(fileName: String, clazz: Class<*>? = null): Bitmap {
         try {
-            val img = Image.read(fileName, null)
+            val img = Image.read(fileName, clazz)
 
             val result = Bitmap(img.width, img.height)
             img.getRGB(result.pixels)

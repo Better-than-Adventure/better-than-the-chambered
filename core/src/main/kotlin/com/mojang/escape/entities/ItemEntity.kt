@@ -2,9 +2,10 @@ package com.mojang.escape.entities
 
 import com.mojang.escape.Sound
 import com.mojang.escape.gui.BasicSprite
+import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.Sprite
 
-abstract class ItemEntity(x: Double, z: Double, spriteIndex: Int, spriteColor: Int): Entity() {
+abstract class ItemEntity(x: Double, z: Double, spriteIndex: Int, spriteColor: Int, art: Bitmap): Entity(art) {
     private val sprite: Sprite
     private var y: Double
     private var ya: Double
@@ -14,7 +15,7 @@ abstract class ItemEntity(x: Double, z: Double, spriteIndex: Int, spriteColor: I
         this.z = z
         this.y = 0.5
         this.ya = 0.025
-        this.sprite = BasicSprite(0.0, 0.0, 0.0, spriteIndex, spriteColor)
+        this.sprite = BasicSprite(0.0, 0.0, 0.0, spriteIndex, spriteColor, art)
         this.sprites.add(this.sprite)
     }
 

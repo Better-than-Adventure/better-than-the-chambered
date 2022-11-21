@@ -10,11 +10,12 @@ import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.mods.prelude.gui.RubbleSprite
 import com.mojang.escape.gui.Sprite
 import com.mojang.escape.level.block.Block
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 
-class AltarBlock: Block() {
+class AltarBlock: Block(ModArt.walls, ModArt.floors) {
     private var filled = false
-    private val sprite: Sprite = BasicSprite(0.0, 0.0, 0.0, 16 + 4, Art.getCol(0xE2FFE4))
+    private val sprite: Sprite = BasicSprite(0.0, 0.0, 0.0, 16 + 4, Art.getCol(0xE2FFE4), ModArt.sprites)
 
     init {
         blocksMotion = true

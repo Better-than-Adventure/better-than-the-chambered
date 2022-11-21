@@ -3,9 +3,10 @@ package com.mojang.escape.mods.prelude.entities
 import com.mojang.escape.Art
 import com.mojang.escape.entities.EnemyEntity
 import com.mojang.escape.entities.KeyEntity
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 
-class BatBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8, Art.getCol(0xFFFF00)) {
+class BatBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8, Art.getCol(0xFFFF00), ModArt.sprites) {
     init {
         this.health = 5
         this.r = 0.3

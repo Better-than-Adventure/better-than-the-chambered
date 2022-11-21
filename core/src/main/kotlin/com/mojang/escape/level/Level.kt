@@ -1,5 +1,6 @@
 package com.mojang.escape.level
 
+import com.mojang.escape.Art
 import com.mojang.escape.Game
 import com.mojang.escape.entities.*
 import com.mojang.escape.lang.StringUnit
@@ -24,7 +25,7 @@ open class Level(game: Game, levelProvider: ILevelProvider) {
     var width = 0
     var height = 0
 
-    val solidWall = SolidBlock()
+    val solidWall = SolidBlock(Art.missing, Art.missing)
 
     var xSpawn: Int
     var ySpawn: Int

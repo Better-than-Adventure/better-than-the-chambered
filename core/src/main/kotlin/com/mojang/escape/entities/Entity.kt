@@ -1,12 +1,14 @@
 package com.mojang.escape.entities
 
+import com.mojang.escape.Art
+import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.Sprite
 import com.mojang.escape.level.Level
 import kotlin.math.abs
 import java.util.Random
 import kotlin.math.floor
 
-open class Entity {
+open class Entity(val art: Bitmap) {
     companion object {
         val random = Random()
     }

@@ -29,6 +29,7 @@ class WinMenu(private val player: Player, lastMenu: Menu? = null): Menu(lastMenu
             tickDelay--
         } else if (use) {
             Sound.click1.play()
+            game.level = null
             game.menu = TitleMenu()
         }
     }

@@ -5,12 +5,13 @@ import com.mojang.escape.entities.Entity
 import com.mojang.escape.entities.Item
 import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.gui.Sprite
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-class BoulderEntity(x: Int, z: Int): Entity() {
+class BoulderEntity(x: Int, z: Int): Entity(ModArt.sprites) {
     companion object {
         val COLOR = Art.getCol(0xAFA293)
     }
@@ -21,7 +22,7 @@ class BoulderEntity(x: Int, z: Int): Entity() {
     init {
         this.x = x.toDouble()
         this.z = z.toDouble()
-        this.sprite = BasicSprite(0.0, 0.0, 0.0, 16, COLOR)
+        this.sprite = BasicSprite(0.0, 0.0, 0.0, 16, COLOR, ModArt.sprites)
         this.sprites.add(this.sprite)
     }
 

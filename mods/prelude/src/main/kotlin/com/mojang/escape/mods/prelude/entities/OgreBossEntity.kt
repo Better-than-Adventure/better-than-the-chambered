@@ -5,9 +5,10 @@ import com.mojang.escape.Sound
 import com.mojang.escape.entities.Bullet
 import com.mojang.escape.entities.EnemyEntity
 import com.mojang.escape.entities.KeyEntity
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 
-class OgreBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0xFFFF00)) {
+class OgreBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0xFFFF00), ModArt.sprites) {
     private var shootDelay: Int = 0
     private var shootPhase: Int = 0
 

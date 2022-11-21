@@ -1,8 +1,10 @@
 package com.mojang.escape.level.block
 
+import com.mojang.escape.Art
 import com.mojang.escape.entities.Entity
 import com.mojang.escape.entities.Item
 import com.mojang.escape.entities.Player
+import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.Bitmap3D
 import com.mojang.escape.gui.Sprite
 import com.mojang.escape.lang.StringUnit
@@ -10,7 +12,7 @@ import com.mojang.escape.level.Level
 import java.util.*
 import kotlin.collections.ArrayList
 
-open class Block {
+open class Block(val wallArt: Bitmap = Art.missing, val floorArt: Bitmap) {
     protected val random = Random()
 
     protected var blocksMotion = false

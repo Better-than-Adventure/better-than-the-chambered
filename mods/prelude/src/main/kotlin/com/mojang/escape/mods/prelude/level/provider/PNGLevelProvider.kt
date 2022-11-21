@@ -8,6 +8,7 @@ import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.*
 import com.mojang.escape.mods.prelude.level.block.*
 import com.mojang.escape.level.provider.ILevelProvider
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.util.Image
 import java.lang.Exception
 import java.lang.RuntimeException
@@ -27,7 +28,7 @@ class PNGLevelProvider(
     
     init {
         try {
-            val img = Image.read("/level/$name.png", Game.theMod!!)
+            val img = Image.read("/level/$name.png", this::class.java)
             
             width = img.width
             height = img.height
@@ -163,9 +164,9 @@ class PNGLevelProvider(
     
     private fun getBlock(col: Int): Block {
         return when (col) {
-            0x93FF9B -> SolidBlock()
+            0x93FF9B -> SolidBlock(ModArt.walls, ModArt.floors)
             0x009300 -> PitBlock()
-            0xFFFFFF -> SolidBlock()
+            0xFFFFFF -> SolidBlock(ModArt.walls, ModArt.floors)
             0x00FFFF -> VanishBlock()
             0xFFFF64 -> ChestBlock()
             0x0000FF -> WaterBlock()
@@ -182,10 +183,10 @@ class PNGLevelProvider(
             0xC6C697 -> LockedDoorBlock()
             0xFFBA02 -> AltarBlock()
             0x749327 -> SpiritWallBlock()
-            0x1A2108 -> Block()
+            0x1A2108 -> Block(ModArt.walls, ModArt.floors)
             0x00C2A7 -> FinalUnlockBlock()
             0x000056 -> WinBlock()
-            else -> Block()
+            else -> Block(ModArt.walls, ModArt.floors)
         }
     }
     

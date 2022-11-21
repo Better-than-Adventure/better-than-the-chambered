@@ -6,9 +6,10 @@ import com.mojang.escape.gui.Bitmap3D
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.Block
 import com.mojang.escape.level.block.SolidBlock
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.entities.OgreEntity
 
-open class DoorBlock: SolidBlock() {
+open class DoorBlock: SolidBlock(ModArt.walls, ModArt.floors) {
     var open = false
     var openness = 0.0
 
@@ -68,13 +69,13 @@ open class DoorBlock: SolidBlock() {
             val rr = 1 / 8.0
             val openness = 1 - center.openness * 7 / 8
             if (east.solidRender) {
-                bitmap.renderWall(x + openness, z + 0.5 - rr, x.toDouble(), z + 0.5 - rr, center.tex, (center.col and 0xFEFEFE) shr 1, 0.0, openness)
-                bitmap.renderWall(x.toDouble(), z + 0.5 + rr, x + openness, z + 0.5 + rr, center.tex, (center.col and 0xFEFEFE) shr 1, openness, 0.0)
-                bitmap.renderWall(x + openness, z + 0.5 + rr, x + openness, z + 0.5 - rr, center.tex,  center.col, 0.5 - rr, 0.5 + rr)
+                bitmap.renderWall(x + openness, z + 0.5 - rr, x.toDouble(), z + 0.5 - rr, center.tex, (center.col and 0xFEFEFE) shr 1, center.wallArt, 0.0, openness)
+                bitmap.renderWall(x.toDouble(), z + 0.5 + rr, x + openness, z + 0.5 + rr, center.tex, (center.col and 0xFEFEFE) shr 1, center.wallArt, openness, 0.0)
+                bitmap.renderWall(x + openness, z + 0.5 + rr, x + openness, z + 0.5 - rr, center.tex,  center.col, center.wallArt, 0.5 - rr, 0.5 + rr)
             } else {
-                bitmap.renderWall(x + 0.5 - rr, z.toDouble(), x + 0.5 - rr, z + openness, center.tex,  center.col, openness, 0.0)
-                bitmap.renderWall(x + 0.5 + rr, z + openness, x + 0.5 + rr, z.toDouble(), center.tex,  center.col, 0.0, openness)
-                bitmap.renderWall(x + 0.5 - rr, z + openness, x + 0.5 + rr, z + openness, center.tex, (center.col and 0xFEFEFE) shr 1, 0.5 - rr, 0.5 + rr)
+                bitmap.renderWall(x + 0.5 - rr, z.toDouble(), x + 0.5 - rr, z + openness, center.tex,  center.col, center.wallArt, openness, 0.0)
+                bitmap.renderWall(x + 0.5 + rr, z + openness, x + 0.5 + rr, z.toDouble(), center.tex,  center.col, center.wallArt, 0.0, openness)
+                bitmap.renderWall(x + 0.5 - rr, z + openness, x + 0.5 + rr, z + openness, center.tex, (center.col and 0xFEFEFE) shr 1, center.wallArt, 0.5 - rr, 0.5 + rr)
             }
         }
         return false
