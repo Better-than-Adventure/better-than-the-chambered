@@ -15,7 +15,7 @@ import kotlin.collections.ArrayList
 open class Block(val wallArt: Bitmap = Art.missing, val floorArt: Bitmap) {
     protected val random = Random()
 
-    protected var blocksMotion = false
+    var blocksMotion = false
     var solidRender = false
 
     val messages: Array<StringUnit>? = null

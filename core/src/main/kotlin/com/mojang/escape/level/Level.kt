@@ -90,6 +90,16 @@ open class Level(game: Game, levelProvider: ILevelProvider) {
 
         return blocks[x + y * width]
     }
+    
+    fun setBlock(x: Int, y: Int, block: Block) {
+        if (x < 0 || y < 0 || x >= width || y >= height) return
+        
+        block.level = this
+        block.x = x
+        block.y = y
+        blocks[x + y * width] = block
+    }
+    
 
     fun containsBlockingEntity(x0: Double, y0: Double, x1: Double, y1: Double): Boolean {
         val xc = floor((x1 + x0) / 2).toInt()

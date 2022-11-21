@@ -12,6 +12,10 @@ import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.*
 import com.mojang.escape.level.provider.ILevelProvider
 import com.mojang.escape.mods.wolf3d.data.GameMaps
+import com.mojang.escape.mods.wolf3d.level.block.DoorBlock
+import com.mojang.escape.mods.wolf3d.level.block.SlidingBlock
+import com.mojang.escape.mods.wolf3d.level.block.TexturedBlock
+import com.mojang.escape.mods.wolf3d.level.block.TexturedSolidBlock
 import com.mojang.escape.toLiteral
 
 class Wolf3DLevelProvider(val levelHeader: GameMaps.LevelHeader): ILevelProvider {
@@ -129,16 +133,34 @@ class Wolf3DLevelProvider(val levelHeader: GameMaps.LevelHeader): ILevelProvider
             when (plane1) {
                 //30 -> BarsBlock()
                 //in 52..55 -> LootBlock()
-                //98 -> VanishBlock()
-                else -> Block()
+                98 -> SlidingBlock(getTex(plane0), 8 * 0 + 0)
+                else -> TexturedBlock(8 * 0 + 0, 8 * 0 + 0)
             }
         } else {
             when (plane0) {
                 //21 -> LadderBlock(true)
-                in 1..63 -> SolidBlock()
-                //in 90..101 -> DoorBlock()
-                else -> Block()
+                in 1..63 -> TexturedSolidBlock(getTex(plane0), 8 * 0 + 0)
+                in 90..101 -> DoorBlock()
+                else -> TexturedBlock(8 * 0 + 0, 8 * 0 + 0)
             }
+        }
+    }
+    
+    private fun getTex(plane0: Int): Int {
+        return when (plane0) {
+            1  -> 8 * 0 + 0 // GRAY 1
+            2  -> 8 * 0 + 1 // GRAY 2
+            3  -> 8 * 0 + 0 // GRAY FLAG TODO
+            4  -> 8 * 0 + 2 // GRAY PORTRAIT
+            5  -> 8 * 0 + 3 // BLUE CELL EMPTY TODO
+            6  -> 8 * 0 + 0 // GRAY HAWK TODO
+            7  -> 8 * 0 + 3 // BLUE CELL SKELETON TODO
+            8  -> 8 * 0 + 3 // BLUE 1
+            9  -> 8 * 0 + 4 // BLUE 2
+            10 -> 8 * 0 + 5 // WOOD HAWK TODO
+            11 -> 8 * 0 + 5 // WOOD PORTRAIT TODO
+            12 -> 8 * 0 + 5 // WOOD
+            else -> 8 * 0 + 0
         }
     }
 
@@ -146,7 +168,7 @@ class Wolf3DLevelProvider(val levelHeader: GameMaps.LevelHeader): ILevelProvider
         val gray = 0xC0C0C0.col
         val blue = 0x0000FF.col
         val yellow = 0xFFFF00.col
-        val brown = 0x7F3300.col
+        val brown = 0x7F3F3F.col
         val cyan = 0x00FFFF.col
         val green = 0x00FF00.col
         val red = 0xFF0000.col

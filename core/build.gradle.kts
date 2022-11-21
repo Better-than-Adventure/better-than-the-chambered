@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.7.21"
     application
+    id("com.github.johnrengelman.shadow") version "5.1.0"
 }
 
 group = "net.betterthanadventure"
@@ -54,12 +55,28 @@ dependencies {
     runtimeOnly("org.lwjgl", "lwjgl-tinyfd", classifier = "natives-macos-arm64")
 }
 
-tasks["run"].dependsOn += ":mods:prelude:build"
-tasks["run"].dependsOn += ":mods:prelude:jar"
+tasks.register<Copy>("grabJars") {
+    from(layout.projectDirectory.file("../mods/prelude/build/libs/prelude-$version.jar"))
+    into(layout.projectDirectory.dir("mods/"))
+    from(layout.projectDirectory.file("../mods/wolf3d/build/libs/wolf3d-$version.jar"))
+    into(layout.projectDirectory.dir("mods/"))
+}
+tasks["grabJars"].dependsOn += ":mods:prelude:build"
+tasks["grabJars"].dependsOn += ":mods:prelude:jar"
+tasks["grabJars"].dependsOn += ":mods:wolf3d:build"
+tasks["grabJars"].dependsOn += ":mods:wolf3d:jar"
+tasks["run"].dependsOn += "grabJars"
 
 application {
     if (System.getProperty("os.name").toLowerCase().contains("mac")) {
         applicationDefaultJvmArgs = listOf("-XstartOnFirstThread")
     }
     mainClass.set(nameOfMainClass)
+}
+
+project.setProperty("mainClassName", nameOfMainClass)
+tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+    manifest {
+        attributes["Main-Class"] = nameOfMainClass
+    }
 }

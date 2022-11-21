@@ -3,9 +3,10 @@ package com.mojang.escape.mods.wolf3d.entities
 import com.mojang.escape.Art
 import com.mojang.escape.entities.Bullet
 import com.mojang.escape.entities.EnemyEntity
+import com.mojang.escape.mods.wolf3d.ModArt
 import kotlin.math.atan2
 
-class SSEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0x0000FF)) {
+class SSEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0x0000FF), ModArt.sprites) {
    
     private var shootDelay: Int = 0
     private var shootCount = 4 

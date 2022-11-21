@@ -219,8 +219,8 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
         val l1 = ((+0.5) - zCam) * 2
         var zz1 = yc1 * rCos + xc1 * rSin
 
-        var xt0 = xt0 * 16
-        var xt1 = xt1 * 16
+        var xt0 = xt0 * (art.width / 8)
+        var xt1 = xt1 * (art.width / 8)
 
         val zClip = 0.2
 
@@ -294,8 +294,8 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
             val ih = 1 / (yPixel1 - yPixel0)
             for (y in yp0 until yp1) {
                 val pry = (y - yPixel0) * ih
-                val yTex = (16 * pry).toInt()
-                pixels[x + y * width] = art.pixels[((xTex) + (tex % 8) * 16) + (yTex + tex / 8 * 16) * 128] * color
+                val yTex = ((art.width / 8) * pry).toInt()
+                pixels[x + y * width] = art.pixels[((xTex) + (tex % 8) * (art.width / 8)) + (yTex + tex / 8 * (art.width / 8)) * art.width] * color
                 zBuffer[x + y * width] = 1 / iz * 4
             }
         }

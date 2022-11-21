@@ -51,5 +51,20 @@ object Art {
         }
     }
 
+    fun loadBitmapAsIs(fileName: String, clazz: Class<*>? = null): Bitmap {
+        try {
+            val img = Image.read(fileName, clazz)
 
+            val result = Bitmap(img.width, img.height)
+            img.getRGB(result.pixels)
+            result.pixels.forEachIndexed { index, pixel ->
+                var col = pixel
+                if (pixel.toUInt() == 0xFFFF00FFu) col = -1;
+                result.pixels[index] = col;
+            }
+            return result
+        } catch (e: Exception) {
+            throw RuntimeException(e)
+        }
+    }
 }

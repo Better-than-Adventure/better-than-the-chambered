@@ -12,10 +12,3 @@ repositories {
 dependencies {
     implementation(project(":core"))
 }
-
-tasks.register<Copy>("copyJar") {
-    from(layout.buildDirectory.file("libs/prelude-$version.jar"))
-    into(layout.projectDirectory.dir("../../core/mods"))
-}
-
-tasks["jar"].dependsOn += tasks["copyJar"]

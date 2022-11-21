@@ -16,6 +16,7 @@ dependencies {
 tasks.register<Copy>("copyJar") {
     from(layout.buildDirectory.file("libs/prelude-$version.jar"))
     into(layout.projectDirectory.dir("../../core/mods"))
+    Thread.sleep(1000)
 }
 
 tasks["jar"].dependsOn += tasks["copyJar"]
