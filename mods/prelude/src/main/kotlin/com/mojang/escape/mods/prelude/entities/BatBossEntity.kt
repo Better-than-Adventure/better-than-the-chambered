@@ -3,6 +3,7 @@ package com.mojang.escape.mods.prelude.entities
 import com.mojang.escape.Art
 import com.mojang.escape.entities.EnemyEntity
 import com.mojang.escape.entities.KeyEntity
+import com.mojang.escape.level.Level
 import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 
@@ -19,7 +20,7 @@ class BatBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8, Art.getCol(0
         level?.addEntity(KeyEntity(x, z))
     }
 
-    override fun tick() {
+    override fun tick(level: Level) {
         super.tick()
         if (random.nextInt(20) == 0) {
             val xx = x + (random.nextDouble() - 0.5) * 2

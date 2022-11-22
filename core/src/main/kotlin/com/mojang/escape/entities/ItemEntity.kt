@@ -4,6 +4,7 @@ import com.mojang.escape.Sound
 import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.Sprite
+import com.mojang.escape.level.Level
 
 abstract class ItemEntity(x: Double, z: Double, spriteIndex: Int, spriteColor: Int, art: Bitmap): Entity(art) {
     private val sprite: Sprite
@@ -19,7 +20,7 @@ abstract class ItemEntity(x: Double, z: Double, spriteIndex: Int, spriteColor: I
         this.sprites.add(this.sprite)
     }
 
-    override fun tick() {
+    override fun tick(level: Level) {
         this.move()
         this.y += this.ya
         if (this.y < 0.0) {
@@ -29,7 +30,7 @@ abstract class ItemEntity(x: Double, z: Double, spriteIndex: Int, spriteColor: I
         this.sprite.y = this.y
     }
 
-    override fun collide(entity: Entity) {
+    override fun collide(level: Level, entity: Entity) {
         if (entity is Player) {
             Sound.pickup.play()
             onPickup(entity)

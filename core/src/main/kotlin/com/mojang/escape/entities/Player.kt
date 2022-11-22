@@ -2,6 +2,7 @@ package com.mojang.escape.entities
 
 import com.mojang.escape.Art
 import com.mojang.escape.Sound
+import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.Block
 import kotlin.math.cos
 import kotlin.math.sin
@@ -35,8 +36,6 @@ class Player: Entity(Art.sprites) {
     val selectedItem: Item
     get() = items[selectedSlot]
 
-    private var sliding = false
-
     private var lastBlock: Block? = null
 
     var items = Array(8) {
@@ -55,13 +54,13 @@ class Player: Entity(Art.sprites) {
         }
     }
 
-    fun tick(up: Boolean, down: Boolean, left: Boolean, right: Boolean, turnLeft: Boolean, turnRight: Boolean) {
+    fun tick(level: Level, up: Boolean, down: Boolean, left: Boolean, right: Boolean, turnLeft: Boolean, turnRight: Boolean) {
         var allowMovement = true
         if (dead) {
             allowMovement = false
             deadTime++
             if (deadTime > 60 * 2) {
-                level!!.lose()
+                level.lose()
             }
         } else {
             time++
@@ -73,7 +72,7 @@ class Player: Entity(Art.sprites) {
             hurtTime--
         }
 
-        val onBlock = level!!.getBlock((x + 0.5).toInt(), (z + 0.5).toInt())
+        val onBlock = level.getBlock((x + 0.5).toInt(), (z + 0.5).toInt())
 
         var fh = onBlock.getFloorHeight(this)
         if (lastBlock != null && onBlock::class != lastBlock!!::class) {
@@ -136,15 +135,13 @@ class Player: Entity(Art.sprites) {
         val bobMod = sqrt(xm * xm + zm * zm)
         bob += bobMod
         bobPhase += bobMod * onBlock.getWalkSpeed(this)
-        val wasSliding = sliding
-        sliding = false
         
         if (!onBlock.onPlayerWalk(this, xm, zm)) {
             xa -= (xm * cos(rot) + zm * sin(rot)) * walkSpeed
             za -= (zm * cos(rot) - xm * sin(rot)) * walkSpeed
         }
 
-        this.move()
+        this.move(level)
 
         val friction = onBlock.getFriction(this)
         xa *= friction
@@ -153,7 +150,7 @@ class Player: Entity(Art.sprites) {
         rota *= 0.4
     }
 
-    fun activate() {
+    fun activate(level: Level) {
         if (dead || itemUseTime > 0) {
             return
         }
@@ -162,7 +159,7 @@ class Player: Entity(Art.sprites) {
             if (ammo > 0) {
                 Sound.shoot.play()
                 itemUseTime = 10
-                level!!.addEntity(Bullet(this, x, z, rot, 1.0, 0, 0xFFFFFF))
+                level.addEntity(Bullet(this, x, z, rot, 1.0, 0, 0xFFFFFF))
                 ammo--
             }
             return
@@ -208,7 +205,7 @@ class Player: Entity(Art.sprites) {
             val zz = z + za * i / divs
             for (e in possibleHits) {
                 if (e.contains(xx, zz)) {
-                    if (e.use(this, item)) {
+                    if (e.use(level, this, item)) {
                         return
                     }
                 }
@@ -216,8 +213,8 @@ class Player: Entity(Art.sprites) {
             val xt = (xx + 0.5).toInt()
             val zt = (zz + 0.5).toInt()
             if (xt != (x + 0.5).toInt() || zt != (z + 0.5).toInt()) {
-                val block = level!!.getBlock(xt, zt)
-                if (block.use(level!!, item)) {
+                val block = level.getBlock(xt, zt)
+                if (block.use(level, item)) {
                     return
                 }
                 if (block.blocks(this)) {
@@ -227,7 +224,7 @@ class Player: Entity(Art.sprites) {
         }
     }
 
-    fun addLoot(item: Item) {
+    fun addLoot(level: Level, item: Item) {
         if (item == Item.Pistol) {
             ammo += 20
         }
@@ -236,9 +233,7 @@ class Player: Entity(Art.sprites) {
         }
         for (i in items) {
             if (i == item) {
-                if (level != null) {
-                    level!!.showLootScreen(item)
-                }
+                level.showLootScreen(item)
                 return;
             }
         }
@@ -248,9 +243,7 @@ class Player: Entity(Art.sprites) {
                 items[i] = item
                 selectedSlot = i
                 itemUseTime = 0
-                if (level != null) {
-                    level!!.showLootScreen(item);
-                }
+                level.showLootScreen(item);
                 return
             }
         }
@@ -280,7 +273,7 @@ class Player: Entity(Art.sprites) {
         rota += (random.nextDouble() - 0.5) * 0.2
     }
 
-    override fun collide(entity: Entity) {
+    override fun collide(level: Level, entity: Entity) {
         if (entity is Bullet) {
             if (entity.owner is Player) {
                 return
@@ -288,12 +281,21 @@ class Player: Entity(Art.sprites) {
             if (hurtTime > 0) {
                 return
             }
-            entity.remove()
+            level.removeEntity(this)
             this.hurt(entity, 1)
         }
     }
 
-    fun win() {
-        level!!.win()
+    override fun use(level: Level, source: Entity, item: Item): Boolean {
+        // Do nothing
+        return false
+    }
+
+    override fun tick(level: Level) {
+        // Do nothing
+    }
+
+    fun win(level: Level) {
+        level.win()
     }
 }

@@ -2,6 +2,7 @@ package com.mojang.escape.entities
 
 import com.mojang.escape.Art
 import com.mojang.escape.gui.BasicSprite
+import com.mojang.escape.level.Level
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -19,7 +20,7 @@ class Bullet(val owner: Entity, x: Double, z: Double, rot: Double, pow: Double, 
         this.flying = true
     }
 
-    override fun tick() {
+    override fun tick(level: Level) {
         val xao = this.xa
         val zao = this.za
         this.move()
@@ -29,7 +30,7 @@ class Bullet(val owner: Entity, x: Double, z: Double, rot: Double, pow: Double, 
         }
     }
 
-    override fun blocks(entity: Entity, x2: Double, z2: Double, r2: Double): Boolean {
+    override fun blocks(level: Level, entity: Entity, x2: Double, z2: Double, r2: Double): Boolean {
         if (entity is Bullet) {
             return false
         }
@@ -37,6 +38,6 @@ class Bullet(val owner: Entity, x: Double, z: Double, rot: Double, pow: Double, 
             return false
         }
 
-        return super.blocks(entity, x2, z2, r2)
+        return super.blocks(, entity, x2, z2, r2)
     }
 }

@@ -3,6 +3,7 @@ package com.mojang.escape.gui
 import com.mojang.escape.Art
 import com.mojang.escape.Game
 import com.mojang.escape.level.Level
+import com.mojang.escape.level.block.EmptyBlock
 import java.util.*
 import kotlin.math.ceil
 import kotlin.math.cos
@@ -98,7 +99,7 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
         renderFloor(level)
     }
 
-    fun renderFloor(level: Level) {
+    private fun renderFloor(level: Level) {
         for (y in 0 until height) {
             val yd = ((y + 0.5) - yCenter) / fov
 
@@ -113,7 +114,7 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
                 if (zBuffer[x + y * width] <= zd) {
                     continue
                 }
-
+                
                 var xd = (xCenter - x) / fov
                 xd *= zd
 
@@ -124,20 +125,24 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
                 val yPix = (yy * 2).toInt()
                 val xTile = xPix shr 4
                 val yTile = yPix shr 4
+                
+                val block = level[xTile, yTile]
+                if (block is EmptyBlock) {
+                    var art = block.floorArt
+                    var tex = block.floorTex
+                    var col = block.floorCol
+                    if (!floor) {
+                        art = block.ceilArt
+                        col = block.ceilCol
+                        tex = block.ceilTex
+                    }
 
-                val block = level.getBlock(xTile, yTile)
-                var col = block.floorCol
-                var tex = block.floorTex
-                if (!floor) {
-                    col = block.ceilCol
-                    tex = block.ceilTex
-                }
-
-                if (tex < 0) {
-                    zBuffer[x + y * width] = -1.0
-                } else {
-                    zBuffer[x + y * width] = zd
-                    pixels[x + y * width] = block.floorArt.pixels[((xPix and 15) + (tex % 8) * 16) + ((yPix and 15) + (tex / 8) * 16) * 128] * col
+                    if (tex < 0) {
+                        zBuffer[x + y * width] = -1.0
+                    } else {
+                        zBuffer[x + y * width] = zd
+                        pixels[x + y * width] = art.pixels[((xPix and 15) + (tex % 8) * 16) + ((yPix and 15) + (tex / 8) * 16) * 128] * col
+                    }
                 }
             }
         }

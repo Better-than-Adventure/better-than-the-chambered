@@ -29,7 +29,7 @@ class Game {
 
     fun switchLevel(level: Level) {
         pauseTime = 30
-        this.level?.removeEntityImmediately(player!!)
+        this.level?.removeEntity(player!!)
         val localPlayer = player!!
 
         level.player = localPlayer

@@ -1,67 +1,37 @@
 package com.mojang.escape.entities
 
-import com.mojang.escape.Art
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.Sprite
 import com.mojang.escape.level.Level
+import com.mojang.escape.level.physics.AABB
+import com.mojang.escape.level.physics.Point2D
+import com.mojang.escape.level.physics.Point2I
 import kotlin.math.abs
 import java.util.Random
 import kotlin.math.floor
 
-open class Entity(val art: Bitmap) {
-    companion object {
-        val random = Random()
-    }
+abstract class Entity(
+    val art: Bitmap,
+    var pos: Point2D = Point2D(0.0, 0.0),
+    var rot: Double = 0.0,
+    var vel: Point2D = Point2D(0.0, 0.0),
+    var rotVel: Double = 0.0,
+    val flying: Boolean = false,
+    val collisionBox: AABB = AABB(0.4)
+) {
+    protected val random = Random()
 
+    val tilePos: Point2I
+        get() = Point2I((pos.x + 0.5).toInt(), (pos.y + 0.5).toInt())
+    
     val sprites = arrayListOf<Sprite>()
+    var removed = false
 
-    var x = 0.0
-    var z = 0.0
-    var rot = 0.0
-
-    var xa = 0.0
-    var za = 0.0
-    var rota = 0.0
-
-    var r = 0.4
-
-    var level: Level? = null
-
-    var xTileO = -1
-    var zTileO = -1
-    var flying = false
-
-    private var removed = false
-
-    fun updatePos() {
-        val xTile = (x + 0.5).toInt()
-        val zTile = (z + 0.5).toInt()
-        if (xTile != xTileO || zTile != zTileO) {
-            level?.getBlock(xTileO, zTileO)?.removeEntity(this)
-
-            xTileO = xTile
-            zTileO = zTile
-
-            if (!removed) {
-                level?.getBlock(xTileO, zTileO)?.addEntity(this)
-            }
-        }
-    }
-
-    fun isRemoved(): Boolean {
-        return removed
-    }
-
-    fun remove() {
-        level?.getBlock(xTileO, zTileO)?.removeEntity(this)
-        removed = true
-    }
-
-    protected open fun move() {
+    protected open fun move(level: Level) {
         val xSteps = (abs(xa * 100) + 1).toInt()
         for (i in xSteps downTo 1) {
             val xxa = xa
-            if (isFree(x + xxa * i / xSteps, z)) {
+            if (isFree(level, x + xxa * i / xSteps, z)) {
                 x += xxa * i / xSteps
                 break
             } else {
@@ -72,7 +42,7 @@ open class Entity(val art: Bitmap) {
         val zSteps = (abs(za * 100) + 1).toInt()
         for (i in zSteps downTo 1) {
             val zza = za
-            if (isFree(x, z + zza * i / zSteps)) {
+            if (isFree(level, x, z + zza * i / zSteps)) {
                 z += zza * i / zSteps
                 break
             } else {
@@ -80,23 +50,25 @@ open class Entity(val art: Bitmap) {
             }
         }
     }
+    
+    abstract fun onCollideWithEntity(level: Level, other: Entity)
 
-    fun isFree(xx: Double, yy: Double): Boolean {
+    fun isFree(level: Level, xx: Double, yy: Double): Boolean {
         val x0 = floor(xx + 0.5 - r).toInt()
         val x1 = floor(xx + 0.5 + r).toInt()
         val y0 = floor(yy + 0.5 - r).toInt()
         val y1 = floor(yy + 0.5 + r).toInt()
 
-        if (level!!.getBlock(x0, y0).blocks(this)) {
+        if (level.getBlock(x0, y0).blocks(this)) {
             return false
         }
-        if (level!!.getBlock(x1, y0).blocks(this)) {
+        if (level.getBlock(x1, y0).blocks(this)) {
             return false
         }
-        if (level!!.getBlock(x0, y1).blocks(this)) {
+        if (level.getBlock(x0, y1).blocks(this)) {
             return false
         }
-        if (level!!.getBlock(x1, y1).blocks(this)) {
+        if (level.getBlock(x1, y1).blocks(this)) {
             return false
         }
 
@@ -105,15 +77,15 @@ open class Entity(val art: Bitmap) {
         val rr = 2
         for (z in (zc - rr)..(zc + rr)) {
             for (x in (xc - rr)..(xc + rr)) {
-                val es = level!!.getBlock(x, z).entities
+                val es = level.getBlock(x, z).entities
                 for (e in es) {
                     if (e == this) {
                         continue
                     }
 
-                    if (!e.blocks(this, this.x, this.z, r) && e.blocks(this, xx, yy, r)) {
-                        e.collide(this)
-                        this.collide(e)
+                    if (!e.blocks(level, this, this.x, this.z, r) && e.blocks(level, this, xx, yy, r)) {
+                        e.collide(level, this)
+                        this.collide(level, e)
                         return false
                     }
                 }
@@ -123,10 +95,7 @@ open class Entity(val art: Bitmap) {
         return true
     }
 
-    protected open fun collide(entity: Entity) {
-    }
-
-    open fun blocks(entity: Entity, x2: Double, z2: Double, r2: Double): Boolean {
+    open fun blocks(level: Level, entity: Entity, x2: Double, z2: Double, r2: Double): Boolean {
         if (entity is Bullet) {
             if (entity.owner == this) {
                 return false
@@ -177,10 +146,7 @@ open class Entity(val art: Bitmap) {
         return true
     }
 
-    open fun use(source: Entity, item: Item): Boolean {
-        return false
-    }
+    abstract fun use(level: Level, source: Entity, item: Item): Boolean
 
-    open fun tick() {
-    }
+    abstract fun tick(level: Level)
 }

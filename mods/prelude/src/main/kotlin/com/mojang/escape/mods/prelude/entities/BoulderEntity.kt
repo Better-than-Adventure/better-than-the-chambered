@@ -5,6 +5,7 @@ import com.mojang.escape.entities.Entity
 import com.mojang.escape.entities.Item
 import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.gui.Sprite
+import com.mojang.escape.level.Level
 import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 import kotlin.math.cos
@@ -26,7 +27,7 @@ class BoulderEntity(x: Int, z: Int): Entity(ModArt.sprites) {
         this.sprites.add(this.sprite)
     }
 
-    override fun tick() {
+    override fun tick(level: Level) {
         this.rollDist += sqrt(xa * xa + za * za)
         this.sprite.tex = 8 + ((rollDist * 4).toInt() and 1)
         val xao = xa

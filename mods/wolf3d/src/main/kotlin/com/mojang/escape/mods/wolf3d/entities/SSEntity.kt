@@ -3,6 +3,7 @@ package com.mojang.escape.mods.wolf3d.entities
 import com.mojang.escape.Art
 import com.mojang.escape.entities.Bullet
 import com.mojang.escape.entities.EnemyEntity
+import com.mojang.escape.level.Level
 import com.mojang.escape.mods.wolf3d.ModArt
 import kotlin.math.atan2
 
@@ -28,7 +29,7 @@ class SSEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0x
         this.shootDelay = 50
     }
 
-    override fun tick() {
+    override fun tick(level: Level) {
         super.tick()
         if (shootDelay > 0) {
             shootDelay--

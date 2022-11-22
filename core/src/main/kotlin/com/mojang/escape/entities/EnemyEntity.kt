@@ -6,6 +6,7 @@ import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.PoofSprite
 import com.mojang.escape.gui.Sprite
+import com.mojang.escape.level.Level
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
@@ -26,7 +27,7 @@ open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, prot
         this.r = 0.3
     }
 
-    override fun tick() {
+    override fun tick(level: Level) {
         if (hurtTime > 0) {
             hurtTime--
             if (hurtTime == 0) {
@@ -81,7 +82,7 @@ open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, prot
     protected open fun die() {
     }
 
-    override fun collide(entity: Entity) {
+    override fun collide(level: Level, entity: Entity) {
         if (entity is Bullet) {
             if (entity.owner is EnemyEntity) {
                 return

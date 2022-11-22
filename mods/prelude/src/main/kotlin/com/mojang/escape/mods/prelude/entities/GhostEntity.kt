@@ -2,6 +2,7 @@ package com.mojang.escape.mods.prelude.entities
 
 import com.mojang.escape.Art
 import com.mojang.escape.entities.EnemyEntity
+import com.mojang.escape.level.Level
 import com.mojang.escape.mods.prelude.ModArt
 import kotlin.math.cos
 import kotlin.math.sin
@@ -17,7 +18,7 @@ class GhostEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.getCol
         this.flying = true
     }
 
-    override fun tick() {
+    override fun tick(level: Level) {
         this.animTime++
         this.sprite.tex = defaultTex + animTime / 10 % 2
 
@@ -53,7 +54,7 @@ class GhostEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.getCol
         // Do nothing
     }
 
-    override fun move() {
+    override fun move(level: Level) {
         x += xa
         z += za
     }
