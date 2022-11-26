@@ -1,47 +1,57 @@
 package com.mojang.escape.mods.prelude.level.block
 
 import com.mojang.escape.Sound
+import com.mojang.escape.col
 import com.mojang.escape.entities.Bullet
 import com.mojang.escape.entities.Entity
 import com.mojang.escape.entities.Item
 import com.mojang.escape.entities.Player
 import com.mojang.escape.gui.BasicSprite
+import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.Sprite
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.Block
+import com.mojang.escape.level.block.ICollidableBlock
+import com.mojang.escape.level.block.IUsableBlock
+import com.mojang.escape.level.physics.Point2I
+import com.mojang.escape.level.physics.RelativeAABB
 import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 
-class BarsBlock: Block(ModArt.walls, ModArt.floors) {
-    private val sprite: Sprite = BasicSprite(0.0, 0.0, 0.0, 0, 0x202020, ModArt.sprites)
-    private var open: Boolean = false
+class BarsBlock(
+    pos: Point2I,
+    floorArt: Bitmap,
+    floorTex: Int,
+    floorCol: Int,
+    ceilArt: Bitmap,
+    ceilTex: Int,
+    ceilCol: Int
+): SpriteEmptyBlock(
+    pos = pos,
+    floorArt = floorArt,
+    floorTex = floorTex,
+    floorCol = floorCol,
+    ceilArt = ceilArt,
+    ceilTex = ceilTex,
+    ceilCol = ceilCol,
+    spriteArt = ModArt.sprites,
+    spriteTex = 8 * 0 + 0,
+    spriteCol = 0x202020.col
+), ICollidableBlock, IUsableBlock {
+    override val collisionBox = RelativeAABB(0.5)
 
-    init {
-        addSprite(sprite)
-        blocksMotion = true
-    }
-
-    override fun use(level: Level, item: Item): Boolean {
-        if (open) {
-            return false
-        }
-
+    override fun onUsed(level: Level, source: Entity, item: Item) {
         if (item == Item.Cutters) {
             ModSound.cut.play()
-            sprite.tex = 1
-            open = true
+            level[pos.x, pos.z] = SpriteEmptyBlock(pos, floorArt, floorTex, floorCol, ceilArt, ceilTex, ceilCol, sprite.art, 8 * 0 + 1, sprite.col)
         }
-
-        return true
     }
 
-    override fun blocks(entity: Entity): Boolean {
-        if (open && entity is Player) {
-            return false
-        }
-        if (open && entity is Bullet) {
-            return false
-        }
-        return blocksMotion
+    override fun onEntityCollision(level: Level, entity: Entity) {
+        // Do nothing
+    }
+
+    override fun blocksEntity(level: Level, entity: Entity): Boolean {
+        return true
     }
 }

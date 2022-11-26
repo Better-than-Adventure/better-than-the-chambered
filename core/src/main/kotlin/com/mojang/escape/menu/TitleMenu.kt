@@ -2,6 +2,7 @@ package com.mojang.escape.menu
 
 import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
+import com.mojang.escape.input.MenuInput
 
 class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     private val options = arrayOf(
@@ -12,7 +13,7 @@ class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     private var selected = 0
     private var firstTick = true
 
-    override fun render(target: Bitmap) {
+    override fun doRender(target: Bitmap) {
         target.fill(0, 0, 160, 120, 0)
         target.draw(Art.logo, 0, 8, 0, 0, 160, 36, Art.getCol(0xFFFFFF))
 
@@ -29,18 +30,21 @@ class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         target.draw("gui.menu.title.copyright".toTranslatable(), 1 + 4, 120 - 9, Art.getCol(0x303030))
     }
 
-    override fun tick(game: Game, keys: BooleanArray, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
+    override fun onTick(game: Game) {
         if (firstTick) {
-            firstTick = false
             Sound.altar.play()
+            firstTick = false
         }
-        if (up || down) {
+    }
+
+    override fun handleInputs(game: Game, inputs: MutableMap<MenuInput, Boolean>) {
+        if (inputs[MenuInput.UP] == true || inputs[MenuInput.DOWN] == true) {
             Sound.click2.play()
         }
-        if (up) {
+        if (inputs[MenuInput.UP] == true) {
             selected--
         }
-        if (down) {
+        if (inputs[MenuInput.DOWN] == true) {
             selected++
         }
         if (selected < 0) {
@@ -49,7 +53,7 @@ class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         if (selected >= options.size) {
             selected = options.size - 1
         }
-        if (use) {
+        if (inputs[MenuInput.CONFIRM] == true) {
             Sound.click1.play()
             when (selected) {
                 0 -> {
@@ -64,7 +68,6 @@ class TitleMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
                 }
             }
         }
+
     }
-
-
-}
+ }

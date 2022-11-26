@@ -5,38 +5,49 @@ import com.mojang.escape.gui.BasicSprite
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.Sprite
 import com.mojang.escape.level.Level
-
-abstract class ItemEntity(x: Double, z: Double, spriteIndex: Int, spriteColor: Int, art: Bitmap): Entity(art) {
-    private val sprite: Sprite
-    private var y: Double
-    private var ya: Double
+import com.mojang.escape.level.physics.Point2D
+import com.mojang.escape.level.physics.Point3D
+import com.mojang.escape.level.physics.RelativeAABB
+abstract class ItemEntity(
+    pos: Point3D,
+    rot: Double,
+    vel: Point3D, 
+    rotVel: Double,
+    override val collisionBox: RelativeAABB,
+    art: Bitmap,
+    tex: Int,
+    col: Int
+): Entity(
+    pos = pos,
+    rot = rot,
+    vel = vel,
+    rotVel = rotVel, 
+    flying = false
+), ISpriteEntity, ICollidableEntity {
+    final override val sprites = mutableListOf<Sprite>()
     
     init {
-        this.x = x
-        this.z = z
-        this.y = 0.5
-        this.ya = 0.025
-        this.sprite = BasicSprite(0.0, 0.0, 0.0, spriteIndex, spriteColor, art)
-        this.sprites.add(this.sprite)
+        this.sprites.add(BasicSprite(0.0, 0.0, 0.0, tex, col, art))
     }
 
-    override fun tick(level: Level) {
-        this.move()
-        this.y += this.ya
-        if (this.y < 0.0) {
-            this.y = 0.0
-        }
-        this.ya -= 0.005
-        this.sprite.y = this.y
+    override fun onInit(level: Level) {
+        // Do nothing
+    }
+    override fun onTick(level: Level) {
+        this.sprites[0].y = this.pos.y
     }
 
-    override fun collide(level: Level, entity: Entity) {
-        if (entity is Player) {
+    override fun onCollideWithEntity(level: Level, other: Entity) {
+        if (other is Player) {
             Sound.pickup.play()
-            onPickup(entity)
-            this.remove()
+            onPickup(level, other)
+            this.removed = true
         }
     }
+
+     override fun blocksEntity(level: Level, entity: Entity): Boolean {
+         return entity is Player
+     }
     
-    protected abstract fun onPickup(player: Player)
+    protected abstract fun onPickup(level: Level, player: Player)
 }

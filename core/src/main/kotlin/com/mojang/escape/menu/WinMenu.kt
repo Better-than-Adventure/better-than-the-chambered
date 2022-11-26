@@ -3,6 +3,7 @@ package com.mojang.escape.menu
 import com.mojang.escape.*
 import com.mojang.escape.entities.Player
 import com.mojang.escape.gui.Bitmap
+import com.mojang.escape.input.MenuInput
 
 class WinMenu(private val player: Player, lastMenu: Menu? = null): Menu(lastMenu) {
     /**
@@ -10,7 +11,7 @@ class WinMenu(private val player: Player, lastMenu: Menu? = null): Menu(lastMenu
      */
     private var tickDelay = 30
 
-    override fun render(target: Bitmap) {
+    override fun doRender(target: Bitmap) {
         target.draw(Art.logo, 0, 10, 0, 65, 160, 23, Art.getCol(0xFFFFFF))
 
         val seconds = (player.time / 60) % 60
@@ -24,12 +25,16 @@ class WinMenu(private val player: Player, lastMenu: Menu? = null): Menu(lastMenu
         }
     }
 
-    override fun tick(game: Game, keys: BooleanArray, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
+    override fun onTick(game: Game) {
         if (tickDelay > 0) {
             tickDelay--
-        } else if (use) {
+        }
+    }
+
+    override fun handleInputs(game: Game, inputs: MutableMap<MenuInput, Boolean>) {
+        if (tickDelay == 0 && inputs[MenuInput.CONFIRM] == true) {
             Sound.click1.play()
-            game.level = null
+            game.session = null
             game.menu = TitleMenu()
         }
     }

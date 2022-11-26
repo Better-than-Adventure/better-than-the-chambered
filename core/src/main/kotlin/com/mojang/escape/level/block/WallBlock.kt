@@ -4,46 +4,49 @@ import com.mojang.escape.entities.Entity
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.Bitmap3D
 import com.mojang.escape.level.Level
-import com.mojang.escape.level.physics.AABB
+import com.mojang.escape.level.physics.Point2I
+import com.mojang.escape.level.physics.RelativeAABB
 
 open class WallBlock(
-    x: Int,
-    y: Int,
-    val art: Bitmap,
-    val tex: Int,
-    val col: Int
+    pos: Point2I,
+    var art: Bitmap,
+    var tex: Int,
+    var col: Int
 ): Block(
-    x = x,
-    y = y,
+    pos = pos,
     occludesAdjacentBlocks = true
 ), ICollidableBlock {
-    override val collisionBox: AABB = AABB(0.0, 0.0, 1.0, 1.0)
+    override val collisionBox: RelativeAABB = RelativeAABB(0.0, 0.0, 1.0, 1.0)
     
-    override fun init(level: Level) {
+    override fun onInit(level: Level) {
         // Do nothing
     }
 
-    override fun doRender(bitmap: Bitmap3D, level: Level) {
-        val xPos = level.getBlock(x + 1, y + 0)
-        val yPos = level.getBlock(x + 0, y + 1)
-        val xNeg = level.getBlock(x - 1, y + 0)
-        val yNeg = level.getBlock(x + 0, y - 1)
+    override fun doRender(level: Level, bitmap: Bitmap3D) {
+        val xPos = level[pos.x + 1, pos.z + 0]
+        val zPos = level[pos.x + 0, pos.z + 1]
+        val xNeg = level[pos.x - 1, pos.z + 0]
+        val zNeg = level[pos.x + 0, pos.z - 1]
         
-        if (!xNeg.occludesAdjacentBlocks) {
-            bitmap.renderWall(x + 0.0, y + 0.0, x + 0.0, y + 1.0, tex, (col and 0xFEFEFE) shr 1, art)
+        if (xNeg != null && !xNeg.occludesAdjacentBlocks) {
+            bitmap.renderWall(pos.x + 0.0, pos.z + 0.0, pos.x + 0.0, pos.z + 1.0, tex, (col and 0xFEFEFE) shr 1, art)
         }
-        if (!yNeg.occludesAdjacentBlocks) {
-            bitmap.renderWall(x + 0.0, y + 0.0, x + 1.0, y + 0.0, tex, col, art)
+        if (zNeg != null && !zNeg.occludesAdjacentBlocks) {
+            bitmap.renderWall(pos.x + 1.0, pos.z + 0.0, pos.x + 0.0, pos.z + 0.0, tex, col, art)
         }
-        if (!xPos.occludesAdjacentBlocks) {
-            bitmap.renderWall(x + 1.0, y + 0.0, x + 1.0, y + 1.0, tex, (col and 0xFEFEFE) shr 1, art)
+        if (xPos != null && !xPos.occludesAdjacentBlocks) {
+            bitmap.renderWall(pos.x + 1.0, pos.z + 1.0, pos.x + 1.0, pos.z + 0.0, tex, (col and 0xFEFEFE) shr 1, art)
         }
-        if (!yPos.occludesAdjacentBlocks) {
-            bitmap.renderWall(x + 0.0, y + 1.0, x + 1.0, y + 1.0, tex, col, art)
+        if (zPos != null && !zPos.occludesAdjacentBlocks) {
+            bitmap.renderWall(pos.x + 0.0, pos.z + 1.0, pos.x + 1.0, pos.z + 1.0, tex, col, art)
         }
     }
 
     override fun onEntityCollision(level: Level, entity: Entity) {
         // Do nothing
+    }
+
+    override fun blocksEntity(level: Level, entity: Entity): Boolean {
+        return true
     }
 }

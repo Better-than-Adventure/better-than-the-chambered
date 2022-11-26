@@ -22,37 +22,26 @@ settings.
             full=Full
             ega=EGA
             cga=CGA
-    keyForward.
-        name=Forward
-    keyBackward.
-        name=Backward
-    keyTurnLeft.
-        name=Turn Left
-    keyTurnRight.
-        name=Turn Right
-    keyStrafeLeft.
-        name=Strafe Left
-    keyStrafeRight.
-        name=Strafe Right
-    keyInteract.
-        name=Interact
-    keySlots.
-        1.
-            name=Slot 1
-        2.
-            name=Slot 2
-        3.
-            name=Slot 3
-        4.
-            name=Slot 4
-        5.
-            name=Slot 5
-        6.
-            name=Slot 6
-        7.
-            name=Slot 7
-        8.
-            name=Slot 8
+input.
+    game.
+        forward=Forward
+        backward=Backward
+        strafeLeft=Strafe Left
+        strafeRight=Strafe Right
+        turnLeft=Turn Left
+        turnRight=Turn Right
+        strafeMod=Strafe
+        use=Use
+        primary=Primary
+        secondary=Secondary
+        pause=Pause
+    menu.
+        up=Up
+        down=Down
+        left=Left
+        right=Right
+        select=Select
+        back=Back
 gametype.
     prelude=Prelude of the Chambered
     wolf3d=Preludestein 3D

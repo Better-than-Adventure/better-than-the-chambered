@@ -102,8 +102,8 @@ class Wolf3DLevelProvider(val levelHeader: GameMaps.LevelHeader): ILevelProvider
         val blocks = getBlocks(level)
         val entities = mutableListOf<Entity>()
         for (i in blocks.indices) {
-            val x = i % level.width
-            val y = i / level.width
+            val x = i % level.lengthX
+            val y = i / level.lengthX
             val e = getEntity(levelHeader.plane1!![i].toInt(), x, y)
             if (e != null) {
                 e.level = level
@@ -118,8 +118,8 @@ class Wolf3DLevelProvider(val levelHeader: GameMaps.LevelHeader): ILevelProvider
     override fun getSpawn(level: Level): Pair<Int, Int>? {
         val blocks = getBlocks(level)
         for (i in blocks.indices) {
-            val x = i % level.width
-            val y = i / level.width
+            val x = i % level.lengthX
+            val y = i / level.lengthX
             val id = levelHeader.plane1!![i].toInt()
             if (id == 19 || id == 20 || id == 21 || id == 22) {
                 return Pair(x, y)

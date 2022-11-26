@@ -31,8 +31,6 @@ class Escape {
     
     private val display = Display()
     
-    private val inputHandler: InputHandler = InputHandler()
-    
     fun run() {
         initGLFW()
         initGame()
@@ -110,8 +108,7 @@ class Escape {
     }
     
     fun initGame() {
-        this.game = Game()
-        Game.theGame = this.game
+        this.game = Game(window)
         this.screen = Screen(WIDTH, HEIGHT)
     }
     
@@ -151,8 +148,6 @@ class Escape {
             }
 
             unprocessedSeconds += passedTime / 1000000000.0
-            
-            inputHandler.updateKeys()
 
             var ticked = false
             while (unprocessedSeconds > secondsPerTick) {
@@ -188,8 +183,7 @@ class Escape {
             } else {
                 glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED)
             }
-            inputHandler.updateMouse()
-            game.tick(inputHandler.keys, inputHandler.mousePos, inputHandler.mouseButtons)
+            game.tick()
         }
     }
     

@@ -1,212 +1,234 @@
 package com.mojang.escape.mods.prelude.level.provider
 
-import com.mojang.escape.*
-import com.mojang.escape.entities.*
-import com.mojang.escape.mods.prelude.entities.*
-import com.mojang.escape.lang.StringUnit
+import com.mojang.escape.GameSession
+import com.mojang.escape.alpha
+import com.mojang.escape.col
+import com.mojang.escape.entities.Entity
+import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.level.Level
-import com.mojang.escape.level.block.*
-import com.mojang.escape.mods.prelude.level.block.*
+import com.mojang.escape.level.block.Block
+import com.mojang.escape.level.block.EmptyBlock
+import com.mojang.escape.level.block.WallBlock
+import com.mojang.escape.level.physics.Point2D
+import com.mojang.escape.level.physics.Point2I
 import com.mojang.escape.level.provider.ILevelProvider
 import com.mojang.escape.mods.prelude.ModArt
+import com.mojang.escape.mods.prelude.level.PNGLevel
+import com.mojang.escape.mods.prelude.level.block.*
+import com.mojang.escape.toTranslatable
 import com.mojang.escape.util.Image
-import java.lang.Exception
 import java.lang.RuntimeException
 
-class PNGLevelProvider(
-    private val name: String, 
-    private val wallCol: Int = 0xB3CEE2, 
-    private val floorCol: Int = 0x9CA09B, 
-    private val ceilCol: Int = 0x9CA09B, 
-    private val wallTex: Int = 0, 
-    private val floorTex: Int = 0, 
-    private val ceilTex: Int = 0
-): ILevelProvider {
-    private val width: Int
-    private val height: Int
-    private val pixels: IntArray
+class PNGLevelProvider: ILevelProvider {
+    private data class BlockDefaults(
+        val wallArt: Bitmap = ModArt.walls,
+        val wallTex: Int = 0,
+        val wallCol: Int = 0xB3CEE2,
+        val floorArt: Bitmap = ModArt.floors,
+        val floorTex: Int = 0,
+        val floorCol: Int = 0x9CA09B,
+        val ceilArt: Bitmap = ModArt.floors,
+        val ceilTex: Int = 0,
+        val ceilCol: Int = 0x9CA09B
+    )
+    private val defaults = mapOf(
+        "crypt" to BlockDefaults(
+            floorCol = 0x404040,
+            ceilCol = 0x404040,
+            wallCol = 0x404040
+        ),
+        "dungeon" to BlockDefaults(
+            wallCol = 0xC64954,
+            floorCol = 0x8E4A51,
+            ceilCol = 0x8E4A51
+        ),
+        "ice" to BlockDefaults(
+            floorCol = 0xB8DBE0,
+            ceilCol = 0xB8DBE0,
+            wallCol = 0x6BE8FF
+        ),
+        "overworld" to BlockDefaults(
+            ceilTex = -1,
+            floorCol = 0x508253,
+            floorTex = 8 + 3,
+            wallCol = 0xA0A0A0
+        ),
+        "temple" to BlockDefaults(
+            floorCol = 0x8A6496,
+            ceilCol = 0x8A6496,
+            wallCol = 0xCFADD8
+        )
+    )
     
-    init {
-        try {
-            val img = Image.read("/level/$name.png", this::class.java)
-            
-            width = img.width
-            height = img.height
-            pixels = IntArray(width * height)
-            img.getRGB(pixels)
+    override fun getFirstLevel(session: GameSession): Level {
+        return getLevelByName(session, "start")!!
+    }
+
+    override fun getLevelByName(session: GameSession, name: String): Level? {
+        val img = try {
+            Image.read("/level/$name.png", this::class.java)
         } catch (e: Exception) {
-            throw RuntimeException(e)
+            return null
         }
+        val default = defaults[name] ?: BlockDefaults()
+        
+        return PNGLevel(
+            session = session,
+            name = "level.$name.name".toTranslatable(),
+            lengthX = img.width,
+            lengthZ = img.height,
+            spawn = Point2I(26, 27),
+            getLevelBlocks(name, img, default),
+            getLevelEntities(img)
+        )
     }
     
-    override fun getName(): StringUnit {
-        return "level.$name.name".toTranslatable()
-    }
-
-    override fun getWallCol(): Int {
-        return wallCol
-    }
-
-    override fun getWallTex(): Int {
-        return wallTex
-    }
-
-    override fun getFloorCol(): Int {
-        return floorCol
-    }
-
-    override fun getFloorTex(): Int {
-        return floorTex
-    }
-
-    override fun getCeilCol(): Int {
-        return ceilCol
-    }
-
-    override fun getCeilTex(): Int {
-        return ceilTex
-    }
-
-    override fun getWidth(): Int {
-        return width
-    }
-
-    override fun getHeight(): Int {
-        return height
-    }
-
-    override fun getBlocks(level: Level): Array<Block> {
-        val blocks = Array(width * height) {
-            val x = it % width
-            val y = it / width
+    private fun getLevelBlocks(levelName: String, image: Image, default: BlockDefaults): Array<Block> {
+        val blocks = Array(image.width * image.height) {
+            val x = it % image.width
+            val y = it / image.width
             
-            val col = pixels[x + y * width] and 0xFFFFFF
-            val id = 255 - pixels[x + y * width].alpha
-
-            val block = getBlock(col)
-            block.id = id
-
-            if (block.tex == -1) {
-                block.tex = wallTex
-            }
-            if (block.floorTex == -1) {
-                block.floorTex = floorTex
-            }
-            if (block.ceilTex == -1) {
-                block.ceilTex = ceilTex
-            }
-            if (block.col == -1) {
-                block.col = Art.getCol(wallCol)
-            }
-            if (block.floorCol == -1) {
-                block.floorCol = Art.getCol(floorCol)
-            }
-            if (block.ceilCol == -1) {
-                block.ceilCol = Art.getCol(ceilCol)
-            }
-
-            block.level = level
-            block.x = x
-            block.y = y
+            val col = image[x, y] and 0xFFFFFF
+            val id = 255 - image[x, y].alpha
             
-            // Nasty little edge case decorations
-            decorateBlock(x, y, block, col)
-            
-            block
+            getBlock(levelName, id, Point2I(x, y), col, default)
         }
-        for (i in blocks.withIndex()) {
-            i.value.decorate(blocks, width, height, i.index % width, i.index / width)
-        }
+        
         return blocks
     }
-
-    override fun getEntities(level: Level): MutableList<Entity> {
-        val entities = mutableListOf<Entity>()
-        
-        for (i in pixels.withIndex()) {
-            val x = i.index % width
-            val y = i.index / width
-            
-            val col = i.value and 0xFFFFFF
-            
-            val entity: Entity? = when (col) {
-                0xAA5500 -> BoulderEntity(x, y)
-                0xFF0000 -> BatEntity(x.toDouble(), y.toDouble())
-                0xFF0001 -> BatBossEntity(x.toDouble(), y.toDouble())
-                0xFF0002 -> OgreEntity(x.toDouble(), y.toDouble())
-                0xFF0003 -> OgreBossEntity(x.toDouble(), y.toDouble())
-                0xFF0004 -> EyeEntity(x.toDouble(), y.toDouble())
-                0xFF0005 -> EyeBossEntity(x.toDouble(), y.toDouble())
-                0xFF0006 -> GhostEntity(x.toDouble(), y.toDouble())
-                0xFF0007 -> GhostBossEntity(x.toDouble(), y.toDouble())
-                else -> null
-            }
-            
-            if (entity != null) {
-                entities.add(entity)
-                entity.level = level
-                entity.updatePos()
-            }
-        }
-        
-        return entities
-    }
     
-    override fun getSpawn(level: Level): Pair<Int, Int>? {
-        for (i in pixels.withIndex()) {
-            if ((i.value and 0xFFFFFF) == 0xFFFF00) {
-                return Pair(i.index % width, i.index / width)
-            }
-        }
-        
-        return null
-    }
-    
-    private fun getBlock(col: Int): Block {
+    private fun getBlock(levelName: String, id: Int, pos: Point2I, col: Int, default: BlockDefaults): Block {
         return when (col) {
-            0x93FF9B -> SolidBlock(ModArt.walls, ModArt.floors)
-            0x009300 -> PitBlock()
-            0xFFFFFF -> SolidBlock(ModArt.walls, ModArt.floors)
-            0x00FFFF -> VanishBlock()
-            0xFFFF64 -> ChestBlock()
-            0x0000FF -> WaterBlock()
-            0xFF3A02 -> TorchBlock()
-            0x4C4C4C -> BarsBlock()
-            0xFF66FF -> LadderBlock(false)
-            0x9E009E -> LadderBlock(true)
-            0xC1C14D -> LootBlock()
-            0xC6C6C6 -> DoorBlock()
-            0x00FFA7 -> SwitchBlock()
-            0x009380 -> PressurePlateBlock()
-            0xFF0005 -> IceBlock()
-            0x3F3F60 -> IceBlock()
-            0xC6C697 -> LockedDoorBlock()
-            0xFFBA02 -> AltarBlock()
-            0x749327 -> SpiritWallBlock()
-            0x1A2108 -> Block(ModArt.walls, ModArt.floors)
-            0x00C2A7 -> FinalUnlockBlock()
-            0x000056 -> WinBlock()
-            else -> Block(ModArt.walls, ModArt.floors)
+            0x93FF9B -> WallBlock(
+                pos = pos,
+                art = default.wallArt,
+                tex = 8,
+                col = 0x2AAF33.col
+            )
+            0x009300 -> PitBlock(
+                pos = pos,
+                floorArt = default.floorArt,
+                floorCol = default.floorCol,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol
+            )
+            0xFFFFFF -> WallBlock(
+                pos = pos,
+                art = default.wallArt,
+                tex = default.wallTex,
+                col = default.wallCol
+            )
+            0x0000FF -> WaterBlock(
+                pos = pos,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol
+            )
+            0xFF3A02 -> TorchBlock(
+                pos = pos,
+                floorArt = default.floorArt,
+                floorTex = default.floorTex,
+                floorCol = default.floorCol,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol
+            )
+            0x4C4C4C -> BarsBlock(
+                pos = pos,
+                floorArt = default.floorArt,
+                floorTex = default.floorTex,
+                floorCol = default.floorCol,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol
+            )
+            0xFF66FF, 0x9E009E -> LadderBlock(
+                pos = pos,
+                floorArt = default.floorArt,
+                floorTex = default.floorTex,
+                floorCol = default.floorCol,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol,
+                levelChangeId = when (levelName) {
+                    "crypt" -> when (id) {
+                        1 -> 2
+                        else -> -1
+                    }
+                    "dungeon" -> when (id) {
+                        1 -> 2
+                        else -> -1
+                    }
+                    "ice" -> when (id) {
+                        1 -> 5
+                        else -> -1
+                    }
+                    "overworld" -> when (id) {
+                        1 -> 1
+                        2 -> 1
+                        3 -> 1
+                        5 -> 1
+                        else -> -1
+                    }
+                    "start" -> when (id) {
+                        1 -> 1
+                        2 -> 1
+                        else -> -1
+                    }
+                    "temple" -> when (id) {
+                        1 -> 3
+                        else -> -1
+                    }
+                    else -> -1
+                },
+                down = col == 0x9E009E,
+                targetLevel = when (levelName) {
+                    "crypt" -> when (id) {
+                        1 -> "overworld"
+                        else -> ""
+                    }
+                    "dungeon" -> when (id) {
+                        1 -> "start"
+                        else -> ""
+                    }
+                    "ice" -> when (id) {
+                        1 -> "overworld"
+                        else -> ""
+                    }
+                    "overworld" -> when (id) {
+                        1 -> "start"
+                        2 -> "crypt"
+                        3 -> "temple"
+                        5 -> "ice"
+                        else -> ""
+                    }
+                    "start" -> when (id) {
+                        1 -> "overworld"
+                        2 -> "dungeon"
+                        else -> ""
+                    }
+                    "temple" -> when (id) {
+                        1 -> "overworld"
+                        else -> ""
+                    }
+                    else -> ""
+                }
+            )
+            // TODO
+            else -> EmptyBlock(
+                pos = pos,
+                floorArt = default.floorArt,
+                floorTex = default.floorTex,
+                floorCol = default.floorCol,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol
+            )
         }
     }
     
-    private fun decorateBlock(x: Int, y: Int, block: Block, col: Int) {
-        when (col) {
-            0x1A2108, 0xFF0007 -> {
-                block.floorTex = 7
-                block.ceilTex = 7
-            }
-            0xC6C6C6, 0xC6C697 -> {
-                block.col = 0xA0A0A0.col
-            }
-            0x653A00 -> {
-                block.floorCol = 0xB56600.col
-                block.floorTex = 3 * 8 + 1
-            }
-            0x93FF9B -> {
-                block.col = 0x2AAF33.col
-                block.tex = 8
-            }
-        }
+    private fun getLevelEntities(image: Image): MutableList<Entity> {
+        return mutableListOf()
     }
 }

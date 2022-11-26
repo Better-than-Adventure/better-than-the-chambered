@@ -28,8 +28,8 @@ class GuardEntity(x: Double, z: Double): EnemyEntity(x, z, 8 * 1 + 0, Art.getCol
         this.shootDelay = 40
     }
 
-    override fun tick(level: Level) {
-        super.tick()
+    override fun onTick(level: Level) {
+        super.onTick()
         if (shootDelay > 0) {
             shootDelay--
         } else if (random.nextInt(500) == 0) {

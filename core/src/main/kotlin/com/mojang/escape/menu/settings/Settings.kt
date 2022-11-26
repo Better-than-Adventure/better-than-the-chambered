@@ -1,7 +1,6 @@
 package com.mojang.escape.menu.settings
 
 import com.mojang.escape.Game
-import com.mojang.escape.Keys
 import com.mojang.escape.lang.Language
 import com.mojang.escape.lang.StringUnitTranslatable
 import com.mojang.escape.menu.LanguagesMenu
@@ -39,7 +38,7 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
         }
     }
 
-    abstract class Setting<T>(private val settings: Settings, val key: String, val name: StringUnitTranslatable, value: T) {
+    abstract class Setting<T>(val key: String, val name: StringUnitTranslatable, value: T) {
         private var _onChanged: ((oldValue: T, newValue: T) -> Unit)? = null
         private var _valueString: ((value: T) -> String)? = null
 
@@ -52,7 +51,6 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
                 val oldValue = _value
                 _value = value
                 _onChanged?.invoke(oldValue, value)
-                Settings.writeToFile(settings)
             }
 
         open val valueString: String
@@ -69,13 +67,13 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
             return this
         }
 
-        abstract fun onActivated()
+        abstract fun onActivated(game: Game, settings: Settings)
 
         abstract fun toConfigString(): String
         abstract fun fromConfigString(string: String)
     }
 
-    class RangeSetting(settings: Settings, key: String, name: StringUnitTranslatable, value: Int, private val minValue: Int, private val maxValue: Int): Setting<Int>(settings, key, name, value) {
+    class RangeSetting(key: String, name: StringUnitTranslatable, value: Int, private val minValue: Int, private val maxValue: Int): Setting<Int>(key, name, value) {
         override var value: Int
             get() = super.value
             set(value) {
@@ -85,7 +83,7 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
                 super.value = realValue
             }
 
-        override fun onActivated() {
+        override fun onActivated(game: Game, settings: Settings) {
             value++
         }
 
@@ -98,8 +96,8 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
         }
     }
 
-    class BooleanSetting(settings: Settings, key: String, name: StringUnitTranslatable, value: Boolean): Setting<Boolean>(settings, key, name, value) {
-        override fun onActivated() {
+    class BooleanSetting(key: String, name: StringUnitTranslatable, value: Boolean): Setting<Boolean>(key, name, value) {
+        override fun onActivated(game: Game, settings: Settings) {
             value = !value
         }
 
@@ -111,29 +109,10 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
             value = string.toBoolean()
         }
     }
-
-    class KeySetting(settings: Settings, key: String, name: StringUnitTranslatable, value: Keys): Setting<Keys>(settings, key, name, value) {
-        var picking = false
-
-        override val valueString: String
-            get() = if (picking) "?" else value.displayName
-
-        override fun onActivated() {
-            // Do nothing
-        }
-
-        override fun toConfigString(): String {
-            return value.ordinal.toString()
-        }
-
-        override fun fromConfigString(string: String) {
-            value = Keys.values()[string.toInt()]
-        }
-    }
     
-    class LanguageSetting(settings: Settings, key: String, name: StringUnitTranslatable, value: Language): Setting<Language>(settings, key, name, value) {
-        override fun onActivated() {
-            Game.theGame?.menu = LanguagesMenu(Game.theGame?.menu) 
+    class LanguageSetting(key: String, name: StringUnitTranslatable, value: Language): Setting<Language>(key, name, value) {
+        override fun onActivated(game: Game, settings: Settings) {
+            game.menu = LanguagesMenu(game.menu) 
         }
 
         override fun toConfigString(): String {
@@ -150,25 +129,19 @@ class Settings(init: Settings.() -> Unit): MutableList<Settings.Setting<*>> by m
     }
 
     fun rangeSetting(key: String, name: StringUnitTranslatable, value: Int, minValue: Int, maxValue: Int): RangeSetting {
-        val setting = RangeSetting(this, key, name, value, minValue, maxValue)
+        val setting = RangeSetting(key, name, value, minValue, maxValue)
         add(setting)
         return setting
     }
 
     fun booleanSetting(key: String, name: StringUnitTranslatable, value: Boolean): BooleanSetting {
-        val setting = BooleanSetting(this, key, name, value)
-        add(setting)
-        return setting
-    }
-
-    fun keySetting(key: String, name: StringUnitTranslatable, value: Keys): KeySetting {
-        val setting = KeySetting(this, key, name, value)
+        val setting = BooleanSetting(key, name, value)
         add(setting)
         return setting
     }
     
     fun languagesSetting(key: String, name: StringUnitTranslatable, value: Language): LanguageSetting {
-        val setting = LanguageSetting(this, key, name, value)
+        val setting = LanguageSetting(key, name, value)
         add(setting)
         return setting
     }

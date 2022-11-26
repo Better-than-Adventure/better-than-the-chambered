@@ -2,35 +2,52 @@ package com.mojang.escape.mods.prelude.level.block
 
 import com.mojang.escape.Sound
 import com.mojang.escape.entities.*
+import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.Bitmap3D
+import com.mojang.escape.level.ITriggerable
 import com.mojang.escape.level.Level
-import com.mojang.escape.level.block.Block
-import com.mojang.escape.level.block.SolidBlock
+import com.mojang.escape.level.block.*
+import com.mojang.escape.level.physics.Point2I
+import com.mojang.escape.level.physics.RelativeAABB
 import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.entities.OgreEntity
 
-open class DoorBlock: SolidBlock(ModArt.walls, ModArt.floors) {
+open class DoorBlock(
+    pos: Point2I,
+    floorArt: Bitmap,
+    floorTex: Int,
+    floorCol: Int,
+    ceilArt: Bitmap,
+    ceilTex: Int,
+    ceilCol: Int,
+    val doorArt: Bitmap,
+    val doorTex: Int,
+    val doorCol: Int, 
+    override val triggerId: Int
+): EmptyBlock(
+    pos = pos,
+    floorArt = floorArt,
+    floorTex = floorTex,
+    floorCol = floorCol,
+    ceilArt = ceilArt,
+    ceilTex = ceilTex,
+    ceilCol = ceilCol
+), ICollidableBlock, IUsableBlock, ITickableBlock, ITriggerable {
     var open = false
     var openness = 0.0
+    override val collisionBox = RelativeAABB(0.5)
+    override var triggerState = 0
 
-    init {
-        tex = 4
-        solidRender = false
-    }
-
-    override fun use(level: Level, item: Item): Boolean {
+    override fun onUsed(level: Level, source: Entity, item: Item) {
         open = !open
         if (open) {
-            Sound.click1.play()
+            Sound.click1
         } else {
-            Sound.click2.play()
-        }
-        return true
+            Sound.click2
+        }.play()
     }
 
-    override fun tick() {
-        super.tick()
-
+    override fun onTick(level: Level) {
         if (open) {
             openness += 0.2
         } else {
@@ -38,46 +55,39 @@ open class DoorBlock: SolidBlock(ModArt.walls, ModArt.floors) {
         }
         if (openness < 0) openness = 0.0
         if (openness > 1) openness = 1.0
-
+        
         val openLimit = 7 / 8.0
-        if (openness < openLimit && !open && !blocksMotion) {
-            if (level != null && level!!.containsBlockingEntity(x - 0.5, y - 0.5, x + 0.5, y + 0.5)) {
+        if (openness < openLimit && !open) {
+            if (level.entitiesInAABB(offsetCollisionBox).isNotEmpty()) {
                 openness = openLimit
-                return
             }
         }
-
-        blocksMotion = openness < openLimit
     }
 
-    override fun blocks(entity: Entity): Boolean {
-        val openLimit = 7 / 8.0
-        if (openness >= openLimit && entity is Player) {
-            return blocksMotion
-        }
-        if (openness >= openLimit && entity is Bullet) {
-            return blocksMotion
-        }
-        if (openness >= openLimit && entity is OgreEntity) {
-            return blocksMotion
-        }
-        return true
+    override fun onTrigger(level: Level, source: Entity?, state: Int) {
+        open = state % 2 == 0
     }
 
-    override fun doRender(bitmap: Bitmap3D, x: Int, z: Int, center: Block, east: Block, south: Block): Boolean {
-        if (center is DoorBlock) {
-            val rr = 1 / 8.0
-            val openness = 1 - center.openness * 7 / 8
-            if (east.solidRender) {
-                bitmap.renderWall(x + openness, z + 0.5 - rr, x.toDouble(), z + 0.5 - rr, center.tex, (center.col and 0xFEFEFE) shr 1, center.wallArt, 0.0, openness)
-                bitmap.renderWall(x.toDouble(), z + 0.5 + rr, x + openness, z + 0.5 + rr, center.tex, (center.col and 0xFEFEFE) shr 1, center.wallArt, openness, 0.0)
-                bitmap.renderWall(x + openness, z + 0.5 + rr, x + openness, z + 0.5 - rr, center.tex,  center.col, center.wallArt, 0.5 - rr, 0.5 + rr)
-            } else {
-                bitmap.renderWall(x + 0.5 - rr, z.toDouble(), x + 0.5 - rr, z + openness, center.tex,  center.col, center.wallArt, openness, 0.0)
-                bitmap.renderWall(x + 0.5 + rr, z + openness, x + 0.5 + rr, z.toDouble(), center.tex,  center.col, center.wallArt, 0.0, openness)
-                bitmap.renderWall(x + 0.5 - rr, z + openness, x + 0.5 + rr, z + openness, center.tex, (center.col and 0xFEFEFE) shr 1, center.wallArt, 0.5 - rr, 0.5 + rr)
-            }
+    override fun blocksEntity(level: Level, entity: Entity): Boolean {
+        return !open
+    }
+
+    override fun doRender(level: Level, bitmap: Bitmap3D) {
+        val rr = 1 / 8.0
+        val openness = 1 - openness * 7 / 8
+        val east = level[pos.x + 1, pos.z]
+        if (east != null && east.occludesAdjacentBlocks) {
+            bitmap.renderWall(pos.x + openness, pos.z + 0.5 - rr, pos.x.toDouble(), pos.z + 0.5 - rr, doorTex, (doorCol and 0xFEFEFE) shr 1, doorArt, 0.0, openness)
+            bitmap.renderWall(pos.x.toDouble(), pos.z + 0.5 + rr, pos.x + openness, pos.z + 0.5 + rr, doorTex, (doorCol and 0xFEFEFE) shr 1, doorArt, openness, 0.0)
+            bitmap.renderWall(pos.x + openness, pos.z + 0.5 + rr, pos.x + openness, pos.z + 0.5 - rr, doorTex,  doorCol, doorArt, 0.5 - rr, 0.5 + rr)
+        } else {
+            bitmap.renderWall(pos.x + 0.5 - rr, pos.z.toDouble(), pos.x + 0.5 - rr, pos.z + openness, doorTex,  doorCol, doorArt, openness, 0.0)
+            bitmap.renderWall(pos.x + 0.5 + rr, pos.z + openness, pos.x + 0.5 + rr, pos.z.toDouble(), doorTex,  doorCol, doorArt, 0.0, openness)
+            bitmap.renderWall(pos.x + 0.5 - rr, pos.z + openness, pos.x + 0.5 + rr, pos.z + openness, doorTex, (doorCol and 0xFEFEFE) shr 1, doorArt, 0.5 - rr, 0.5 + rr)
         }
-        return false
+    }
+
+    override fun onEntityCollision(level: Level, entity: Entity) {
+        // Do nothing
     }
 }

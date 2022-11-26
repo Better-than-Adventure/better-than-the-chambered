@@ -1,7 +1,8 @@
 package com.mojang.escape.gui
 
 import com.mojang.escape.Art
-import com.mojang.escape.Game
+import com.mojang.escape.GameSession
+import com.mojang.escape.entities.ISpriteEntity
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.EmptyBlock
 import java.util.*
@@ -15,8 +16,8 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
     private val zBufferWall = DoubleArray(width)
 
     private var xCam = 0.0
-    private var yCam = 0.0
     private var zCam = 0.0
+    private var yCam = 0.0
     private var rCos = 0.0
     private var rSin = 0.0
     private var fov = 0.0
@@ -24,10 +25,7 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
     private var yCenter = 0.0
     private var rot = 0.0
 
-    fun render(game: Game) {
-        val player = game.player!!
-        val level = game.level!!
-
+    fun render(session: GameSession) {
         Arrays.setAll(zBufferWall) {
             0.0
         }
@@ -35,10 +33,10 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
             10000.0
         }
 
-        rot = player.rot
-        xCam = player.x - sin(rot) * 0.3
-        yCam = player.z - cos(rot) * 0.3
-        zCam = -0.2 + sin(player.bobPhase * 0.4) * 0.01 * player.bob - player.y
+        rot = session.player.rot
+        xCam = session.player.pos.x - sin(rot) * 0.3
+        zCam = session.player.pos.z - cos(rot) * 0.3
+        yCam = -0.2 + sin(session.player.bobPhase * 0.4) * 0.01 * session.player.bob - session.player.pos.y
 
         xCenter = width / 2.0
         yCenter = height / 3.0
@@ -50,53 +48,29 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
 
         val r = 6
         val xCenter = floor(xCam).toInt()
-        val zCenter = floor(yCam).toInt()
+        val zCenter = floor(zCam).toInt()
         for (zb in (zCenter - r)..(zCenter + r)) {
             for (xb in (xCenter - r)..(xCenter + r)) {
-                if (xb < 0 || zb >= level.width || zb < 0 || zb >= level.height) continue
-                
-                val c = level.getBlock(xb, zb)
-                val e = level.getBlock(xb + 1, zb)
-                val s = level.getBlock(xb, zb + 1)
-                
-                if (!c.doRender(this, xb, zb, c, e, s)) {
-                    if (c.solidRender) {
-                        if (!e.solidRender) {
-                            renderWall(xb + 1.0, zb + 1.0, xb + 1.0, zb + 0.0, c.tex, c.col, c.wallArt)
-                        }
-                        if (!s.solidRender) {
-                            renderWall(xb + 0.0, zb + 1.0, xb + 1.0, zb + 1.0, c.tex, (c.col and 0xFEFEFE) shr 1, c.wallArt)
-                        }
-                    } else {
-                        if (e.solidRender) {
-                            renderWall(xb + 1.0, zb + 0.0, xb + 1.0, zb + 1.0, e.tex, e.col, c.wallArt)
-                        }
-                        if (s.solidRender) {
-                            renderWall(xb + 1.0, zb + 1.0, xb + 0.0, zb + 1.0, s.tex, (s.col and 0xFEFEFE) shr 1, c.wallArt)
-                        }
-                    }
-                }
+                if (xb < 0 || zb >= session.currentLevel.lengthX || zb < 0 || zb >= session.currentLevel.lengthZ) continue
 
+                val c = session.currentLevel[xb, zb]
+                c?.doRender(session.currentLevel, this)
             }
         }
-
-        for (zb in (zCenter - r)..(zCenter + r)) {
-            for (xb in (xCenter - r)..(xCenter + r)) {
-                val c = level.getBlock(xb, zb)
-
-                for (e in c.entities) {
-                    for (sprite in e.sprites) {
-                        renderSprite(e.x + sprite.x, 0 - sprite.y, e.z + sprite.z, sprite.tex, sprite.col, sprite.art)
-                    }
-                }
-
-                for (sprite in c.sprites) {
-                    renderSprite(xb + sprite.x, 0 - sprite.y, zb + sprite.z, sprite.tex, sprite.col, sprite.art)
+        
+        for (entity in session.currentLevel.entities) {
+            if (entity is ISpriteEntity) {
+                for (sprite in entity.sprites) {
+                    renderSprite(sprite.x, 0 - sprite.y, sprite.z, sprite.tex, sprite.col, sprite.art)
                 }
             }
         }
 
-        renderFloor(level)
+        for (sprite in session.currentLevel.sprites) {
+            renderSprite(sprite.x, 0 - sprite.y, sprite.z, sprite.tex, sprite.col, sprite.art)
+        }
+
+        renderFloor(session.currentLevel)
     }
 
     private fun renderFloor(level: Level) {
@@ -104,10 +78,10 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
             val yd = ((y + 0.5) - yCenter) / fov
 
             var floor = true
-            var zd = (4 - zCam * 8) / yd
+            var zd = (4 - yCam * 8) / yd
             if (yd < 0) {
                 floor = false
-                zd = (4 + zCam * 8) / -yd
+                zd = (4 + yCam * 8) / -yd
             }
 
             for (x in 0 until width) {
@@ -119,7 +93,7 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
                 xd *= zd
 
                 val xx = xd * rCos + zd * rSin + (xCam + 0.5) * 8
-                val yy = zd * rCos - xd * rSin + (yCam + 0.5) * 8
+                val yy = zd * rCos - xd * rSin + (zCam + 0.5) * 8
 
                 val xPix = (xx * 2).toInt()
                 val yPix = (yy * 2).toInt()
@@ -150,8 +124,8 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
 
     fun renderSprite(x: Double, y: Double, z: Double, tex: Int, color: Int, art: Bitmap) {
         val xc = (x - xCam) * 2 - rSin * 0.2
-        val yc = (y - zCam) * 2
-        val zc = (z - yCam) * 2 - rCos * 0.2
+        val yc = (y - yCam) * 2
+        val zc = (z - zCam) * 2 - rCos * 0.2
 
         val xx = xc * rCos - zc * rSin
         val yy = yc
@@ -209,19 +183,19 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
 
     fun renderWall(x0: Double, y0: Double, x1: Double, y1: Double, tex: Int, color: Int, art: Bitmap, xt0: Double, xt1: Double) {
         val xc0 = ((x0 - 0.5) - xCam) * 2
-        val yc0 = ((y0 - 0.5) - yCam) * 2
+        val yc0 = ((y0 - 0.5) - zCam) * 2
 
         var xx0 = xc0 * rCos - yc0 * rSin
-        val u0 = ((-0.5) - zCam) * 2
-        val l0 = ((+0.5) - zCam) * 2
+        val u0 = ((-0.5) - yCam) * 2
+        val l0 = ((+0.5) - yCam) * 2
         var zz0 = yc0 * rCos + xc0 * rSin
 
         val xc1 = ((x1 - 0.5) - xCam) * 2
-        val yc1 = ((y1 - 0.5) - yCam) * 2
+        val yc1 = ((y1 - 0.5) - zCam) * 2
 
         var xx1 = xc1 * rCos - yc1 * rSin
-        val u1 = ((-0.5) - zCam) * 2
-        val l1 = ((+0.5) - zCam) * 2
+        val u1 = ((-0.5) - yCam) * 2
+        val l1 = ((+0.5) - yCam) * 2
         var zz1 = yc1 * rCos + xc1 * rSin
 
         var xt0 = xt0 * (art.width / 8)

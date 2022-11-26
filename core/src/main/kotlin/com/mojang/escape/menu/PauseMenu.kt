@@ -2,6 +2,7 @@ package com.mojang.escape.menu
 
 import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
+import com.mojang.escape.input.MenuInput
 
 class PauseMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     private val options = arrayOf(
@@ -11,7 +12,7 @@ class PauseMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     )
     private var selected = 2
 
-    override fun render(target: Bitmap) {
+    override fun doRender(target: Bitmap) {
         target.draw(Art.logo, 0, 8, 0, 0, 160, 36, Art.getCol(0xFFFFFF))
 
         options.forEachIndexed { index, s ->
@@ -26,14 +27,14 @@ class PauseMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         }
     }
 
-    override fun tick(game: Game, keys: BooleanArray, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
-        if (up || down) {
+    override fun handleInputs(game: Game, inputs: MutableMap<MenuInput, Boolean>) {
+        if (inputs[MenuInput.UP] == true || inputs[MenuInput.DOWN] == true) {
             Sound.click2.play()
         }
-        if (up) {
+        if (inputs[MenuInput.UP] == true) {
             selected--
         }
-        if (down) {
+        if (inputs[MenuInput.DOWN] == true) {
             selected++
         }
         if (selected < 0) {
@@ -42,17 +43,23 @@ class PauseMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         if (selected >= options.size) {
             selected = options.size - 1
         }
-        if (use) {
+        if (inputs[MenuInput.CONFIRM] == true) {
             Sound.click1.play()
             game.menu = when (selected) {
                 0 -> {
-                    game.level = null
-                    game.player = null
+                    game.session = null
                     TitleMenu()
                 }
                 1 -> SettingsMenu(this)
                 else -> null
             }
         }
+        if (inputs[MenuInput.BACK] == true) {
+            game.menu = null
+        }
+    }
+
+    override fun onTick(game: Game) {
+        // Do nothing
     }
 }

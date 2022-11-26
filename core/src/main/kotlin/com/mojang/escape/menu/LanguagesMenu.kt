@@ -1,5 +1,6 @@
 package com.mojang.escape.menu
 
+import com.mojang.escape.Game
 import com.mojang.escape.col
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.lang.StringUnit
@@ -17,18 +18,31 @@ class LanguagesMenu(lastMenu: Menu? = null): ScrollableMenu(lastMenu) {
         "en_US",
         "fr"
     )
+    private val oldLanguage = GameSettings.language.value
     
     override val title: StringUnit = "gui.menu.languages.title".toTranslatable()
     override val lastButton: StringUnit = "gui.menu.languages.buttonBack".toTranslatable()
     override val numLines: Int = languages.size
 
-    override fun drawLine(target: Bitmap, lineIndex: Int, selected: Boolean) {
-        val str = (if (selected) "-> " else "").toLiteral() + languageNames[languages[lineIndex]]!!
+    override fun drawLine(target: Bitmap, index: Int, selected: Boolean) {
+        val str = (if (selected) "-> " else "").toLiteral() + languageNames[languages[index]]!!
         val col = (if (selected) 0xFFFF80 else 0xA0A0A0).col
         target.draw(str, 0, 0, col)
     }
 
-    override fun lineActivated(lineIndex: Int) {
-        GameSettings.language.value = Language(languages[lineIndex])
+    override fun onLineActivated(game: Game) {
+        GameSettings.language.value = Language(languages[selected])
+    }
+
+    override fun onLastButtonActivated(game: Game) {
+        onLineActivated(game)
+    }
+
+    override fun onCancel(game: Game) {
+        GameSettings.language.value = oldLanguage
+    }
+
+    override fun onTick(game: Game) {
+        // Do nothing
     }
 }

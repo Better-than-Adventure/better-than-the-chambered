@@ -16,6 +16,7 @@ class StructuredProperties: Properties() {
         load0(BufferedReader(reader))
     }
 
+    // TODO: Rewrite this to be safer and smarter
     private fun load0(reader: BufferedReader) {
         val parts = mutableListOf<String>()
         for (line in reader.lines()) {

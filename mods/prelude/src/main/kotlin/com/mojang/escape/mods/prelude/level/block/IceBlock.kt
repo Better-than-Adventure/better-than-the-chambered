@@ -1,86 +1,84 @@
 package com.mojang.escape.mods.prelude.level.block
 
-import com.mojang.escape.Art
-import com.mojang.escape.Sound
 import com.mojang.escape.entities.*
-import com.mojang.escape.level.block.Block
-import com.mojang.escape.mods.prelude.ModArt
+import com.mojang.escape.gui.Bitmap
+import com.mojang.escape.level.Level
+import com.mojang.escape.level.block.EmptyBlock
+import com.mojang.escape.level.physics.Point2I
 import com.mojang.escape.mods.prelude.ModSound
 import com.mojang.escape.mods.prelude.entities.EyeBossEntity
 import com.mojang.escape.mods.prelude.entities.EyeEntity
 import kotlin.math.cos
 import kotlin.math.sin
 
-class IceBlock: Block(ModArt.walls, ModArt.floors) {
-    companion object {
-        var playerSliding = false
-    }
-    
-    init {
-        blocksMotion = false
-        floorTex = 16
-    }
+class IceBlock(
+    pos: Point2I,
+    floorArt: Bitmap,
+    floorTex: Int,
+    floorCol: Int,
+    ceilArt: Bitmap,
+    ceilTex: Int,
+    ceilCol: Int
+): EmptyBlock(
+    pos,
+    floorArt,
+    floorTex,
+    floorCol,
+    ceilArt,
+    ceilTex,
+    ceilCol
+) {
 
-    override fun tick() {
-        super.tick()
-        floorCol = Art.getCol(0x8080FF)
-    }
-
-    override fun getWalkSpeed(player: Player): Double {
-        if (player.selectedItem == Item.Skates) return 0.05
+    override fun getWalkSpeed(level: Level, entity: Entity): Double {
+        if (entity is Player && entity.selectedItem == Item.Skates) {
+            return 0.05
+        }
         return 1.4
     }
 
-    override fun getFriction(player: Player): Double {
-        if (player.selectedItem == Item.Skates) return 0.98
+    override fun getFriction(level: Level, entity: Entity): Double {
+        if (entity is Player && entity.selectedItem == Item.Skates) {
+            return 0.98
+        }
+        
         return 1.0
     }
 
-    override fun onPlayerEnter(player: Player) {
-        ModSound.slide.play()
+    override fun onEntityEnter(level: Level, entity: Entity) {
+        if (entity !is IFlyingEntity || !entity.flying) {
+            ModSound.slide.play()
+        }
     }
 
-    override fun onPlayerWalk(player: Player, xm: Double, zm: Double): Boolean {
-        if (player.selectedItem != Item.Skates) {
-            if (player.xa * player.xa > player.za * player.za) {
-                player.za = 0.0
-                player.xa = if (player.xa > 0.0) {
-                    0.08
-                } else {
-                    -0.08
-                }
-                player.z += ((player.z + 0.5).toInt() - player.z) * 0.2
-            } else if (player.xa * player.xa < player.za * player.za) {
-                player.xa = 0.0
-                player.za = if (player.za > 0) {
-                    0.08
-                } else {
-                    -0.08
-                }
-                player.x += ((x + 0.5).toInt() - x) * 0.2
+    override fun onEntityMoveWhileInside(level: Level, entity: Entity, dx: Double, dz: Double) {
+        if ((entity is Player && entity.selectedItem != Item.Skates) ||
+                entity !is IFlyingEntity || !entity.flying) {
+            if (entity.vel.x * entity.vel.x > entity.vel.z * entity.vel.z) {
+                entity.vel = entity.vel.copy(
+                    z = 0.0,
+                    x = if (entity.vel.x > 0.0) {
+                        0.08
+                    } else {
+                        -0.08
+                    }
+                )
+                entity.pos = entity.pos.copy(z = entity.pos.z + ((entity.pos.z + 0.5).toInt() - entity.pos.z) * 0.2)
+            } else if (entity.vel.x * entity.vel.x < entity.vel.z * entity.vel.z) {
+                entity.vel = entity.vel.copy(
+                    x = 0.0,
+                    z = if (entity.vel.z > 0) {
+                        0.08
+                    } else {
+                        -0.08
+                    }
+                )
+                entity.pos = entity.pos.copy(x = entity.pos.x + ((entity.pos.x + 0.5)) * 0.2)
             } else {
-                player.xa -= (xm * cos(player.rot) + zm * sin(player.rot)) * 0.1
-                player.za -= (zm * cos(player.rot) - xm * sin(player.rot)) * 0.1
+                entity.vel = entity.vel.copy(
+                    x = entity.vel.x - (dx * cos(entity.rot) + dz * sin(entity.rot)) * 0.1,
+                    z = entity.vel.z - (dz * cos(entity.rot) - dx * sin(entity.rot)) * 0.1
+                )
             }
-            return true
         }
-
-        return false
-    }
-
-    override fun blocks(entity: Entity): Boolean {
-        if (entity is Player) {
-            return false
-        }
-        if (entity is Bullet) {
-            return false
-        }
-        if (entity is EyeBossEntity) {
-            return false
-        }
-        if (entity is EyeEntity) {
-            return false
-        }
-        return true
     }
 }

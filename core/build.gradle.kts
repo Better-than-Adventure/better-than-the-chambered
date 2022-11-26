@@ -58,13 +58,13 @@ dependencies {
 tasks.register<Copy>("grabJars") {
     from(layout.projectDirectory.file("../mods/prelude/build/libs/prelude-$version.jar"))
     into(layout.projectDirectory.dir("mods/"))
-    from(layout.projectDirectory.file("../mods/wolf3d/build/libs/wolf3d-$version.jar"))
-    into(layout.projectDirectory.dir("mods/"))
+//    from(layout.projectDirectory.file("../mods/wolf3d/build/libs/wolf3d-$version.jar"))
+//    into(layout.projectDirectory.dir("mods/"))
 }
 tasks["grabJars"].dependsOn += ":mods:prelude:build"
 tasks["grabJars"].dependsOn += ":mods:prelude:jar"
-tasks["grabJars"].dependsOn += ":mods:wolf3d:build"
-tasks["grabJars"].dependsOn += ":mods:wolf3d:jar"
+//tasks["grabJars"].dependsOn += ":mods:wolf3d:build"
+//tasks["grabJars"].dependsOn += ":mods:wolf3d:jar"
 tasks["run"].dependsOn += "grabJars"
 
 application {

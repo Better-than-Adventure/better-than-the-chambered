@@ -7,12 +7,35 @@ import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.PoofSprite
 import com.mojang.escape.gui.Sprite
 import com.mojang.escape.level.Level
+import com.mojang.escape.level.physics.Point2D
+import com.mojang.escape.level.physics.Point3D
+import com.mojang.escape.level.physics.RelativeAABB
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, protected val defaultColor: Int, art: Bitmap): Entity(art) {
-    protected val sprite: Sprite
+abstract class EnemyEntity(
+    pos: Point3D,
+    rot: Double, 
+    vel: Point3D,
+    rotVel: Double,
+    flying: Boolean,
+    override val collisionBox: RelativeAABB,
+    art: Bitmap,
+    texA: Int,
+    texB: Int,
+    protected val col: Int
+): Entity(
+    pos = pos,
+    rot = rot,
+    vel = vel,
+    rotVel = rotVel,
+    flying = flying
+), ISpriteEntity, IUsableEntity, ICollidableEntity {
+    final override val sprites = mutableListOf<Sprite>()
+    
+    protected val spriteA: Sprite = BasicSprite(0.0, 0.0, 0.0, texA, col, art)
+    protected val spriteB: Sprite = BasicSprite(0.0, 0.0, 0.0, texB, col, art)
     protected var hurtTime = 0
     protected var animTime = 0
     protected var health = 3
@@ -20,81 +43,76 @@ open class EnemyEntity(x: Double, z: Double, protected val defaultTex: Int, prot
     protected var runSpeed = 1.0
 
     init {
-        this.x = x
-        this.z = z
-        this.sprite = BasicSprite(0.0, 0.0, 0.0, 4 * 8, defaultColor, art)
-        this.sprites.add(this.sprite)
-        this.r = 0.3
+        this.sprites.add(this.spriteA)
     }
 
-    override fun tick(level: Level) {
+    override fun onInit(level: Level) {
+        // Do nothing
+    }
+    override fun onTick(level: Level) {
         if (hurtTime > 0) {
             hurtTime--
             if (hurtTime == 0) {
-                this.sprite.col = defaultColor
+                this.spriteA.col = col
+                this.spriteB.col = col
             }
         }
         this.animTime++
-        this.sprite.tex = defaultTex + animTime / 10 % 2
-        this.move()
-        if (xa == 0.0 || za == 0.0) {
-            this.rota += (random.nextGaussian() * random.nextDouble())
+        if (animTime / 10 % 2 == 0) {
+            if (sprites[0] != spriteA) {
+                sprites.clear()
+                sprites.add(spriteA)
+            }
+        } else {
+            if (sprites[0] != spriteB) {
+                sprites.clear()
+                sprites.add(spriteB)
+            }
+        }
+        if (vel.x == 0.0 || vel.z == 0.0) {
+            this.rotVel += (random.nextGaussian() * random.nextDouble())
         }
 
-        this.rota += (random.nextGaussian() * random.nextDouble()) * spinSpeed
-        rot += rota
-        rota *= 0.8
-        xa *= 0.8
-        za *= 0.8
-        xa += sin(rot) * 0.004 * runSpeed
-        za += cos(rot) * 0.004 * runSpeed
+        this.rotVel += (random.nextGaussian() * random.nextDouble()) * spinSpeed
+        rot += rotVel
+        rotVel *= 0.8
+        vel = vel.copy(x = vel.x * 0.8, z = vel.z * 0.8)
+        vel = vel.copy(x = vel.x + sin(rot) * 0.004 * runSpeed, z = vel.z + cos(rot) * 0.004 * runSpeed)
     }
 
-    override fun use(source: Entity, item: Item): Boolean {
+    override fun onUsed(level: Level, source: Entity, item: Item) {
         if (hurtTime > 0 || item != Item.PowerGlove) {
-            return false
+            return
         }
         
-        hurt(sin(source.rot), cos(source.rot))
-
-        return true
+        onHurt(level, sin(source.rot), cos(source.rot))
     }
     
-    protected open fun hurt(xd: Double, zd: Double) {
-        sprite.col = Art.getCol(0xFF0000)
+    open fun onHurt(level: Level, xd: Double, zd: Double) {
+        if (hurtTime > 0) return
+        this.spriteA.col = Art.getCol(0xFF0000)
+        this.spriteB.col = Art.getCol(0xFF0000)
         hurtTime = 15
 
         val dd = sqrt(xd * xd + zd * zd)
-        xa += xd / dd * 0.2
-        za += zd / dd * 0.2
+        vel = Point3D(vel.x + xd / dd * 0.2, vel.y, vel.z + zd / dd * 0.2)
         Sound.hurt2.play()
         health--
         if (health <= 0) {
-            val xt = (x + 0.5).toInt()
-            val zt = (z + 0.5).toInt()
-            level?.getBlock(xt, zt)?.addSprite(PoofSprite(x - xt, 0.0, z - zt))
-            this.die()
-            this.remove()
+            val xt = (pos.x + 0.5).toInt()
+            val zt = (pos.z + 0.5).toInt()
+            level.sprites.add(PoofSprite(pos.x - xt, 0.0, pos.z - zt))
+            this.onDeath(level)
+            this.removed = true
             Sound.kill.play()
         }
     }
 
-    protected open fun die() {
-    }
-
-    override fun collide(level: Level, entity: Entity) {
-        if (entity is Bullet) {
-            if (entity.owner is EnemyEntity) {
-                return
-            }
-            if (hurtTime > 0) {
-                return
-            }
-            entity.remove()
-            this.hurt(entity.xa, entity.za)
-        }
-        if (entity is Player) {
-            entity.hurt(this, 1)
+    abstract fun onDeath(level: Level)
+    
+    override fun onCollideWithEntity(level: Level, other: Entity) {
+        if (other is Player) {
+            other.hurt(this, 1)
         }
     }
 }

@@ -1,62 +1,86 @@
 package com.mojang.escape.mods.prelude.entities
 
-import com.mojang.escape.Art
+import com.mojang.escape.col
 import com.mojang.escape.entities.EnemyEntity
+import com.mojang.escape.entities.Entity
 import com.mojang.escape.level.Level
+import com.mojang.escape.level.physics.Point3D
+import com.mojang.escape.level.physics.RelativeAABB
 import com.mojang.escape.mods.prelude.ModArt
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-class GhostEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.getCol(0xFFFFFF), ModArt.sprites) {
+class GhostEntity(
+    pos: Point3D,
+    rot: Double,
+    vel: Point3D,
+    rotVel: Double
+): EnemyEntity(
+    pos = pos,
+    rot = rot,
+    vel = vel,
+    rotVel = rotVel,
+    flying = true,
+    collisionBox = RelativeAABB(0.3),
+    art = ModArt.sprites,
+    texA = 8 * 4 + 4,
+    texB = 8 * 4 + 5,
+    col = 0xFFFFFF.col
+) {
     private var rotatePos = 0.0
 
-    init {
-        this.health = 4
-        this.r = 0.3
+    override fun onTick(level: Level) {
+        animTime++
+        if (animTime / 10 % 2 == 0) {
+            if (sprites[0] != spriteA) {
+                sprites.clear()
+                sprites.add(spriteA)
+            }
+        } else {
+            if (sprites[0] != spriteB) {
+                sprites.clear()
+                sprites.add(spriteB)
+            }
+        }
 
-        this.flying = true
-    }
+        vel = vel.copy(
+            x = vel.x * 0.9,
+            z = vel.z * 0.9
+        )
 
-    override fun tick(level: Level) {
-        this.animTime++
-        this.sprite.tex = defaultTex + animTime / 10 % 2
+        var xd = (level.session.player.pos.x + sin(rotatePos) * 2) - pos.x
+        var zd = (level.session.player.pos.z + cos(rotatePos) * 2) - pos.z
+        var dd = xd * xd + zd + zd
 
-        var xd = (level!!.player.x + sin(rotatePos)) - x
-        var zd = (level!!.player.z + cos(rotatePos)) - z
-        var dd = xd * xd + zd * zd
+        if (dd < 1) {
+            rotatePos += 0.04
+        } else {
+            rotatePos = level.session.player.rot
+        }
 
         if (dd < 4 * 4) {
-            if (dd < 1) {
-                this.rotatePos += 0.04
-            } else {
-                this.rotatePos = level!!.player.rot
-                this.xa += (random.nextDouble() - 0.5) * 0.02
-                this.za += (random.nextDouble() - 0.5) * 0.02
-            }
-
             dd = sqrt(dd)
 
             xd /= dd
             zd /= dd
 
-            xa += xd * 0.004
-            za += zd * 0.004
+            vel = vel.copy(
+                x = vel.x + xd * 0.006,
+                z = vel.z + zd * 0.006
+            )
         }
-
-        this.move()
-
-        xa *= 0.9
-        za *= 0.9
     }
 
-    override fun hurt(xd: Double, zd: Double) {
+    override fun onHurt(level: Level, xd: Double, zd: Double) {
         // Do nothing
     }
 
-    override fun move(level: Level) {
-        x += xa
-        z += za
+    override fun onDeath(level: Level) {
+        // Do nothing
     }
 
+    override fun blocksEntity(level: Level, entity: Entity): Boolean {
+        return true
+    }
 }

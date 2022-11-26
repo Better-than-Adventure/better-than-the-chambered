@@ -40,6 +40,14 @@ class Image(val width: Int, val height: Int) {
 
     private var buffer = ByteArray(width * height * 4)
 
+    operator fun get(x: Int, y: Int): Int {
+        val i = x + y * width
+        return (buffer[(i * 4) + 0].toUByte().toInt() shl 16) or
+                (buffer[(i * 4) + 1].toUByte().toInt() shl 8 ) or
+                (buffer[(i * 4) + 2].toUByte().toInt() shl 0 ) or
+                (buffer[(i * 4) + 3].toUByte().toInt() shl 24)
+    }
+    
     fun getRGB(rgbArray: IntArray) {
         for (i in 0 until (width * height)) {
             rgbArray[i] =

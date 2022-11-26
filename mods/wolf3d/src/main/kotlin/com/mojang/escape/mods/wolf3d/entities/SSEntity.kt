@@ -29,8 +29,8 @@ class SSEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 2, Art.getCol(0x
         this.shootDelay = 50
     }
 
-    override fun tick(level: Level) {
-        super.tick()
+    override fun onTick(level: Level) {
+        super.onTick()
         if (shootDelay > 0) {
             shootDelay--
         } else if (random.nextInt(40) == 0) {

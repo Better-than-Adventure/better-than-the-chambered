@@ -1,66 +1,105 @@
 package com.mojang.escape.mods.prelude.entities
 
 import com.mojang.escape.Art
+import com.mojang.escape.col
 import com.mojang.escape.entities.Bullet
 import com.mojang.escape.entities.EnemyEntity
+import com.mojang.escape.entities.Entity
 import com.mojang.escape.level.Level
+import com.mojang.escape.level.physics.Point3D
+import com.mojang.escape.level.physics.RelativeAABB
 import com.mojang.escape.mods.prelude.ModArt
 import kotlin.math.atan2
+import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-class GhostBossEntity(x: Double, z: Double): EnemyEntity(x, z, 4 * 8 + 6, Art.getCol(0xFFFF00), ModArt.sprites) {
+class GhostBossEntity(
+    pos: Point3D,
+    rot: Double,
+    vel: Point3D,
+    rotVel: Double
+): EnemyEntity(
+    pos = pos,
+    rot = rot,
+    vel = vel,
+    rotVel = rotVel,
+    flying = true,
+    collisionBox = RelativeAABB(0.3),
+    art = ModArt.sprites,
+    texA = 8 * 4 + 4,
+    texB = 8 * 4 + 5,
+    col = 0xFFFF00.col
+) {
     private var rotatePos = 0.0
     private var shootDelay = 0
 
-    init {
-        this.health = 10
-        this.flying = true
-    }
-
-    override fun tick(level: Level) {
+    override fun onTick(level: Level) {
         animTime++
-        sprite.tex = defaultTex + animTime / 10 % 2
-
-        var xd = ((level!!.player.x ?: 0.0) + sin(rotatePos) * 2) - x
-        var zd = ((level!!.player.z ?: 0.0) + sin(rotatePos) * 2) - z
-        var dd = xd * xd + zd * zd
-
+        if (animTime / 10 % 2 == 0) {
+            if (sprites[0] != spriteA) {
+                sprites.clear()
+                sprites.add(spriteA)
+            }
+        } else {
+            if (sprites[0] != spriteB) {
+                sprites.clear()
+                sprites.add(spriteB)
+            }
+        }
+        
+        vel = vel.copy(
+            x = vel.x * 0.9,
+            z = vel.z * 0.9
+        )
+        
+        var xd = (level.session.player.pos.x + sin(rotatePos) * 2) - pos.x
+        var zd = (level.session.player.pos.z + cos(rotatePos) * 2) - pos.z
+        var dd = xd * xd + zd + zd
+        
         if (dd < 1) {
             rotatePos += 0.04
         } else {
-            rotatePos = level!!.player.rot
+            rotatePos = level.session.player.rot
         }
-
+        
         if (dd < 4 * 4) {
             dd = sqrt(dd)
-
+            
             xd /= dd
             zd /= dd
-
-            xa += xd * 0.006
-            za += zd * 0.006
-
+            
+            vel = vel.copy(
+                x = vel.x + xd * 0.006,
+                z = vel.z + zd * 0.006
+            )
+            
             if (shootDelay > 0) {
                 shootDelay--
             } else if (random.nextInt(10) == 0) {
                 shootDelay = 10
-                level?.addEntity(Bullet(this, x, z, atan2((level?.player?.x ?: 0.0) - x, (level?.player?.z ?: 0.0) - z), 0.20, 1, defaultColor))
+                level.entities += Bullet(
+                    pos = pos,
+                    rot = atan2(level.session.player.pos.x - pos.x, level.session.player.pos.z - pos.z), 
+                    pow = 0.20, 
+                    art = Art.sprites, 
+                    tex = 8 * 1 + 1,
+                    col = this.col,
+                    owner = this
+                )
             }
         }
-        
-        move()
-        
-        xa *= 0.9
-        za *= 0.9
     }
 
-    override fun hurt(xd: Double, zd: Double) {
+    override fun onDeath(level: Level) {
         // Do nothing
     }
 
-    override fun move(level: Level) {
-        x += xa
-        z += za
+    override fun blocksEntity(level: Level, entity: Entity): Boolean {
+        return true
+    }
+
+    override fun onHurt(level: Level, xd: Double, zd: Double) {
+        // Do nothing
     }
 }

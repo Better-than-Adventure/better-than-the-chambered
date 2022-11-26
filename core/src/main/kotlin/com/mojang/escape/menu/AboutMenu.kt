@@ -2,6 +2,7 @@ package com.mojang.escape.menu
 
 import com.mojang.escape.*
 import com.mojang.escape.gui.Bitmap
+import com.mojang.escape.input.MenuInput
 
 class AboutMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
     /**
@@ -9,7 +10,7 @@ class AboutMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
      */
     private var tickDelay = 30
 
-    override fun render(target: Bitmap) {
+    override fun doRender(target: Bitmap) {
         target.fill(0, 0, 160, 120, 0)
 
         target.draw("gui.menu.about.title".toTranslatable(), 60, 8, Art.getCol(0xFFFFFF))
@@ -34,14 +35,15 @@ class AboutMenu(lastMenu: Menu? = null) : Menu(lastMenu) {
         }
     }
 
-    override fun tick(game: Game, keys: BooleanArray, up: Boolean, down: Boolean, left: Boolean, right: Boolean, use: Boolean) {
+    override fun onTick(game: Game) {
         if (tickDelay > 0) {
             tickDelay--
-        } else if (use) {
-            Sound.click1.play()
-            game.menu = TitleMenu()
         }
     }
 
-
+    override fun handleInputs(game: Game, inputs: MutableMap<MenuInput, Boolean>) {
+        if ((inputs[MenuInput.CONFIRM] == true && tickDelay == 0) || inputs[MenuInput.BACK] == true) {
+            game.menu = lastMenu ?: TitleMenu()
+        }
+    }
 }

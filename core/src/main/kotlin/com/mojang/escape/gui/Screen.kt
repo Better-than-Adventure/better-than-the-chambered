@@ -32,40 +32,31 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
     }
 
     fun render(game: Game, hasFocus: Boolean) {
-        if (game.level == null) {
+        val session = game.session
+        val menu = game.menu
+        if (session == null) {
             fill(0, 0, width, height, 0)
-            if (game.menu != null) {
-                game.menu!!.render(this)
+            if (menu != null) {
+                menu.doRender(this)
             }
             postProcess(this, false)
         } else {
-            val player = game.player!!
-            val level = game.level!!
-            val itemUsed = player.itemUseTime > 0
-            val item = player.items[player.selectedSlot]
+            val itemUsed = session.player.itemUseTime > 0
+            val item = session.player.items[session.player.selectedSlot]
 
             if (game.pauseTime > 0) {
                 fill(0, 0, width, height, 0)
-                val message = "gui.ingame.enteringLevel".toTranslatable().format(level.name)
+                val message = "gui.ingame.enteringLevel".toTranslatable().format(session.currentLevel.name)
                 message.draw(this, (width - message.length * 6) / 2, (viewport.height - 8) / 2 + 8 + 1, 0x111111)
                 message.draw(this, (width - message.length * 6) / 2, (viewport.height - 8) / 2 + 8 + 1, 0x555544)
             } else {
-                viewport.render(game)
-                viewport.postProcess(level)
-
-                val block = level.getBlock((player.x + 0.5).toInt(), (player.z + 0.5).toInt())
-                if (block.messages != null && hasFocus) {
-                    for (message in block.messages.withIndex()) {
-                        message.value.draw(this, (width - message.value.length * 6) / 2, (viewport.height - block.messages.size * 8) / 2 + message.index * 8 + 1, 0x111111)
-                        message.value.draw(this, (width - message.value.length * 6) / 2, (viewport.height - block.messages.size * 8) / 2 + message.index * 8, 0x555544)
-                    }
-
-                }
+                viewport.render(session)
+                viewport.postProcess(session.currentLevel)
 
                 postProcess(viewport, true)
                 draw(viewport, 0, 0)
-                var xx = (player.turnBob * 32).toInt()
-                var yy = (sin(player.bobPhase * 0.4) * 1 * player.bob + player.bob * 2).toInt()
+                var xx = (session.player.turnBob * 32).toInt()
+                var yy = (sin(session.player.bobPhase * 0.4) * 1 * session.player.bob + session.player.bob * 2).toInt()
 
                 if (itemUsed) {
                     xx = 0
@@ -77,10 +68,10 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                     scaleDraw(Art.items, 3, xx, yy, 16 * item.icon + 1, 16 + 1 + (if (itemUsed) 16 else 0), 15, 15, Art.getCol(item.color))
                 }
 
-                if (player.hurtTime > 0 || player.dead) {
-                    var offs = 1.5 - player.hurtTime / 30.0
+                if (session.player.hurtTime > 0 || session.player.dead) {
+                    var offs = 1.5 - session.player.hurtTime / 30.0
                     val random = Random(111)
-                    if (player.dead) offs = 0.5
+                    if (session.player.dead) offs = 0.5
                     for (i in pixels.indices) {
                         val xp = ((i % width) - viewport.width / 2.0) / width * 2
                         val yp = ((i / width) - viewport.height / 2.0) / viewport.height * 2
@@ -94,28 +85,28 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                 draw(Art.panel, 0, height - PANEL_HEIGHT, 0, 0, width, PANEL_HEIGHT, Art.getCol(0x707070))
 
                 draw("symbols.key".toTranslatable(Game.symbols), 3, height - 26 + 0, 0x00ffff)
-                draw(("" + player.keys + "/4").toLiteral(), 10, height - 26 + 0, 0xffffff)
+                draw(("" + session.player.keys + "/4").toLiteral(), 10, height - 26 + 0, 0xffffff)
                 draw("symbols.trophy".toTranslatable(Game.symbols), 3, height - 26 + 8, 0xffff00)
-                draw(("" + player.loot).toLiteral(), 10, height - 26 + 8, 0xffffff)
+                draw(("" + session.player.loot).toLiteral(), 10, height - 26 + 8, 0xffffff)
                 draw("symbols.heart".toTranslatable(Game.symbols), 3, height - 26 + 16, 0xff0000)
-                draw(("" + player.health).toLiteral(), 10, height - 26 + 16, 0xffffff)
+                draw(("" + session.player.health).toLiteral(), 10, height - 26 + 16, 0xffffff)
 
                 for (i in 0 until 8) {
-                    val slotItem = player.items[i]
+                    val slotItem = session.player.items[i]
                     if (slotItem != Item.None) {
                         draw(Art.items, 30 + i * 16, height - PANEL_HEIGHT + 2, slotItem.icon * 16, 0, 16, 16, Art.getCol(slotItem.color))
                         if (slotItem == Item.Pistol) {
-                            val str = "" + player.ammo
+                            val str = "" + session.player.ammo
                             draw(str.toLiteral(), 30 + i * 16 + 17 - str.length * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555)
                         }
                         if (slotItem == Item.Potion) {
-                            val str = "" + player.potions
+                            val str = "" + session.player.potions
                             draw(str.toLiteral(), 30 + i * 16 + 17 - str.length * 6, height - PANEL_HEIGHT + 1 + 10, 0x555555)
                         }
                     }
                 }
 
-                draw(Art.items, 30 + player.selectedSlot * 16, height - PANEL_HEIGHT + 2, 0, 48, 17, 17, Art.getCol(0xFFFFFF))
+                draw(Art.items, 30 + session.player.selectedSlot * 16, height - PANEL_HEIGHT + 2, 0, 48, 17, 17, Art.getCol(0xFFFFFF))
                 item.itemName.draw(this, 26 + (8 * 16 - item.itemName.length * 4) / 2, height - 9, 0xFFFFFF)
             }
 
@@ -123,7 +114,7 @@ class Screen(width: Int, height: Int): Bitmap(width, height) {
                 for (i in pixels.indices) {
                     pixels[i] = (pixels[i] and 0xFCFCFC) shr 2
                 }
-                game.menu!!.render(this)
+                game.menu!!.doRender(this)
             }
 
             if (!hasFocus) {

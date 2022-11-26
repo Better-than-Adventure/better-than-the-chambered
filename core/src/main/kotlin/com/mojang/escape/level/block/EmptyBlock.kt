@@ -4,26 +4,25 @@ import com.mojang.escape.entities.Entity
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.gui.Bitmap3D
 import com.mojang.escape.level.Level
+import com.mojang.escape.level.physics.Point2I
 
 open class EmptyBlock(
-    x: Int,
-    y: Int,
-    val floorArt: Bitmap,
-    val floorTex: Int,
-    val floorCol: Int,
-    val ceilArt: Bitmap,
-    val ceilTex: Int,
-    val ceilCol: Int
+    pos: Point2I,
+    var floorArt: Bitmap,
+    var floorTex: Int,
+    var floorCol: Int,
+    var ceilArt: Bitmap,
+    var ceilTex: Int,
+    var ceilCol: Int
 ): Block(
-    x = x,
-    y = y,
+    pos = pos,
     occludesAdjacentBlocks = false
 ) {
-    override fun init(level: Level) {
+    override fun onInit(level: Level) {
         // Do nothing
     }
 
-    override fun doRender(bitmap: Bitmap3D, level: Level) {
+    override fun doRender(level: Level, bitmap: Bitmap3D) {
         // Floor rendering is flood fill, so do nothing
     }
     
@@ -35,7 +34,7 @@ open class EmptyBlock(
         // Do nothing
     }
 
-    open fun onEntityMoveWhileInside(level: Level, entity: Entity, dx: Double, dy: Double) {
+    open fun onEntityMoveWhileInside(level: Level, entity: Entity, dx: Double, dz: Double) {
         // Do nothing
     }
 
