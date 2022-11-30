@@ -17,14 +17,14 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 class BoulderEntity(
-    pos: Point2I,
+    pos: Point3D,
     rot: Double,
-    vel: Point2D,
+    vel: Point3D,
     rotVel: Double
 ): Entity(
-    pos = Point3D(pos.x + 0.5, 0.0, pos.z + 0.5),
+    pos = pos,
     rot = rot,
-    vel = Point3D(vel.x, 0.0, vel.z),
+    vel = vel,
     rotVel = rotVel,
     flying = false
 ), ISpriteEntity, IUsableEntity, ICollidableEntity {
@@ -33,7 +33,7 @@ class BoulderEntity(
     }
 
     override val sprites = mutableListOf<Sprite>()
-    override val collisionBox = RelativeAABB(0.5)
+    override val collisionBox = RelativeAABB(0.45)
 
     private var rollDist: Double = 0.0
     
@@ -57,6 +57,12 @@ class BoulderEntity(
     }
 
     override fun onTick(level: Level) {
+        this.rollDist += sqrt(vel.x * vel.x + vel.z * vel.z)
+        this.sprites[0].tex = 8 * 1 + ((rollDist * 4).toInt() and 1)
+        velO = vel
+        
+        level.physics.linearMoveEntity(level, this)
+        
         if (vel.x == 0.0 && velO.x != 0.0) {
             vel = vel.copy(x = -velO.x * 0.3)
         }
@@ -70,9 +76,6 @@ class BoulderEntity(
         if (vel.x * vel.x + vel.z * vel.z < 0.0001) {
             vel = vel.copy(x = 0.0, z = 0.0)
         }
-        this.rollDist += sqrt(vel.x * vel.x + vel.z * vel.z)
-        this.sprites[0].tex = 8 * 1 + ((rollDist * 4).toInt() and 1)
-        velO = vel
     }
 
     override fun onUsed(level: Level, source: Entity, item: Item) {

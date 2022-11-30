@@ -22,6 +22,10 @@ open class WallBlock(
         // Do nothing
     }
 
+    override fun onDeinit(level: Level) {
+        // Do nothing
+    }
+
     override fun doRender(level: Level, bitmap: Bitmap3D) {
         val xPos = level[pos.x + 1, pos.z + 0]
         val zPos = level[pos.x + 0, pos.z + 1]

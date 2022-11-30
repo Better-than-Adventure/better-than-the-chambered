@@ -48,6 +48,7 @@ abstract class Level(
             return
         }
         
+        blocks[x + z * lengthX].onDeinit(this)
         blocks[x + z * lengthX] = value
     }
 
@@ -85,6 +86,16 @@ abstract class Level(
                     block.onTick(this)
                 }
             }
+        }
+        
+        i = 0
+        while (i < sprites.size) {
+            val s = sprites[i]
+            s.tick()
+            if (s.removed) {
+                sprites.removeAt(i--)
+            }
+            i++
         }
     }
 

@@ -38,15 +38,15 @@ class VanishBlock(
             sprite.y = 0.5
             sprite.z = pos.z + 0.5
             level.sprites.add(sprite)
-            level[pos] = EmptyBlock(
-                pos = pos,
-                floorArt = floorArt,
-                floorTex = floorTex,
-                floorCol = floorCol,
-                ceilArt = ceilArt,
-                ceilTex = ceilTex,
-                ceilCol = ceilCol
-            )
         }
+        level[pos] = EmptyBlock(
+            pos = pos,
+            floorArt = floorArt,
+            floorTex = floorTex,
+            floorCol = floorCol,
+            ceilArt = ceilArt,
+            ceilTex = ceilTex,
+            ceilCol = ceilCol
+        )
     }
 }

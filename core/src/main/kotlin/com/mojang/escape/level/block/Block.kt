@@ -17,6 +17,8 @@ abstract class Block(
     protected val random = Random()
 
     abstract fun onInit(level: Level)
+    
+    abstract fun onDeinit(level: Level)
 
     abstract fun doRender(level: Level, bitmap: Bitmap3D)
     

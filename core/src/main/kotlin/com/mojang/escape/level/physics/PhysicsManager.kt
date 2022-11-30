@@ -3,6 +3,7 @@ package com.mojang.escape.level.physics
 import com.mojang.escape.entities.Entity
 import com.mojang.escape.entities.ICollidableEntity
 import com.mojang.escape.level.Level
+import com.mojang.escape.level.block.EmptyBlock
 import com.mojang.escape.level.block.ICollidableBlock
 import kotlin.math.abs
 import kotlin.math.floor
@@ -15,6 +16,8 @@ class PhysicsManager {
         var xa = entity.vel.x
         var ya = entity.vel.y
         var za = entity.vel.z
+        
+        val oldBlock = level[entity.tilePos]
         
         // Gravity
         if (entity.pos.y > 0.0) {
@@ -56,6 +59,12 @@ class PhysicsManager {
         
         entity.pos = Point3D(x, y, z)
         entity.vel = Point3D(xa, ya, za)
+
+        val newBlock = level[entity.tilePos]
+        if (oldBlock != newBlock) {
+            if (oldBlock is EmptyBlock) oldBlock.onEntityLeave(level, entity)
+            if (newBlock is EmptyBlock) newBlock.onEntityEnter(level, entity)
+        }
     }
 
 

@@ -9,17 +9,16 @@ import com.mojang.escape.level.block.ITriggerEmitterBlock
 import com.mojang.escape.level.block.IUsableBlock
 import com.mojang.escape.level.block.WallBlock
 import com.mojang.escape.level.physics.Point2I
+import com.mojang.escape.mods.prelude.ModArt
 
 class SwitchBlock(
     pos: Point2I,
-    art: Bitmap,
-    tex: Int,
     col: Int, 
     override val triggerEmitId: Int
 ): WallBlock(
     pos = pos,
-    art = art,
-    tex = tex,
+    art = ModArt.walls,
+    tex = 2,
     col = col
 ), IUsableBlock, ITriggerEmitterBlock {
     private var pressed = false

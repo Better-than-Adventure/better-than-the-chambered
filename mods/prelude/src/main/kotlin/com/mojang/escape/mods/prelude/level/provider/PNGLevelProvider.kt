@@ -4,6 +4,7 @@ import com.mojang.escape.GameSession
 import com.mojang.escape.alpha
 import com.mojang.escape.col
 import com.mojang.escape.entities.Entity
+import com.mojang.escape.entities.Item
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.Block
@@ -11,8 +12,10 @@ import com.mojang.escape.level.block.EmptyBlock
 import com.mojang.escape.level.block.WallBlock
 import com.mojang.escape.level.physics.Point2D
 import com.mojang.escape.level.physics.Point2I
+import com.mojang.escape.level.physics.Point3D
 import com.mojang.escape.level.provider.ILevelProvider
 import com.mojang.escape.mods.prelude.ModArt
+import com.mojang.escape.mods.prelude.entities.BoulderEntity
 import com.mojang.escape.mods.prelude.level.PNGLevel
 import com.mojang.escape.mods.prelude.level.block.*
 import com.mojang.escape.toTranslatable
@@ -78,8 +81,8 @@ class PNGLevelProvider: ILevelProvider {
             lengthX = img.width,
             lengthZ = img.height,
             spawn = Point2I(26, 27),
-            getLevelBlocks(name, img, default),
-            getLevelEntities(img)
+            blocks = getLevelBlocks(name, img, default),
+            entities = getLevelEntities(img)
         )
         
         level.blocks.forEach { 
@@ -124,6 +127,28 @@ class PNGLevelProvider: ILevelProvider {
                 art = default.wallArt,
                 tex = default.wallTex,
                 col = default.wallCol.col
+            )
+            0x00FFFF -> VanishBlock(
+                pos = pos,
+                wallArt = ModArt.walls,
+                wallTex = 8 * 0 + 1,
+                wallCol = default.wallCol.col,
+                floorArt = default.floorArt,
+                floorTex = default.floorTex,
+                floorCol = default.floorCol.col,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol.col,
+            )
+            0xFFFF64 -> ChestBlock(
+                pos = pos,
+                floorArt = default.floorArt,
+                floorTex = default.floorTex,
+                floorCol = default.floorCol.col,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol.col,
+                contents = Item.PowerGlove
             )
             0x0000FF -> WaterBlock(
                 pos = pos,
@@ -222,7 +247,79 @@ class PNGLevelProvider: ILevelProvider {
                     else -> ""
                 }
             )
-            // TODO
+            0xC1C14D -> LootBlock(
+                pos = pos,
+                floorArt = default.floorArt,
+                floorTex = default.floorTex,
+                floorCol = default.floorCol.col,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol.col
+            )
+            0xC6C6C6 -> DoorBlock(
+                pos = pos,
+                floorArt = default.floorArt,
+                floorTex = default.floorTex,
+                floorCol = default.floorCol.col,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol.col,
+                doorArt = ModArt.walls,
+                doorTex = 8 * 0 + 4,
+                doorCol = 0xC6C6C6.col,
+                triggerId = id
+            )
+            0x00FFA7 -> SwitchBlock(
+                pos = pos,
+                col = default.wallCol.col,
+                triggerEmitId = id
+            )
+            0x009380 -> PressurePlateBlock(
+                pos = pos,
+                floorCol = default.floorCol.col,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol.col,
+                triggerEmitId = id
+            )
+            0xFF0005, 0x3F3F60 -> IceBlock(
+                pos = pos,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol.col
+            )
+            0xC6C697 -> LockedDoorBlock(
+                pos = pos,
+                floorArt = default.floorArt,
+                floorTex = default.floorTex,
+                floorCol = default.floorCol.col,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol.col,
+                doorArt = ModArt.walls,
+                doorTex = 8 * 0 + 5,
+                doorCol = 0xC6C697.col,
+                triggerId = id
+            )
+            0xFFBA02 -> AltarBlock(
+                pos = pos,
+                floorArt = default.floorArt,
+                floorTex = default.floorTex,
+                floorCol = default.floorCol,
+                ceilArt = default.ceilArt,
+                ceilTex = default.ceilTex,
+                ceilCol = default.ceilCol
+            )
+            0x749327 -> SpiritWallBlock(
+                pos = pos,
+                floorArt = default.floorArt,
+                floorTex = default.floorTex,
+                floorCol = default.floorCol,
+                ceilArt = default.floorArt,
+                ceilTex = default.floorTex,
+                ceilCol = default.ceilCol
+            )
+            
             else -> EmptyBlock(
                 pos = pos,
                 floorArt = default.floorArt,
@@ -236,6 +333,33 @@ class PNGLevelProvider: ILevelProvider {
     }
     
     private fun getLevelEntities(image: Image): MutableList<Entity> {
-        return mutableListOf()
+        val list = mutableListOf<Entity>()
+        for (y in 0 until image.height) {
+            for (x in 0 until image.width) {
+                val pos = Point3D(x + 0.0, 0.0, y + 0.0)
+
+                val col = image[x, y] and 0xFFFFFF
+                val id = 255 - image[x, y].alpha
+
+                val entity = getEntity(pos, col)
+                if (entity != null) {
+                    list.add(entity)
+                }
+            }
+        }
+        
+        return list
+    }
+    
+    private fun getEntity(pos: Point3D, col: Int): Entity? {
+        return when (col) {
+            0xAA5500 -> BoulderEntity(
+                pos = pos,
+                rot = 0.0,
+                vel = Point3D(0.0, 0.0, 0.0),
+                rotVel = 0.0
+            )
+            else -> null
+        }
     }
 }

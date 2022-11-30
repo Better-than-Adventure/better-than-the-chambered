@@ -61,7 +61,7 @@ class Bitmap3D(width: Int, height: Int): Bitmap(width, height) {
         for (entity in session.currentLevel.entities) {
             if (entity is ISpriteEntity) {
                 for (sprite in entity.sprites) {
-                    renderSprite(sprite.x, 0 - sprite.y, sprite.z, sprite.tex, sprite.col, sprite.art)
+                    renderSprite(entity.pos.x + sprite.x, entity.pos.y - sprite.y, entity.pos.z + sprite.z, sprite.tex, sprite.col, sprite.art)
                 }
             }
         }

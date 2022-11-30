@@ -1,10 +1,12 @@
 package com.mojang.escape.mods.prelude.level.block
 
+import com.mojang.escape.col
 import com.mojang.escape.entities.*
 import com.mojang.escape.gui.Bitmap
 import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.EmptyBlock
 import com.mojang.escape.level.physics.Point2I
+import com.mojang.escape.mods.prelude.ModArt
 import com.mojang.escape.mods.prelude.ModSound
 import com.mojang.escape.mods.prelude.entities.EyeBossEntity
 import com.mojang.escape.mods.prelude.entities.EyeEntity
@@ -13,20 +15,17 @@ import kotlin.math.sin
 
 class IceBlock(
     pos: Point2I,
-    floorArt: Bitmap,
-    floorTex: Int,
-    floorCol: Int,
     ceilArt: Bitmap,
     ceilTex: Int,
     ceilCol: Int
 ): EmptyBlock(
-    pos,
-    floorArt,
-    floorTex,
-    floorCol,
-    ceilArt,
-    ceilTex,
-    ceilCol
+    pos = pos,
+    floorArt = ModArt.floors,
+    floorTex = 8 * 2 + 0,
+    floorCol = 0x8080FF.col,
+    ceilArt = ceilArt,
+    ceilTex = ceilTex,
+    ceilCol = ceilCol
 ) {
 
     override fun getWalkSpeed(level: Level, entity: Entity): Double {

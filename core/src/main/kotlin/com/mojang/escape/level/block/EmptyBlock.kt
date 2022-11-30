@@ -22,6 +22,10 @@ open class EmptyBlock(
         // Do nothing
     }
 
+    override fun onDeinit(level: Level) {
+        // Do nothing
+    }
+
     override fun doRender(level: Level, bitmap: Bitmap3D) {
         // Floor rendering is flood fill, so do nothing
     }

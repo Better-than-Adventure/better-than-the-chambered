@@ -8,10 +8,10 @@ import com.mojang.escape.level.Level
 import com.mojang.escape.level.block.EmptyBlock
 import com.mojang.escape.level.block.ITriggerEmitterBlock
 import com.mojang.escape.level.physics.Point2I
+import com.mojang.escape.mods.prelude.ModArt
 
 class PressurePlateBlock(
     pos: Point2I,
-    floorArt: Bitmap,
     floorCol: Int,
     ceilArt: Bitmap,
     ceilTex: Int,
@@ -19,7 +19,7 @@ class PressurePlateBlock(
     override val triggerEmitId: Int
 ): EmptyBlock(
     pos = pos,
-    floorArt = floorArt,
+    floorArt = ModArt.floors,
     floorTex = 8 * 0 + 2,
     floorCol = floorCol,
     ceilArt = ceilArt,

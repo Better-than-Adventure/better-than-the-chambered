@@ -123,9 +123,9 @@ class InputHandler {
                     }
                 } 
                 gameInputs[highLevelInput] = anyKeyPressed && if (highLevelInput.continuous) {
-                    !lastGameInputs.getOrDefault(highLevelInput, false)
-                } else {
                     true
+                } else {
+                    !lastGameInputs.getOrDefault(highLevelInput, false)
                 }
                 lastGameInputs[highLevelInput] = anyKeyPressed
             }
@@ -141,7 +141,6 @@ class InputHandler {
                 lastMousePos = Pair(x[0], y[0])
             }
         }
-        this.lastGameInputs = gameInputs
         this.mouseDelta = mouseDelta
         this.lastScrollOffset = game.scrollOffset
     }

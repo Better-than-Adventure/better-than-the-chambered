@@ -27,9 +27,15 @@ open class SpriteEmptyBlock(
     ceilTex = ceilTex,
     ceilCol = ceilCol
 ) {
-    protected var sprite = BasicSprite(0.0, 0.0, 0.0, spriteTex, spriteCol, spriteArt)
+    protected var sprite = BasicSprite(pos.x + 0.0, 0.0, pos.z + 0.0, spriteTex, spriteCol, spriteArt)
 
-    override fun doRender(level: Level, bitmap: Bitmap3D) {
-        bitmap.renderSprite(pos.x.toDouble(), 0.0, pos.z.toDouble(), sprite.tex, sprite.col, sprite.art)
+    override fun onInit(level: Level) {
+        super.onInit(level)
+        level.sprites.add(sprite)
+    }
+
+    override fun onDeinit(level: Level) {
+        super.onDeinit(level)
+        sprite.removed = true
     }
 }

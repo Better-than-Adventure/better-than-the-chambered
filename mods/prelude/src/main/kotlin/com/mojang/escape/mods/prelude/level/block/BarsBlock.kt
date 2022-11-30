@@ -36,7 +36,7 @@ class BarsBlock(
     ceilCol = ceilCol,
     spriteArt = ModArt.sprites,
     spriteTex = 8 * 0 + 0,
-    spriteCol = 0x202020.col
+    spriteCol = 0x202020
 ), ICollidableBlock, IUsableBlock {
     override val collisionBox = RelativeAABB(0.5)
 

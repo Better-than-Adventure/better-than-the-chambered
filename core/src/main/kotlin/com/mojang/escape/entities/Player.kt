@@ -69,7 +69,7 @@ class Player(
     }
 
     init {
-        if (false) {
+        if (true) {
             items = Item.values()
             health = 999
             ammo = 999
@@ -105,12 +105,12 @@ class Player(
         if (onBlock is EmptyBlock && allowMovement) {
 
             var fh = onBlock.getFloorHeight(level, this)
-            if (lastBlock != null && onBlock::class != lastBlock!!::class) {
-                if (lastBlock is EmptyBlock) {
-                    onBlock.onEntityLeave(level, this)
-                }
-                onBlock.onEntityEnter(level, this)
-            }
+//            if (lastBlock != null && onBlock::class != lastBlock!!::class) {
+//                if (lastBlock is EmptyBlock) {
+//                    onBlock.onEntityLeave(level, this)
+//                }
+//                onBlock.onEntityEnter(level, this)
+//            }
 
             lastBlock = onBlock
 
@@ -157,7 +157,7 @@ class Player(
                 x = vel.x - ((xm * cos(rot) + zm * sin(rot)) * walkSpeed),
                 z = vel.z - ((zm * cos(rot) - xm * sin(rot)) * walkSpeed)
             )
-            
+
             level.physics.linearMoveEntity(level, this)
             
             val friction = onBlock.getFriction(level, this)
