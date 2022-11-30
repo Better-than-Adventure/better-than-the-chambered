@@ -2,6 +2,7 @@ package com.mojang.escape.mods.prelude.level.block
 
 import com.mojang.escape.Art
 import com.mojang.escape.Sound
+import com.mojang.escape.col
 import com.mojang.escape.entities.Entity
 import com.mojang.escape.entities.Player
 import com.mojang.escape.gui.BasicSprite
@@ -21,7 +22,8 @@ class LadderBlock(
     ceilArt: Bitmap,
     ceilTex: Int,
     ceilCol: Int,
-    override val levelChangeId: Int,
+    override val levelChangeIdOut: Int,
+    override val levelChangeIdIn: Int,
     override val targetLevel: String,
     down: Boolean
 ): SpriteEmptyBlock(
@@ -34,7 +36,7 @@ class LadderBlock(
     ceilCol = ceilCol,
     spriteArt = ModArt.sprites,
     spriteTex = if (down) 8 * 1 + 3 else 8 * 1 + 4,
-    spriteCol = 0xDB8E53
+    spriteCol = 0xDB8E53.col
 ), ILevelChangeBlock {
     override fun onEntityEnter(level: Level, entity: Entity) {
         if (entity is Player && !entity.inLevelChangeBlock) {

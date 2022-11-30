@@ -46,7 +46,8 @@ interface ICollidableBlock {
 }
 
 interface ILevelChangeBlock {
-    val levelChangeId: Int
+    val levelChangeIdOut: Int
+    val levelChangeIdIn: Int
     val targetLevel: String
     
     fun onLevelEnter(level: Level, entity: Entity)

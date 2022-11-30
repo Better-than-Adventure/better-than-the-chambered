@@ -64,8 +64,8 @@ class InputHandler {
                 session.player.rotVel += 0.05
             }
             // Turn Right
-            if (gameInputs[GameInput.STRAFE_LEFT] == true &&
-                gameInputs[GameInput.STRAFE_MOD] == true) {
+            if (gameInputs[GameInput.TURN_RIGHT] == true &&
+                gameInputs[GameInput.STRAFE_MOD] == false) {
                 session.player.rotVel -= 0.05
             }
             // Use

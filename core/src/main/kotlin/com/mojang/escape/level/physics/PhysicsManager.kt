@@ -9,43 +9,53 @@ import kotlin.math.floor
 
 class PhysicsManager {
     fun linearMoveEntity(level: Level, entity: Entity) {
+        var x = entity.pos.x
+        var y = entity.pos.y
+        var z = entity.pos.z
+        var xa = entity.vel.x
+        var ya = entity.vel.y
+        var za = entity.vel.z
+        
         // Gravity
         if (entity.pos.y > 0.0) {
-            entity.vel.copy(y = entity.vel.y - 0.005)
+            ya -= 0.005
         }
-        
-        val xSteps = (abs(entity.vel.x * 100) + 1).toInt()
+
+        val xSteps = (abs(xa * 100) + 1).toInt()
         for (i in xSteps downTo 1) {
-            val xxa = entity.vel.x
-            if (canEntityMoveTo(level, entity, entity.pos.x + xxa * i / xSteps, entity.pos.z)) {
-                entity.pos = entity.pos.copy(x = entity.pos.x + xxa * i / xSteps)
+            val xxa = xa
+            if (canEntityMoveTo(level, entity, x + xxa * i / xSteps, z)) {
+                x += xxa * i / xSteps
                 break
             } else {
-                entity.vel = entity.vel.copy(x = 0.0)
+                xa = 0.0
             }
         }
-        
-        val ySteps = (abs(entity.vel.y * 100) + 1).toInt()
+
+        val ySteps = (abs(ya * 100) + 1).toInt()
         for (i in ySteps downTo 1) {
-            val yya = entity.vel.y
-            if (entity.pos.y + yya * i / ySteps > 0.0) {
-                entity.pos = entity.pos.copy(y = entity.pos.y + yya * i / ySteps)
+            val yya = ya
+            if (y + yya * i / ySteps > 0.0) {
+                y += yya * i / ySteps
+                break
             } else {
-                entity.vel = entity.vel.copy(y = 0.0)
-                entity.pos = entity.pos.copy(y = 0.0)
+                ya = 0.0
+            }
+        }
+
+        val zSteps = (abs(za * 100) + 1).toInt()
+        for (i in zSteps downTo 1) {
+            val zza = za
+            if (canEntityMoveTo(level, entity, x, z + zza * i / zSteps)) {
+                z += zza * i / zSteps
+                break
+            } else {
+                za = 0.0
             }
         }
         
-        val zSteps = (abs(entity.vel.z * 100) + 1).toInt()
-        for (i in zSteps downTo 1) {
-            val zza = entity.vel.z
-            if (canEntityMoveTo(level, entity, entity.pos.x, entity.pos.z + zza * i / zSteps)) {
-                entity.pos = entity.pos.copy(z = entity.pos.z + zza * i / zSteps)
-                break
-            } else {
-                entity.vel = entity.vel.copy(z = 0.0)
-            }
-        }
+        entity.pos = Point3D(x, y, z)
+        entity.vel = Point3D(xa, ya, za)
     }
 
 

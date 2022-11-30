@@ -45,9 +45,11 @@ class GameSession(private val game: Game, val mod: IMod) {
         level.entities.add(player)
         var newPos = Point3D(level.spawn.x.toDouble(), 0.0, level.spawn.z.toDouble())
         for (block in level.blocks) {
-            if (block is ILevelChangeBlock && block.levelChangeId == levelChangeId) {
-                newPos = Point3D(block.pos.x + 0.5, 0.0, block.pos.z + 0.5)
-                break
+            if (block is ILevelChangeBlock) {
+                if (block.levelChangeIdIn == levelChangeId) {
+                    newPos = Point3D(block.pos.x.toDouble(), 0.0, block.pos.z.toDouble())
+                    break
+                }
             }
         }
         player.pos = newPos

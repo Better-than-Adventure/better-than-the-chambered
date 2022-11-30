@@ -103,6 +103,7 @@ class Player(
         val onBlock = level[(pos.x + 0.5).toInt(), (pos.z + 0.5).toInt()]
         
         if (onBlock is EmptyBlock && allowMovement) {
+
             var fh = onBlock.getFloorHeight(level, this)
             if (lastBlock != null && onBlock::class != lastBlock!!::class) {
                 if (lastBlock is EmptyBlock) {
@@ -130,14 +131,16 @@ class Player(
 
             val walkSpeed = 0.03 * onBlock.getWalkSpeed(level, this)
 
-            var dd = (xm * xm + zm * zm).toDouble()
+            var xm = xm.toDouble()
+            var zm = zm.toDouble()
+            var dd = xm * xm + zm * zm
             dd = if (dd > 0.0) {
                 sqrt(dd)
             } else {
                 1.0
             }
-            val xm = this.xm / dd
-            val zm = this.zm / dd
+            xm /= dd
+            zm /= dd
 
             bob *= 0.6
             turnBob *= 0.8
@@ -151,17 +154,17 @@ class Player(
             }
 
             vel = vel.copy(
-                x = vel.x - (xm * cos(rot) + zm * sin(rot)) * walkSpeed,
-                z = vel.z - (zm * cos(rot) - xm * sin(rot)) * walkSpeed
+                x = vel.x - ((xm * cos(rot) + zm * sin(rot)) * walkSpeed),
+                z = vel.z - ((zm * cos(rot) - xm * sin(rot)) * walkSpeed)
             )
-
+            
+            level.physics.linearMoveEntity(level, this)
+            
             val friction = onBlock.getFriction(level, this)
 
             vel = vel.copy(x = vel.x * friction, z = vel.z * friction)
             rot += rotVel
             rotVel *= 0.4
-            println(pos)
-            println(vel)
         }
     }
 

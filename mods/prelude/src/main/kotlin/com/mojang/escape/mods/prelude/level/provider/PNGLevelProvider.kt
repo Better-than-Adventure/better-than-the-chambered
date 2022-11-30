@@ -72,7 +72,7 @@ class PNGLevelProvider: ILevelProvider {
         }
         val default = defaults[name] ?: BlockDefaults()
         
-        return PNGLevel(
+        val level = PNGLevel(
             session = session,
             name = "level.$name.name".toTranslatable(),
             lengthX = img.width,
@@ -81,6 +81,12 @@ class PNGLevelProvider: ILevelProvider {
             getLevelBlocks(name, img, default),
             getLevelEntities(img)
         )
+        
+        level.blocks.forEach { 
+            it.onInit(level)
+        }
+        
+        return level
     }
     
     private fun getLevelBlocks(levelName: String, image: Image, default: BlockDefaults): Array<Block> {
@@ -108,50 +114,50 @@ class PNGLevelProvider: ILevelProvider {
             0x009300 -> PitBlock(
                 pos = pos,
                 floorArt = default.floorArt,
-                floorCol = default.floorCol,
+                floorCol = default.floorCol.col,
                 ceilArt = default.ceilArt,
                 ceilTex = default.ceilTex,
-                ceilCol = default.ceilCol
+                ceilCol = default.ceilCol.col
             )
             0xFFFFFF -> WallBlock(
                 pos = pos,
                 art = default.wallArt,
                 tex = default.wallTex,
-                col = default.wallCol
+                col = default.wallCol.col
             )
             0x0000FF -> WaterBlock(
                 pos = pos,
                 ceilArt = default.ceilArt,
                 ceilTex = default.ceilTex,
-                ceilCol = default.ceilCol
+                ceilCol = default.ceilCol.col
             )
             0xFF3A02 -> TorchBlock(
                 pos = pos,
                 floorArt = default.floorArt,
                 floorTex = default.floorTex,
-                floorCol = default.floorCol,
+                floorCol = default.floorCol.col,
                 ceilArt = default.ceilArt,
                 ceilTex = default.ceilTex,
-                ceilCol = default.ceilCol
+                ceilCol = default.ceilCol.col
             )
             0x4C4C4C -> BarsBlock(
                 pos = pos,
                 floorArt = default.floorArt,
                 floorTex = default.floorTex,
-                floorCol = default.floorCol,
+                floorCol = default.floorCol.col,
                 ceilArt = default.ceilArt,
                 ceilTex = default.ceilTex,
-                ceilCol = default.ceilCol
+                ceilCol = default.ceilCol.col
             )
             0xFF66FF, 0x9E009E -> LadderBlock(
                 pos = pos,
                 floorArt = default.floorArt,
                 floorTex = default.floorTex,
-                floorCol = default.floorCol,
+                floorCol = default.floorCol.col,
                 ceilArt = default.ceilArt,
                 ceilTex = default.ceilTex,
-                ceilCol = default.ceilCol,
-                levelChangeId = when (levelName) {
+                ceilCol = default.ceilCol.col,
+                levelChangeIdOut = when (levelName) {
                     "crypt" -> when (id) {
                         1 -> 2
                         else -> -1
@@ -182,6 +188,7 @@ class PNGLevelProvider: ILevelProvider {
                     }
                     else -> -1
                 },
+                levelChangeIdIn = id,
                 down = col == 0x9E009E,
                 targetLevel = when (levelName) {
                     "crypt" -> when (id) {
@@ -220,10 +227,10 @@ class PNGLevelProvider: ILevelProvider {
                 pos = pos,
                 floorArt = default.floorArt,
                 floorTex = default.floorTex,
-                floorCol = default.floorCol,
+                floorCol = default.floorCol.col,
                 ceilArt = default.ceilArt,
                 ceilTex = default.ceilTex,
-                ceilCol = default.ceilCol
+                ceilCol = default.ceilCol.col
             )
         }
     }

@@ -72,7 +72,6 @@ abstract class Level(
         while (i < entities.size) {
             val e = entities[i]
             e.onTick(this)
-            physics.linearMoveEntity(this, e)
             if (e.removed) {
                 entities.removeAt(i--)
             }
@@ -110,6 +109,6 @@ abstract class Level(
     }
     
     fun switchLevel(source: ILevelChangeBlock) {
-        session.switchLevel(source.targetLevel, source.levelChangeId)
+        session.switchLevel(source.targetLevel, source.levelChangeIdOut)
     }
 }
